@@ -16,5 +16,6 @@ class HomeView(CsrfExemptMixin, ContextMixin, TemplateResponseMixin, View):
 
     def post(self, request, *args, **kwargs):
         response = twilio.twiml.Response()
-        response.say('Hello. Rich is a super smart guy, and you are a monkey. Goodbye.', voice='woman')
+        response.say('Now joining conference.', voice='woman')
+        response.dial().conference('MyRoom')
         return HttpResponse(response, content_type='text/xml')
