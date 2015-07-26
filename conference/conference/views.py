@@ -4,8 +4,10 @@ from django.template.loader import render_to_string
 
 import twilio.twiml
 
+from .mixins import CsrfExemptMixin
 
-class HomeView(ContextMixin, TemplateResponseMixin, View):
+
+class HomeView(CsrfExemptMixin, ContextMixin, TemplateResponseMixin, View):
     template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
