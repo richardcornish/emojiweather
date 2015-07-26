@@ -116,7 +116,7 @@ if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql_psycopg2':
     DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Static asset configuration
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Simplified static file serving.
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
