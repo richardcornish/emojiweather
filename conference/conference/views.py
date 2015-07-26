@@ -1,6 +1,6 @@
+from django.http import HttpResponse
 from django.views.generic import View
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
-from django.template.loader import render_to_string
 
 import twilio.twiml
 
@@ -17,4 +17,4 @@ class HomeView(CsrfExemptMixin, ContextMixin, TemplateResponseMixin, View):
     def post(self, request, *args, **kwargs):
         response = twilio.twiml.Response()
         response.say("Hello Monkey")
-        return render_to_string(response)
+        return HttpResponse(response, content_type='text/xml')
