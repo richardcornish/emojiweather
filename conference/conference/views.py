@@ -23,7 +23,7 @@ class ConferenceView(CsrfExemptMixin, View):
 class WeatherView(CsrfExemptMixin, View):
 
     def post(self, request, *args, **kwargs):
-        body = request.values.get('FromZip', None)
+        body = request.POST.get('FromZip', None)
         # body = request.POST.get('Body', None)
 
         r = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address=%s' % body)
