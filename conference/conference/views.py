@@ -63,7 +63,7 @@ class WeatherView(CsrfExemptMixin, View):
             print e
 
         response = twilio.twiml.Response()
-        with response.message("Weather for %s: %s and %s°F. Moon tonight: %s." % (body, weather.get('summary'), weather.get('temperature'), weather.get('emoji'))) as m:
+        with response.message(u"Weather for %s: %s and %s°F. Moon tonight: %s." % (body, weather.get('summary'), weather.get('temperature'), weather.get('emoji'))) as m:
             m.media("https://demo.twilio.com/owl.png")
         return HttpResponse(response, content_type='text/xml')
 
