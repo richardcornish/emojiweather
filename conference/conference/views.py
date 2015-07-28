@@ -27,6 +27,7 @@ class WeatherView(CsrfExemptMixin, View):
 
         r = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address=%s' % body)
         location = r.json()['results'][0]['geometry']['location']
+        formatted_address = r.json()['results'][0]['formatted_address']
         latitude = location['lat']
         longitude = location['lng']
 
@@ -63,7 +64,7 @@ class WeatherView(CsrfExemptMixin, View):
 
         response = twilio.twiml.Response()
         # response.media('')
-        response.message(u'Weather for %s: %s and %s°F. Moon tonight: %s.' % (body, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
+        response.message(u'Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
         return HttpResponse(response, content_type='text/xml')
 
 
