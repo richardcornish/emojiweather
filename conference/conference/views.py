@@ -23,10 +23,10 @@ class ConferenceView(CsrfExemptMixin, View):
 class WeatherView(CsrfExemptMixin, View):
 
     def post(self, request, *args, **kwargs):
-        # from_zip = request.values.get('FromZip', None)
-        body = request.POST.get('Body', None)
+        body = request.values.get('FromZip', None)
+        # body = request.POST.get('Body', None)
 
-        r = requests.get("http://maps.googleapis.com/maps/api/geocode/json?address=%s" % body)
+        r = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address=%s' % body)
         location = r.json()['results'][0]['geometry']['location']
         latitude = location['lat']
         longitude = location['lng']
@@ -36,10 +36,10 @@ class WeatherView(CsrfExemptMixin, View):
             currently = forecast.currently()
             daily = forecast.daily()
             weather = {
-                "summary": currently.summary,
-                "temperature": str(int(currently.temperature)),
-                "moon": daily.data[0].moonPhase * 100,
-                "emoji": ''
+                'summary': currently.summary,
+                'temperature': str(int(currently.temperature)),
+                'moon': daily.data[0].moonPhase * 100,
+                'emoji': ''
             }
 
             if 0 <= weather['moon'] < 6.25 or 93.75 <= weather['moon'] <= 100:
@@ -63,8 +63,8 @@ class WeatherView(CsrfExemptMixin, View):
             print e
 
         response = twilio.twiml.Response()
-        with response.message(u"Weather for %s: %s and %s°F. Moon tonight: %s." % (body, weather.get('summary'), weather.get('temperature'), weather.get('emoji'))) as m:
-            m.media("https://demo.twilio.com/owl.png")
+        # response.media('')
+        response.message(u'Weather for %s: %s and %s°F. Moon tonight: %s.' % (body, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
         return HttpResponse(response, content_type='text/xml')
 
 
