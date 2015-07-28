@@ -120,3 +120,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Simplified static file serving.
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+# Twilio
+
+TWILIO_KEYS = {
+    'account_sid': os.environ.get('TWILIO_ACCOUNT_SID'),
+    'auth_token': os.environ.get('TWILIO_AUTH_TOKEN')
+}
+
+# Forecast.io
+
+FORECASTIO_API_KEY = os.environ.get('FORECASTIO_API_KEY')
