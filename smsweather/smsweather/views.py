@@ -20,6 +20,7 @@ class SmsView(CsrfExemptMixin, View):
         latitude = location['lat']
         longitude = location['lng']
 
+        response = twilio.twiml.Response()
         try:
             forecast = forecastio.load_forecast(settings.FORECASTIO_API_KEY, latitude, longitude)
             currently = forecast.currently()
@@ -48,11 +49,11 @@ class SmsView(CsrfExemptMixin, View):
             if 81.25 <= weather['moon'] < 93.75:
                 weather['emoji'] = '🌘'
 
-        except Exception as e:
-            print(e)
+            response.message('Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
 
-        response = twilio.twiml.Response()
-        response.message('Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
+        except Exception as e:
+            response.message('We\'re sorry, but an error occurred: %s' % e)
+
         return HttpResponse(response, content_type='text/xml')
 
 
