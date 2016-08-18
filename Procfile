@@ -1,1 +1,1 @@
-web: gunicorn conference.wsgi --pythonpath conference --workers $WEB_CONCURRENCY --log-file -
+web: gunicorn smsweather.wsgi --pythonpath smsweather --workers $WEB_CONCURRENCY --log-file -
