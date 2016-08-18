@@ -49,7 +49,7 @@ class SmsView(CsrfExemptMixin, View):
                 weather['emoji'] = '🌘'
 
         except Exception as e:
-            print e
+            print(e)
 
         response = twilio.twiml.Response()
         # response.media('')
