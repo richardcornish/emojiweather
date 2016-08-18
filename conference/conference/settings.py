@@ -1,27 +1,30 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+
+# Website settings
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'y02fdsa0#16vq1%w18o*psk6r8@=o^_digu!hrk=61*dkdp7=%')
 
-DEBUG = bool(os.environ.get('DEBUG', True))
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '.herokuapp.com',
+    '.herokuapp.com'
 ]
 
 INTERNAL_IPS = (
     '127.0.0.1',
 )
 
-SITE_ID = 1
-
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,21 +32,23 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'debug_toolbar',
-)
 
-MIDDLEWARE_CLASSES = (
+    # Third-party
+    'debug_toolbar',
+]
+
+MIDDLEWARE_CLASSES = [
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+]
 
 ROOT_URLCONF = 'conference.urls'
 
@@ -69,7 +74,7 @@ WSGI_APPLICATION = 'conference.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -79,8 +84,27 @@ DATABASES = {
 }
 
 
+# Password validation
+# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+
 # Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -94,42 +118,46 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'static')),
 )
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# Media
+# https://docs.djangoproject.com/en/1.10/topics/files/
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets', 'media')
+
+MEDIA_URL = '/media/'
+
+
+# Sites
+# https://docs.djangoproject.com/en/1.10/ref/contrib/sites/
+
+SITE_ID = 1
+
+
+# Heroku
+# https://devcenter.heroku.com/articles/getting-started-with-django
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Parse database configuration from $DATABASE_URL
+# Update database configuration with $DATABASE_URL.
 import dj_database_url
-DATABASES['default'] = dj_database_url.config(
-    default='sqlite:///{}'.format(DATABASES['default']['NAME'])
-)
-
-# Enable Connection Pooling for PostgreSQL (if desired)
-if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql_psycopg2':
-    DATABASES['default']['ENGINE'] = 'django_postgrespool'
-
-# Static asset configuration
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Simplified static file serving.
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
-# Twilio
-
-TWILIO_KEYS = {
-    'account_sid': os.environ.get('TWILIO_ACCOUNT_SID'),
-    'auth_token': os.environ.get('TWILIO_AUTH_TOKEN')
-}
-
-# Forecast.io
+# python-forecast.io
+# https://github.com/ZeevG/python-forecast.io
 
 FORECASTIO_API_KEY = os.environ.get('FORECASTIO_API_KEY')
