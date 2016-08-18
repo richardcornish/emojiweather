@@ -33,21 +33,21 @@ class SmsView(CsrfExemptMixin, View):
             }
 
             if 0 <= weather['moon'] < 6.25 or 93.75 <= weather['moon'] <= 100:
-                weather['moon_emoji'] = '🌑'
+                weather['moon_emoji'] = '\U0001F311'
             elif 6.25 <= weather['moon'] < 18.75:
-                weather['moon_emoji'] = '🌒'
+                weather['moon_emoji'] = '\U0001F312'
             elif 18.75 <= weather['moon'] < 31.25:
-                weather['moon_emoji'] = '🌓'
+                weather['moon_emoji'] = '\U0001F313'
             elif 31.25 <= weather['moon'] < 43.75:
-                weather['moon_emoji'] = '🌔'
+                weather['moon_emoji'] = '\U0001F314'
             elif 43.75 <= weather['moon'] < 56.25:
                 weather['moon_emoji'] = '\U0001F315'
             elif 56.25 <= weather['moon'] < 68.75:
-                weather['moon_emoji'] = '🌖'
+                weather['moon_emoji'] = '\U0001F316'
             elif 68.75 <= weather['moon'] < 81.25:
-                weather['moon_emoji'] = '🌗'
+                weather['moon_emoji'] = '\U0001F317'
             elif 81.25 <= weather['moon'] < 93.75:
-                weather['moon_emoji'] = '🌘'
+                weather['moon_emoji'] = '\U0001F318'
             else:
                 weather['moon_emoji'] = 'Unknown'
 
