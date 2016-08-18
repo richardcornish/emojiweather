@@ -29,27 +29,29 @@ class SmsView(CsrfExemptMixin, View):
                 'summary': currently.summary,
                 'temperature': str(int(currently.temperature)),
                 'moon': daily.data[0].moonPhase * 100,
-                'emoji': ''
+                'moon_emoji': ''
             }
 
             if 0 <= weather['moon'] < 6.25 or 93.75 <= weather['moon'] <= 100:
-                weather['emoji'] = '🌑'
-            if 6.25 <= weather['moon'] < 18.75:
-                weather['emoji'] = '🌒'
-            if 18.75 <= weather['moon'] < 31.25:
-                weather['emoji'] = '🌓'
-            if 31.25 <= weather['moon'] < 43.75:
-                weather['emoji'] = '🌔'
-            if 43.75 <= weather['moon'] < 56.25:
-                weather['emoji'] = '🌕'
-            if 56.25 <= weather['moon'] < 68.75:
-                weather['emoji'] = '🌖'
-            if 68.75 <= weather['moon'] < 81.25:
-                weather['emoji'] = '🌗'
-            if 81.25 <= weather['moon'] < 93.75:
-                weather['emoji'] = '🌘'
+                weather['moon_emoji'] = '🌑'
+            elif 6.25 <= weather['moon'] < 18.75:
+                weather['moon_emoji'] = '🌒'
+            elif 18.75 <= weather['moon'] < 31.25:
+                weather['moon_emoji'] = '🌓'
+            elif 31.25 <= weather['moon'] < 43.75:
+                weather['moon_emoji'] = '🌔'
+            elif 43.75 <= weather['moon'] < 56.25:
+                weather['moon_emoji'] = '\U0001F315'
+            elif 56.25 <= weather['moon'] < 68.75:
+                weather['moon_emoji'] = '🌖'
+            elif 68.75 <= weather['moon'] < 81.25:
+                weather['moon_emoji'] = '🌗'
+            elif 81.25 <= weather['moon'] < 93.75:
+                weather['moon_emoji'] = '🌘'
+            else:
+                weather['moon_emoji'] = 'Unknown'
 
-            response.message('Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
+            response.message('Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('moon_emoji')))
 
         except Exception as e:
             response.message('We\'re sorry, but an error occurred: %s' % e)
