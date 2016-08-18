@@ -9,16 +9,7 @@ import twilio.twiml
 from .mixins import CsrfExemptMixin
 
 
-class ConferenceView(CsrfExemptMixin, View):
-
-    def post(self, request, *args, **kwargs):
-        response = twilio.twiml.Response()
-        response.say('Now joining conference.', voice='woman')
-        response.dial().conference('MyRoom')
-        return HttpResponse(response, content_type='text/xml')
-
-
-class WeatherView(CsrfExemptMixin, View):
+class SmsView(CsrfExemptMixin, View):
 
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)

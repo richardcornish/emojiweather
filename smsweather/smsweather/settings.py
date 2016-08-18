@@ -50,7 +50,7 @@ MIDDLEWARE_CLASSES = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-ROOT_URLCONF = 'conference.urls'
+ROOT_URLCONF = 'smsweather.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'conference.wsgi.application'
+WSGI_APPLICATION = 'smsweather.wsgi.application'
 
 
 # Database

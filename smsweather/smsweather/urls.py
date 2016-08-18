@@ -4,13 +4,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from .views import ConferenceView, WeatherView, HomeView
+from .views import SmsView, HomeView
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^conference/$', ConferenceView.as_view(), name='conference'),
-    url(r'^weather/$', WeatherView.as_view(), name='weather'),
+    url(r'^sms/$', SmsView.as_view(), name='sms'),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
 
