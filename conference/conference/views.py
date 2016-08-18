@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View, TemplateView
@@ -43,28 +41,28 @@ class WeatherView(CsrfExemptMixin, View):
             }
 
             if 0 <= weather['moon'] < 6.25 or 93.75 <= weather['moon'] <= 100:
-                weather['emoji'] = u'🌑'
+                weather['emoji'] = '🌑'
             if 6.25 <= weather['moon'] < 18.75:
-                weather['emoji'] = u'🌒'
+                weather['emoji'] = '🌒'
             if 18.75 <= weather['moon'] < 31.25:
-                weather['emoji'] = u'🌓'
+                weather['emoji'] = '🌓'
             if 31.25 <= weather['moon'] < 43.75:
-                weather['emoji'] = u'🌔'
+                weather['emoji'] = '🌔'
             if 43.75 <= weather['moon'] < 56.25:
-                weather['emoji'] = u'🌕'
+                weather['emoji'] = '🌕'
             if 56.25 <= weather['moon'] < 68.75:
-                weather['emoji'] = u'🌖'
+                weather['emoji'] = '🌖'
             if 68.75 <= weather['moon'] < 81.25:
-                weather['emoji'] = u'🌗'
+                weather['emoji'] = '🌗'
             if 81.25 <= weather['moon'] < 93.75:
-                weather['emoji'] = u'🌘'
+                weather['emoji'] = '🌘'
 
         except Exception as e:
             print e
 
         response = twilio.twiml.Response()
         # response.media('')
-        response.message(u'Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
+        response.message('Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
         return HttpResponse(response, content_type='text/xml')
 
 
