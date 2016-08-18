@@ -6,3 +6,5 @@ Phone number: [(331) 200-2787](sms:1-331-200-2787)
 
 - [Code repository](https://github.com/richardcornish/smsweather)
 - [Deployed app](https://smsweather.herokuapp.com/)
+
+![Screenshot](smsweather/static/img/screenshot.png)

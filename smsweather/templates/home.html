@@ -1,27 +1,41 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
 
-{% block content %}
 
-<h1>SMS Weather</h1>
+{% block content_container %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ request.site.name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-push-7">
+            <a href="{% static 'img/screenshot.png' %}"><img src="{% static 'img/screenshot.png' %}" alt="Screenshot" class="img-responsive img-thumbnail"></a>
+        </div>
+        <div class="col-md-6 col-md-pull-4">
 
-<p><strong>SMS Weather</strong> allows someone to send a text message of a location to a phone number and to receive the location's weather forecast.</p>
+            <p><strong>{{ request.site.name }}</strong> allows someone to send a text message of a location to a phone number and to receive the location&rsquo;s weather forecast.</p>
 
-<p>Phone number: <a href="sms:1-331-200-2787">(331) 200-2787</a></p>
+            <p><a href="sms:1-331-200-2787" class="btn btn-primary">(331) 200-2787</a></p>
 
-<ul>
-    <li><a href="https://github.com/richardcornish/smsweather">Code repository</a></li>
-    <li><a href="https://smsweather.herokuapp.com/">Deployed app</a></li>
-</ul>
+            <ul>
+                <li><a href="https://github.com/richardcornish/smsweather">Code repository</a></li>
+                <li><a href="https://smsweather.herokuapp.com/">Deployed app</a></li>
+            </ul>
 
-<h2>How it works</h2>
+            <h2>How it works</h2>
 
-<p>A user texts a location to a phone number that is registered with <a href="https://www.twilio.com/">Twilio</a>. Twilio transforms and sends the text message data as an <a href="https://en.wikipedia.org/wiki/POST_(HTTP)">HTTP POST request</a> to a <a href="https://smsweather.herokuapp.com/sms/">publicly accessible URL</a> in a <a href="https://www.heroku.com/">Heroku</a> app.</p>
+            <p>A user texts a location to a phone number that is registered with <a href="https://www.twilio.com/">Twilio</a>. Twilio transforms and sends the text message data as an <a href="https://en.wikipedia.org/wiki/POST_(HTTP)">HTTP POST request</a> to a <a href="https://smsweather.herokuapp.com/sms/">publicly accessible URL</a> in a <a href="https://www.heroku.com/">Heroku</a> app.</p>
 
-<p>The body of the request is converted from a messy search query into a proper geographic location with the Python <a href="http://docs.python-requests.org/en/master/">Requests</a> library and Google's <a href="https://developers.google.com/maps/documentation/geocoding/start">Geocoding API</a>.</p>
+            <p>The body of the request is converted from a messy search query into a proper geographic location with the Python <a href="http://docs.python-requests.org/en/master/">Requests</a> library and Google&rsquo;s <a href="https://developers.google.com/maps/documentation/geocoding/start">Geocoding API</a>.</p>
 
-<p>The location's latitude and longitude is then sent to the <a href="https://developer.forecast.io/">Dark Sky Forecast API</a> with the Python <a href="https://github.com/ZeevG/python-forecast.io">Forecast.io wrapper</a>.</p>
+            <p>The location&rsquo;s latitude and longitude is then sent to the <a href="https://developer.forecast.io/">Dark Sky Forecast API</a> with the Python <a href="https://github.com/ZeevG/python-forecast.io">Forecast.io wrapper</a>.</p>
 
-<p>The properly formatted address, current temperature, and today's weather summary is returned to Twilio as a <a href="https://www.twilio.com/docs/api/twiml">TwiML response</a> with the <a href="https://www.twilio.com/docs/libraries/python">twilio-python</a> library, which Twilio transforms to a text message and returns to the user. Additionally, the phase of the moon is displayed as an appropriate emoji.</p>
+            <p>The properly formatted address, current temperature, and today&rsquo;s weather summary is returned to Twilio as a <a href="https://www.twilio.com/docs/api/twiml">TwiML response</a> with the <a href="https://www.twilio.com/docs/libraries/python">twilio-python</a> library, which Twilio transforms to a text message and returns to the user. Additionally, the phase of the moon is displayed as an appropriate emoji.</p>
 
+        </div>
+    </div>
+</div>
 {% endblock %}
