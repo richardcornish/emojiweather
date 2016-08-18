@@ -4,12 +4,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from .views import SmsView, HomeView
+from .views import SmsView, FaviconView, HomeView
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^sms/$', SmsView.as_view(), name='sms'),
+    url(r'^favicon\.ico$', FaviconView.as_view(), name='favicon'),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
 

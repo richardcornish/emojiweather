@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, RedirectView
 
 import forecastio
 import requests
@@ -61,3 +61,8 @@ class SmsView(CsrfExemptMixin, View):
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+
+
+class FaviconView(RedirectView):
+    url = staticfiles_storage.url('img/favicon.ico')
+    permanent = True
