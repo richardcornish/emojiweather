@@ -52,7 +52,6 @@ class SmsView(CsrfExemptMixin, View):
             print(e)
 
         response = twilio.twiml.Response()
-        # response.media('')
         response.message('Weather for %s: %s and %s°F. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('emoji')))
         return HttpResponse(response, content_type='text/xml')
 
