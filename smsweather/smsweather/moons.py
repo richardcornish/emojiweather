@@ -1,5 +1,5 @@
 moons = [{
-    'phase': 'Uknown',
+    'phase': 'Unknown',
     'emoji': '¯\_(ツ)_/¯'
 }, {
     'phase': 'New moon',
