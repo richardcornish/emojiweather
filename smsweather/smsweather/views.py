@@ -53,12 +53,12 @@ class SmsView(CsrfExemptMixin, View):
             else:
                 weather['moon'] = moons[0]
 
-            response.message('Weather for %s: %s and %s°. %s %s.' % (
-                formatted_address,
+            response.message('%s and %s°. %s %s. %s' % (
                 weather.get('summary'),
                 weather.get('temperature'),
                 weather.get('moon').get('emoji'),
-                weather.get('moon').get('phase'))
+                weather.get('moon').get('phase')),
+                formatted_address
             )
 
         except Exception as e:
