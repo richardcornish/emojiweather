@@ -52,7 +52,7 @@ class SmsView(CsrfExemptMixin, View):
             else:
                 weather['moon_emoji'] = 'Unknown'
 
-            response.message('Weather for %s: %s and %s°. Moon tonight: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('moon_emoji')))
+            response.message('Weather for %s: %s and %s°. Moon: %s.' % (formatted_address, weather.get('summary'), weather.get('temperature'), weather.get('moon_emoji')))
 
         except Exception as e:
             response.message('We\'re sorry, but an error occurred: %s' % e)
