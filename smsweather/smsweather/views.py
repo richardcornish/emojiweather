@@ -35,23 +35,21 @@ class SmsView(CsrfExemptMixin, View):
             }
 
             if 0 <= weather['moon_phase'] < 6.25 or 93.75 <= weather['moon_phase'] <= 100:
-                weather['moon'] = 1
+                weather['moon'] = moons[1]
             elif 6.25 <= weather['moon_phase'] < 18.75:
-                weather['moon'] = 2
+                weather['moon'] = moons[2]
             elif 18.75 <= weather['moon_phase'] < 31.25:
-                weather['moon'] = 3
+                weather['moon'] = moons[3]
             elif 31.25 <= weather['moon_phase'] < 43.75:
-                weather['moon'] = 4
+                weather['moon'] = moons[4]
             elif 43.75 <= weather['moon_phase'] < 56.25:
-                weather['moon'] = 5
+                weather['moon'] = moons[5]
             elif 56.25 <= weather['moon_phase'] < 68.75:
-                weather['moon'] = 6
+                weather['moon'] = moons[6]
             elif 68.75 <= weather['moon_phase'] < 81.25:
-                weather['moon'] = 7
-            elif 81.25 <= weather['moon_phase'] < 93.75:
-                weather['moon'] = 8
-            else:
-                weather['moon'] = 0
+                weather['moon'] = moons[7]
+            else 81.25 <= weather['moon_phase'] < 93.75:
+                weather['moon'] = moons[8]
 
             response.message('Weather for %s: %s and %s°. Moon: %s %s.' % (
                 formatted_address,
