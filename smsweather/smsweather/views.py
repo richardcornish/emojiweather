@@ -15,7 +15,7 @@ class SmsView(CsrfExemptMixin, View):
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)
 
-        r = requests.get('http://maps.googleapis.com/maps/api/geocode/json', params={'address': '%s'} % body)
+        r = requests.get('http://maps.googleapis.com/maps/api/geocode/json', params={'address': '%s' % body})
         location = r.json()['results'][0]['geometry']['location']
         formatted_address = r.json()['results'][0]['formatted_address']
         latitude = location['lat']
