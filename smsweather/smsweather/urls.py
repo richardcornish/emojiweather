@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from .views import SmsView, FaviconView, HomeView
+from .views import FaviconView, HomeView, SmsView
 
 
 urlpatterns = [

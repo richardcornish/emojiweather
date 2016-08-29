@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView, RedirectView
+from django.views.generic import RedirectView, TemplateView, View
 
 import forecastio
 import requests
 import twilio.twiml
 
-from .mixins import CsrfExemptMixin
 from .icons import icons, phases
+from .mixins import CsrfExemptMixin
 
 
 class SmsView(CsrfExemptMixin, View):
