@@ -35,7 +35,7 @@ class SmsView(CsrfExemptMixin, View):
             currently = forecast.currently()
             daily = forecast.daily()
             weather = {
-                'icon': get_icon(currently.icon),
+                'icon': self.get_icon(currently.icon),
                 'summary': currently.summary,
                 'temperature': str(int(currently.temperature)),
                 'moon_phase': daily.data[0].moonPhase * 100,
