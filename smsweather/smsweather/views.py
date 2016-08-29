@@ -8,17 +8,37 @@ import requests
 import twilio.twiml
 
 from .mixins import CsrfExemptMixin
-from .icons import icons
-from .moons import moons
+from .icons import conditions, moons
 
 
 class SmsView(CsrfExemptMixin, View):
 
     def get_icon(self, slug):
         try:
-            return icons[slug]
+            return conditions[slug]
         except KeyError:
             return ''
+
+    def get_moon(self, moon_phase):
+        moon_phase *= 100
+        if 0 <= moon_phase < 6.25 or 93.75 <= moon_phase <= 100:
+            return moons[1]
+        elif 6.25 <= moon_phase < 18.75:
+            return moons[2]
+        elif 18.75 <= moon_phase < 31.25:
+            return moons[3]
+        elif 31.25 <= moon_phase < 43.75:
+            return moons[4]
+        elif 43.75 <= moon_phase < 56.25:
+            return moons[5]
+        elif 56.25 <= moon_phase < 68.75:
+            return moons[6]
+        elif 68.75 <= moon_phase < 81.25:
+            return moons[7]
+        elif 81.25 <= moon_phase < 93.75:
+            return moons[8]
+        else:
+            return moons[0]
 
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)
@@ -38,29 +58,8 @@ class SmsView(CsrfExemptMixin, View):
                 'icon': self.get_icon(currently.icon),
                 'summary': currently.summary,
                 'temperature': str(int(currently.temperature)),
-                'moon_phase': daily.data[0].moonPhase * 100,
-                'moon': moons[0]
+                'moon': self.get_moon(daily.data[0].moonPhase),
             }
-
-            if 0 <= weather['moon_phase'] < 6.25 or 93.75 <= weather['moon_phase'] <= 100:
-                weather['moon'] = moons[1]
-            elif 6.25 <= weather['moon_phase'] < 18.75:
-                weather['moon'] = moons[2]
-            elif 18.75 <= weather['moon_phase'] < 31.25:
-                weather['moon'] = moons[3]
-            elif 31.25 <= weather['moon_phase'] < 43.75:
-                weather['moon'] = moons[4]
-            elif 43.75 <= weather['moon_phase'] < 56.25:
-                weather['moon'] = moons[5]
-            elif 56.25 <= weather['moon_phase'] < 68.75:
-                weather['moon'] = moons[6]
-            elif 68.75 <= weather['moon_phase'] < 81.25:
-                weather['moon'] = moons[7]
-            elif 81.25 <= weather['moon_phase'] < 93.75:
-                weather['moon'] = moons[8]
-            else:
-                weather['moon'] = moons[0]
-
             response.message('%s %s and %s°. %s %s. %s' % (
                 weather.get('icon'),
                 weather.get('summary'),
