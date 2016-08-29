@@ -8,37 +8,37 @@ import requests
 import twilio.twiml
 
 from .mixins import CsrfExemptMixin
-from .icons import conditions, moons
+from .icons import icons, phases
 
 
 class SmsView(CsrfExemptMixin, View):
 
     def get_icon(self, slug):
         try:
-            return conditions[slug]
+            return icons[slug]
         except KeyError:
             return ''
 
-    def get_moon(self, moon_phase):
-        moon_phase *= 100
-        if 0 <= moon_phase < 6.25 or 93.75 <= moon_phase <= 100:
-            return moons[1]
-        elif 6.25 <= moon_phase < 18.75:
-            return moons[2]
-        elif 18.75 <= moon_phase < 31.25:
-            return moons[3]
-        elif 31.25 <= moon_phase < 43.75:
-            return moons[4]
-        elif 43.75 <= moon_phase < 56.25:
-            return moons[5]
-        elif 56.25 <= moon_phase < 68.75:
-            return moons[6]
-        elif 68.75 <= moon_phase < 81.25:
-            return moons[7]
-        elif 81.25 <= moon_phase < 93.75:
-            return moons[8]
+    def get_moon(self, precentage):
+        precentage *= 100
+        if 0 <= precentage < 6.25 or 93.75 <= precentage <= 100:
+            return phases['new-moon']
+        elif 6.25 <= precentage < 18.75:
+            return phases['waxing-crescent']
+        elif 18.75 <= precentage < 31.25:
+            return phases['first-quarter']
+        elif 31.25 <= precentage < 43.75:
+            return phases['waxing-gibbous']
+        elif 43.75 <= precentage < 56.25:
+            return phases['full-moon']
+        elif 56.25 <= precentage < 68.75:
+            return phases['waning-gibbous']
+        elif 68.75 <= precentage < 81.25:
+            return phases['last-quarter']
+        elif 81.25 <= precentage < 93.75:
+            return phases['waning-crescent']
         else:
-            return moons[0]
+            return phases['unknown']
 
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)
@@ -64,11 +64,10 @@ class SmsView(CsrfExemptMixin, View):
                 weather.get('icon'),
                 weather.get('summary'),
                 weather.get('temperature'),
-                weather.get('moon').get('emoji'),
-                weather.get('moon').get('phase'),
+                weather.get('moon').get('icon'),
+                weather.get('moon').get('name'),
                 formatted_address
             ))
-
         except Exception as e:
             response.message('We\'re sorry, but an error occurred: %s' % e)
 

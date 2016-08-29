@@ -1,4 +1,4 @@
-conditions = {
+icons = {
     'clear-day': '\u2600',
     'clear-night': '\U0001F30C',
     'rain': '\U0001F327',
@@ -14,31 +14,41 @@ conditions = {
     'tornado': '\U0001F32A',
 }
 
-moons = [{
-    'phase': 'Unknown moon',
-    'emoji': '¯\_(ツ)_/¯'
-}, {
-    'phase': 'New moon',
-    'emoji': '\U0001F311'
-}, {
-    'phase': 'Waxing Crescent',
-    'emoji': '\U0001F312'
-}, {
-    'phase': 'First Quarter',
-    'emoji': '\U0001F313'
-}, {
-    'phase': 'Waxing Gibbous',
-    'emoji': '\U0001F314'
-}, {
-    'phase': 'Full Moon',
-    'emoji': '\U0001F315'
-}, {
-    'phase': 'Waning Gibbous',
-    'emoji': '\U0001F316'
-}, {
-    'phase': 'Last Quarter',
-    'emoji': '\U0001F317'
-}, {
-    'phase': 'Waning Crescent',
-    'emoji': '\U0001F318'
-}]
+phases = {
+    'new-moon': {
+        'name': 'New moon',
+        'icon': '\U0001F311'
+    },
+    'waxing-crescent': {
+        'name': 'Waxing Crescent',
+        'icon': '\U0001F312'
+    },
+    'first-quarter': {
+        'name': 'First Quarter',
+        'icon': '\U0001F313'
+    },
+    'waxing-gibbous': {
+        'name': 'Waxing Gibbous',
+        'icon': '\U0001F314'
+    },
+    'full-moon': {
+        'name': 'Full Moon',
+        'icon': '\U0001F315'
+    },
+    'waning-gibbous': {
+        'name': 'Waning Gibbous',
+        'icon': '\U0001F316'
+    },
+    'last-quarter': {
+        'name': 'Last Quarter',
+        'icon': '\U0001F317'
+    },
+    'waning-crescent': {
+        'name': 'Waning Crescent',
+        'icon': '\U0001F318'
+    },
+    'unknown': {
+        'name': 'Unknown moon',
+        'icon': '¯\_(ツ)_/¯'
+    },
+}
