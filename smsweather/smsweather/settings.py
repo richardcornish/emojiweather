@@ -160,4 +160,4 @@ DATABASES['default'].update(db_from_env)
 # python-forecast.io
 # https://github.com/ZeevG/python-forecast.io
 
-FORECASTIO_API_KEY = os.environ.get('FORECASTIO_API_KEY')
+FORECASTIO_API_KEY = os.environ.get('FORECASTIO_API_KEY', '')
