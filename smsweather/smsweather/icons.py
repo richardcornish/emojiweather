@@ -1,16 +1,16 @@
 conditions = {
-    'clear-day': '\U2600',
+    'clear-day': '\u2600',
     'clear-night': '\U0001F30C',
     'rain': '\U0001F327',
-    'snow': '\U2744',
+    'snow': '\u2744',
     'sleet': '\U0001F328',
     'wind': '\U0001F32C',
     'fog': '\U0001F32B',
-    'cloudy': '\U2601',
-    'partly-cloudy-day': '\U26C5',
-    'partly-cloudy-night': '\U2601\U0001F30C',
+    'cloudy': '\u2601',
+    'partly-cloudy-day': '\u26C5',
+    'partly-cloudy-night': '\u2601\U0001F30C',
     'hail': '\U0001F327',
-    'thunderstorm': '\U26C8',
+    'thunderstorm': '\u26C8',
     'tornado': '\U0001F32A',
 }
 
