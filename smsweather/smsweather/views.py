@@ -8,10 +8,17 @@ import requests
 import twilio.twiml
 
 from .mixins import CsrfExemptMixin
+from .icons import icons
 from .moons import moons
 
 
 class SmsView(CsrfExemptMixin, View):
+
+    def get_icon(self, slug):
+        try:
+            return icons[slug]
+        except KeyError:
+            return ''
 
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)
@@ -28,6 +35,7 @@ class SmsView(CsrfExemptMixin, View):
             currently = forecast.currently()
             daily = forecast.daily()
             weather = {
+                'icon': get_icon(currently.icon),
                 'summary': currently.summary,
                 'temperature': str(int(currently.temperature)),
                 'moon_phase': daily.data[0].moonPhase * 100,
@@ -53,7 +61,8 @@ class SmsView(CsrfExemptMixin, View):
             else:
                 weather['moon'] = moons[0]
 
-            response.message('%s and %s°. %s %s. %s' % (
+            response.message('%s %s and %s°. %s %s. %s' % (
+                weather.get('icon'),
                 weather.get('summary'),
                 weather.get('temperature'),
                 weather.get('moon').get('emoji'),
