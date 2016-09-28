@@ -28,7 +28,7 @@
 
             <p>The body of the request is converted from a messy search query into a proper geographic location with the Python <a href="http://docs.python-requests.org/en/master/">Requests</a> library and Google&rsquo;s <a href="https://developers.google.com/maps/documentation/geocoding/start">Geocoding API</a>.</p>
 
-            <p>The location&rsquo;s latitude and longitude is then sent to the <a href="https://developer.forecast.io/">Dark Sky Forecast API</a> with the Python <a href="https://github.com/ZeevG/python-forecast.io">Forecast.io wrapper</a>. I even <a href="https://github.com/ZeevG/python-forecast.io/pull/23">fixed</a> a small bug while using it.</p>
+            <p>The location&rsquo;s latitude and longitude is then sent to the <a href="https://darksky.net/dev/">Dark Sky API</a> with the Python <a href="https://github.com/ZeevG/python-forecast.io">Dark Sky Wrapper</a>. I even <a href="https://github.com/ZeevG/python-forecast.io/pull/23">fixed</a> a small bug while using it.</p>
 
             <p>The properly formatted address, current temperature, and today&rsquo;s weather summary is returned to Twilio as a <a href="https://www.twilio.com/docs/api/twiml">TwiML response</a> with the <a href="https://www.twilio.com/docs/libraries/python">twilio-python</a> library, which Twilio transforms to a text message and returns to the user. Additionally, the phase of the moon is displayed as an appropriate emoji.</p>
 

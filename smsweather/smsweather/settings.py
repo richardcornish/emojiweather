@@ -157,7 +157,7 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 
-# python-forecast.io
+# Dark Sky Wrapper
 # https://github.com/ZeevG/python-forecast.io
 
-FORECASTIO_API_KEY = os.environ.get('FORECASTIO_API_KEY', '')
+DARKSKY_API_KEY = os.environ.get('DARKSKY_API_KEY', '')
