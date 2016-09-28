@@ -13,12 +13,6 @@ from .mixins import CsrfExemptMixin
 
 class SmsView(CsrfExemptMixin, View):
 
-    def get_icon(self, slug):
-        try:
-            return icons[slug]
-        except KeyError:
-            return ''
-
     def get_moon(self, precentage):
         precentage *= 100
         if 0 <= precentage < 6.25 or 93.75 <= precentage <= 100:
@@ -51,11 +45,11 @@ class SmsView(CsrfExemptMixin, View):
 
         response = twilio.twiml.Response()
         try:
-            forecast = forecastio.load_forecast(settings.FORECASTIO_API_KEY, latitude, longitude)
+            forecast = forecastio.load_forecast(settings.DARKSKY_API_KEY, latitude, longitude)
             currently = forecast.currently()
             daily = forecast.daily()
             weather = {
-                'icon': self.get_icon(currently.icon),
+                'icon': icons.get(currently.icon, ''),
                 'summary': currently.summary,
                 'temperature': str(int(currently.temperature)),
                 'moon': self.get_moon(daily.data[0].moonPhase),
