@@ -13,23 +13,23 @@ from .mixins import CsrfExemptMixin
 
 class SmsView(CsrfExemptMixin, View):
 
-    def get_moon(self, precentage):
-        precentage *= 100
-        if 0 <= precentage < 6.25 or 93.75 <= precentage <= 100:
+    def get_moon(self, percentage):
+        percentage *= 100
+        if 0 <= percentage < 6.25 or 93.75 <= percentage <= 100:
             return phases['new-moon']
-        elif 6.25 <= precentage < 18.75:
+        elif 6.25 <= percentage < 18.75:
             return phases['waxing-crescent']
-        elif 18.75 <= precentage < 31.25:
+        elif 18.75 <= percentage < 31.25:
             return phases['first-quarter']
-        elif 31.25 <= precentage < 43.75:
+        elif 31.25 <= percentage < 43.75:
             return phases['waxing-gibbous']
-        elif 43.75 <= precentage < 56.25:
+        elif 43.75 <= percentage < 56.25:
             return phases['full-moon']
-        elif 56.25 <= precentage < 68.75:
+        elif 56.25 <= percentage < 68.75:
             return phases['waning-gibbous']
-        elif 68.75 <= precentage < 81.25:
+        elif 68.75 <= percentage < 81.25:
             return phases['last-quarter']
-        elif 81.25 <= precentage < 93.75:
+        elif 81.25 <= percentage < 93.75:
             return phases['waning-crescent']
         else:
             return phases['unknown']
