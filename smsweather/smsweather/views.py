@@ -36,15 +36,17 @@ class SmsView(CsrfExemptMixin, View):
 
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)
-
-        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': '%s' % body})
-        location = r.json()['results'][0]['geometry']['location']
-        formatted_address = r.json()['results'][0]['formatted_address']
-        latitude = location['lat']
-        longitude = location['lng']
-
-        response = twilio.twiml.Response()
         try:
+
+            # Get geocoded location
+            r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': body})
+            json = r.json()
+            formatted_address = json['results'][0]['formatted_address']
+            location = json['results'][0]['geometry']['location']
+            latitude = location['lat']
+            longitude = location['lng']
+
+            # Get weather forecast
             forecast = forecastio.load_forecast(settings.DARKSKY_API_KEY, latitude, longitude)
             currently = forecast.currently()
             daily = forecast.daily()
@@ -54,6 +56,9 @@ class SmsView(CsrfExemptMixin, View):
                 'temperature': str(int(currently.temperature)),
                 'moon': self.get_moon(daily.data[0].moonPhase),
             }
+
+            # Create Twilio response
+            response = twilio.twiml.Response()
             response.message('%s %s and %s°. %s %s. %s' % (
                 weather.get('icon'),
                 weather.get('summary'),
@@ -62,9 +67,9 @@ class SmsView(CsrfExemptMixin, View):
                 weather.get('moon').get('name'),
                 formatted_address
             ))
+
         except Exception as e:
             response.message('We\'re sorry, but an error occurred: %s' % e)
-
         return HttpResponse(response, content_type='text/xml')
 
 
