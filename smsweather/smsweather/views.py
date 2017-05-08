@@ -5,7 +5,7 @@ from django.views.generic import RedirectView, TemplateView, View
 
 import forecastio
 import requests
-import twilio.twiml
+from twilio import twiml
 
 from .icons import icons, phases
 from .mixins import CsrfExemptMixin
@@ -58,7 +58,7 @@ class SmsView(CsrfExemptMixin, View):
             }
 
             # Create Twilio response
-            response = twilio.twiml.Response()
+            response = twiml.Response()
             response.message('%s %s and %s°. %s %s. %s' % (
                 weather.get('icon'),
                 weather.get('summary'),
@@ -66,7 +66,7 @@ class SmsView(CsrfExemptMixin, View):
                 weather.get('moon').get('icon'),
                 weather.get('moon').get('name'),
                 formatted_address
-            ))
+            ), sender='+13312002787')
 
         except Exception as e:
             response.message('We\'re sorry, but an error occurred: %s' % e)
