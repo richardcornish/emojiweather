@@ -66,7 +66,7 @@ class SmsView(CsrfExemptMixin, View):
                 weather.get('moon').get('icon'),
                 weather.get('moon').get('name'),
                 formatted_address
-            ), sender='+13312002787')
+            ))
 
         except Exception as e:
             response.message('We\'re sorry, but an error occurred: %s' % e)
