@@ -86,8 +86,8 @@ class SmsView(CsrfExemptMixin, View):
                 except IndexError:
                     response.message(self.errors['unknown_error'])
 
-        except Exception as e:
-            response.message("%s %s" % (self.errors['unknown_error'], e))
+        except Exception as error:
+            response.message("%s %s" % (self.errors['unknown_error'], error))
         return HttpResponse(response, content_type='text/xml')
 
 
