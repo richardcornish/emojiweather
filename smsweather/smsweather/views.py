@@ -13,6 +13,14 @@ from .mixins import CsrfExemptMixin
 
 class SmsView(CsrfExemptMixin, View):
 
+    errors = {
+        'zero_results': "We're sorry, but we could not find that address.",
+        'over_query_limit': "We're sorry, but the request quota has been reached.",
+        'request_denied': "We're sorry, but your request was denied.",
+        'invalid_request': "We're sorry, but we could not find that address.",
+        'unknown_error': "We're sorry, but an error occurred.",
+    }
+
     def get_moon(self, percentage):
         percentage *= 100
         if 0 <= percentage < 6.25 or 93.75 <= percentage <= 100:
@@ -42,34 +50,51 @@ class SmsView(CsrfExemptMixin, View):
             # Get geocoded location
             r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': body})
             json = r.json()
-            formatted_address = json['results'][0]['formatted_address']
-            location = json['results'][0]['geometry']['location']
-            latitude = location['lat']
-            longitude = location['lng']
 
-            # Get weather forecast
-            forecast = forecastio.load_forecast(settings.DARKSKY_API_KEY, latitude, longitude)
-            currently = forecast.currently()
-            daily = forecast.daily()
-            weather = {
-                'icon': icons.get(currently.icon, ''),
-                'summary': currently.summary,
-                'temperature': str(int(currently.temperature)),
-                'moon': self.get_moon(daily.data[0].moonPhase),
-            }
+            if json['status'] == 'OK':
 
-            # Create Twilio response
-            response.message('%s %s and %s°. %s %s. %s' % (
-                weather.get('icon'),
-                weather.get('summary'),
-                weather.get('temperature'),
-                weather.get('moon').get('icon'),
-                weather.get('moon').get('name'),
-                formatted_address
-            ))
+                # Get coordinates
+                formatted_address = json['results'][0]['formatted_address']
+                location = json['results'][0]['geometry']['location']
+                latitude = location['lat']
+                longitude = location['lng']
+
+                # Get weather forecast
+                forecast = forecastio.load_forecast(settings.DARKSKY_API_KEY, latitude, longitude)
+                currently = forecast.currently()
+                daily = forecast.daily()
+                weather = {
+                    'icon': icons.get(currently.icon, ''),
+                    'summary': currently.summary,
+                    'temperature': str(int(currently.temperature)),
+                    'moon': self.get_moon(daily.data[0].moonPhase),
+                }
+
+                # Create Twilio response
+                response.message('%s %s and %s°. %s %s. %s' % (
+                    weather.get('icon'),
+                    weather.get('summary'),
+                    weather.get('temperature'),
+                    weather.get('moon').get('icon'),
+                    weather.get('moon').get('name'),
+                    formatted_address
+                ))
+
+            elif json['status'] == 'ZERO_RESULTS':
+                response.message(self.errors['zero_results'])
+            elif json['status'] == 'OVER_QUERY_LIMIT':
+                response.message(self.errors['over_query_limit'])
+            elif json['status'] == 'REQUEST_DENIED':
+                response.message(self.errors['request_denied'])
+            elif json['status'] == 'INVALID_REQUEST':
+                response.message(self.errors['invalid_request'])
+            elif json['status'] == 'UNKNOWN_ERROR':
+                response.message(self.errors['unknown_error'])
+            else:
+                response.message(self.errors['unknown_error'])
 
         except Exception as e:
-            response.message('We\'re sorry, but an error occurred: %s' % e)
+            response.message("%s %s" % (self.errors['unknown_error'], e))
         return HttpResponse(response, content_type='text/xml')
 
 
