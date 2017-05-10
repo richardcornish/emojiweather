@@ -36,6 +36,7 @@ class SmsView(CsrfExemptMixin, View):
 
     def post(self, request, *args, **kwargs):
         body = request.POST.get('Body', None)
+        response = twiml.Response()
         try:
 
             # Get geocoded location
@@ -58,7 +59,6 @@ class SmsView(CsrfExemptMixin, View):
             }
 
             # Create Twilio response
-            response = twiml.Response()
             response.message('%s %s and %s°. %s %s. %s' % (
                 weather.get('icon'),
                 weather.get('summary'),
