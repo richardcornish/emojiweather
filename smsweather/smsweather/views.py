@@ -80,18 +80,11 @@ class SmsView(CsrfExemptMixin, View):
                     formatted_address
                 ))
 
-            elif json['status'] == 'ZERO_RESULTS':
-                response.message(self.errors['zero_results'])
-            elif json['status'] == 'OVER_QUERY_LIMIT':
-                response.message(self.errors['over_query_limit'])
-            elif json['status'] == 'REQUEST_DENIED':
-                response.message(self.errors['request_denied'])
-            elif json['status'] == 'INVALID_REQUEST':
-                response.message(self.errors['invalid_request'])
-            elif json['status'] == 'UNKNOWN_ERROR':
-                response.message(self.errors['unknown_error'])
             else:
-                response.message(self.errors['unknown_error'])
+                try:
+                    response.message(self.errors[json['status'].lower()])
+                except IndexError:
+                    response.message(self.errors['unknown_error'])
 
         except Exception as e:
             response.message("%s %s" % (self.errors['unknown_error'], e))
