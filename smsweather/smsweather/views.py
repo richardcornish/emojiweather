@@ -14,11 +14,11 @@ from .mixins import CsrfExemptMixin
 class SmsView(CsrfExemptMixin, View):
 
     errors = {
-        'zero_results': "We're sorry, but we could not find that address.",
-        'over_query_limit': "We're sorry, but the request quota has been reached.",
-        'request_denied': "We're sorry, but your request was denied.",
-        'invalid_request': "We're sorry, but we could not find that address.",
-        'unknown_error': "We're sorry, but an error occurred.",
+        'zero_results': "Beep boop. We're sorry, but we could not find that address. \U0001F916",
+        'over_query_limit': "Beep boop. We're sorry, but the request quota has been reached. \U0001F916",
+        'request_denied': "Beep boop. We're sorry, but your request was denied. \U0001F916",
+        'invalid_request': "Beep boop. We're sorry, but we could not find that address. \U0001F916",
+        'unknown_error': "Beep boop. We're sorry, but an error occurred. \U0001F916",
     }
 
     def get_moon(self, percentage):
