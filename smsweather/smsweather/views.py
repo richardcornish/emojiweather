@@ -71,7 +71,7 @@ class SmsView(CsrfExemptMixin, View):
                 }
 
                 # Create Twilio response
-                response.message('%s %s and %s°. %s %s. %s' % (
+                response.message('%s %s and %s°. %s %s. %s.' % (
                     weather.get('icon'),
                     weather.get('summary'),
                     weather.get('temperature'),
