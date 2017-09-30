@@ -22,6 +22,11 @@ class VoiceView(CsrfExemptMixin, FormView):
         response = VoiceResponse()
         if form.cleaned_data['SpeechResult']:
             address = form.cleaned_data['SpeechResult']
+        elif form.cleaned_data['Digits']:
+            address = form.cleaned_data['Digits']
+        else:
+            address = None
+        if address:
             weather = form.get_weather(address)
             try:
                 message = 'The weather for %s is %s degrees and %s.' % (
@@ -34,8 +39,8 @@ class VoiceView(CsrfExemptMixin, FormView):
             response.say(message, voice=voice, language=language)
         else:
             response = VoiceResponse()
-            gather = Gather(input='speech')
-            gather.say('Please say your location.', voice=voice, language=language)
+            gather = Gather(input='speech', timeout=1, numDigits=5)
+            gather.say('Please say or enter your location.', voice=voice, language=language)
             response.append(gather)
         return HttpResponse(response, content_type='text/xml')
 
@@ -53,7 +58,7 @@ class SmsView(CsrfExemptMixin, FormView):
         try:
             message = '%s %s and %s\u00B0. %s %s. %s.' % (
                 weather['icon'],
-                weather['summary'].lower(),
+                weather['summary'],
                 weather['temperature'],
                 weather['moon']['icon'],
                 weather['moon']['name'],

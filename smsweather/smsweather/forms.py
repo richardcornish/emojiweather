@@ -147,4 +147,5 @@ class SmsWeatherForm(WeatherMixin, forms.Form):
 
 
 class VoiceWeatherForm(WeatherMixin, forms.Form):
+    Digits = forms.CharField(required=False)
     SpeechResult = forms.CharField(required=False)
