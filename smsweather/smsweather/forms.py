@@ -6,7 +6,7 @@ import requests
 
 
 class WeatherForm(forms.Form):
-    body = forms.CharField()
+    Body = forms.CharField()
 
     def get_location(self, location):
         r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': location})
@@ -27,7 +27,7 @@ class WeatherForm(forms.Form):
             }
             try:
                 error = errors[json['status'].lower()]
-            except IndexError:
+            except KeyError:
                 error = errors['unknown_error']
             return {
                 'error': '%s %s %s' % ('Beep boop.', error, '\U0001F916'),
@@ -61,7 +61,7 @@ class WeatherForm(forms.Form):
         }
         try:
             return icons[forecast['currently'].icon]
-        except IndexError:
+        except KeyError:
             return icons['unknown']
 
     def get_summary(self, forecast):
@@ -131,18 +131,13 @@ class WeatherForm(forms.Form):
 
     def get_weather(self, body):
         location = self.get_location(body)
+        weather = {
+            'location': location,
+        }
         if 'latitude' and 'longitude' in location:
             forecast = self.get_forecast(location)
-            icon = self.get_icon(forecast)
-            summary = self.get_summary(forecast)
-            temperature = self.get_temperature(forecast)
-            moon = self.get_moon(forecast)
-            return {
-                'location': location,
-                'icon': icon,
-                'summary': summary,
-                'temperature': temperature,
-                'moon': moon,
-            }
-        else:
-            return location['error']
+            weather['icon'] = self.get_icon(forecast)
+            weather['summary'] = self.get_summary(forecast)
+            weather['temperature'] = self.get_temperature(forecast)
+            weather['moon'] = self.get_moon(forecast)
+        return weather

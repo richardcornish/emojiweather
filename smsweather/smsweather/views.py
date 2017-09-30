@@ -1,6 +1,5 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse
-from django.urls import reverse_lazy
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormView
 
@@ -11,9 +10,7 @@ from .forms import WeatherForm
 
 
 class SmsView(CsrfExemptMixin, FormView):
-    template_name = 'blank.html'
     form_class = WeatherForm
-    success_url = reverse_lazy('sms')
 
     def get(self, request, *args, **kwargs):
         return HttpResponse()
@@ -21,7 +18,6 @@ class SmsView(CsrfExemptMixin, FormView):
     def form_valid(self, form):
         body = form.cleaned_data['Body']
         weather = form.get_weather(body)
-        response = twiml.Response()
         try:
             message = '%s %s and %s°. %s %s. %s.' % (
                 weather['icon'],
@@ -31,9 +27,10 @@ class SmsView(CsrfExemptMixin, FormView):
                 weather['moon']['name'],
                 weather['location']['formatted_address'],
             )
-        except IndexError:
+        except KeyError:
             message = weather['location']['error']
-        response.message(form.cleaned_data)
+        response = twiml.Response()
+        response.message(message)
         return HttpResponse(response, content_type='text/xml')
 
 
