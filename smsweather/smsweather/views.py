@@ -13,6 +13,9 @@ from .forms import WeatherForm
 class VoiceView(CsrfExemptMixin, FormView):
     form_class = WeatherForm
 
+    def get(self, request, *args, **kwargs):
+        return HttpResponseNotFound()
+
     def form_valid(self, form):
         response = VoiceResponse()
         response.say('Thank you for calling.', voice='alice', language='en-GB')
