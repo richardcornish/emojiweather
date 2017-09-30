@@ -5,7 +5,7 @@ import forecastio
 import requests
 
 
-class WeatherForm(forms.Form):
+class WeatherMixin(object):
 
     def get_location(self, address):
         r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': address})
@@ -142,9 +142,9 @@ class WeatherForm(forms.Form):
         return weather
 
 
-class SmsWeatherForm(WeatherForm)
+class SmsWeatherForm(WeatherMixin, forms.Form):
     Body = forms.CharField()
 
 
-class VoiceWeatherForm(WeatherForm)
+class VoiceWeatherForm(WeatherMixin, forms.Form):
     SpeechResult = forms.CharField(required=False)

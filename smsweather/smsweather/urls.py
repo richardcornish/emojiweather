@@ -6,6 +6,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from .views import FaviconView, HomeView, SmsView, VoiceView
 
+import debug_toolbar
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -19,3 +21,4 @@ urlpatterns = [
 # Static/media for local development
 if getattr(settings, 'DEBUG', False):
     urlpatterns += staticfiles_urlpatterns() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [url(r'^__debug__/', include(debug_toolbar.urls))]
