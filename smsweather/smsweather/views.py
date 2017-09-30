@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormView
 
-from twilio import twiml
+from twilio.twiml.messaging_response import MessagingResponse
 from .mixins import CsrfExemptMixin
 
 from .forms import WeatherForm
@@ -13,7 +13,7 @@ class SmsView(CsrfExemptMixin, FormView):
     form_class = WeatherForm
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse()
+        return HttpResponseNotFound()
 
     def form_valid(self, form):
         body = form.cleaned_data['Body']
@@ -29,7 +29,7 @@ class SmsView(CsrfExemptMixin, FormView):
             )
         except KeyError:
             message = weather['location']['error']
-        response = twiml.Response()
+        response = MessagingResponse()
         response.message(message)
         return HttpResponse(response, content_type='text/xml')
 
