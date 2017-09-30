@@ -1,6 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse, HttpResponseNotFound
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
 
 from twilio.twiml.voice_response import VoiceResponse
@@ -10,15 +10,15 @@ from .mixins import CsrfExemptMixin
 from .forms import WeatherForm
 
 
-class VoiceView(CsrfExemptMixin, FormView):
-    form_class = WeatherForm
+class VoiceView(CsrfExemptMixin, View):
 
     def get(self, request, *args, **kwargs):
         return HttpResponseNotFound()
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        message = 'Thank you for calling.'
         response = VoiceResponse()
-        response.say('Thank you for calling.', voice='alice', language='en-GB')
+        response.say(message, voice='alice', loop='0', language='en-GB')
         response.hangup()
         return HttpResponse(response, content_type='text/xml')
 
