@@ -1,6 +1,5 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse, HttpResponseNotFound
-from django.urls import reverse_lazy
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormView
 
@@ -20,25 +19,24 @@ class VoiceView(CsrfExemptMixin, FormView):
     def form_valid(self, form):
         voice = 'alice'
         language = 'en-GB'
-        if 'SpeechResult' in form.cleaned_data:
+        response = VoiceResponse()
+        if form.cleaned_data['SpeechResult']:
             address = form.cleaned_data['SpeechResult']
             weather = form.get_weather(address)
             try:
                 message = 'The weather for %s is %s degrees and %s.' % (
                     weather['location']['formatted_address'],
                     weather['temperature'],
-                    weather['summary'],
+                    weather['summary'].lower(),
                 )
             except KeyError:
                 message = weather['location']['error']
-            response = VoiceResponse()
             response.say(message, voice=voice, language=language)
         else:
             response = VoiceResponse()
             gather = Gather(input='speech')
             gather.say('Please say your location.', voice=voice, language=language)
             response.append(gather)
-        response.redirect(reverse_lazy('voice'))
         return HttpResponse(response, content_type='text/xml')
 
 
@@ -53,9 +51,9 @@ class SmsView(CsrfExemptMixin, FormView):
         address = form.cleaned_data['Body']
         weather = form.get_weather(address)
         try:
-            message = '%s %s and %s°. %s %s. %s.' % (
+            message = '%s %s and %s\u00B0. %s %s. %s.' % (
                 weather['icon'],
-                weather['summary'],
+                weather['summary'].lower(),
                 weather['temperature'],
                 weather['moon']['icon'],
                 weather['moon']['name'],
