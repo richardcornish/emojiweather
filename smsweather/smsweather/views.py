@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse, HttpResponseNotFound
+from django.urls import reverse_lazy
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormView
 
@@ -39,7 +40,7 @@ class VoiceView(CsrfExemptMixin, FormView):
             response.say(message, voice=voice, language=language)
         else:
             response = VoiceResponse()
-            gather = Gather(input='speech', timeout=1, numDigits=5)
+            gather = Gather(input='speech', timeout=2, numDigits=5, action=reverse_lazy('voice'))
             gather.say('Please say or enter your location.', voice=voice, language=language)
             response.append(gather)
         return HttpResponse(response, content_type='text/xml')
