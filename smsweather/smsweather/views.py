@@ -19,7 +19,6 @@ class VoiceView(CsrfExemptMixin, FormView):
 
     def form_valid(self, form):
         voice = 'alice'
-        language = 'en-GB'
         response = VoiceResponse()
         if form.cleaned_data['SpeechResult']:
             address = form.cleaned_data['SpeechResult']
@@ -37,11 +36,11 @@ class VoiceView(CsrfExemptMixin, FormView):
                 )
             except KeyError:
                 message = weather['location']['error']
-            response.say(message, voice=voice, language=language)
+            response.say(message, voice=voice)
         else:
             response = VoiceResponse()
             gather = Gather(input='dtmf speech', timeout=3, numDigits=5)
-            gather.say('Please say or enter your location.', voice=voice, language=language)
+            gather.say('Please say or enter your location.', voice=voice)
             response.append(gather)
         response.redirect(reverse('voice'))
         return HttpResponse(response, content_type='text/xml')
