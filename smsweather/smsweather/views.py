@@ -40,7 +40,7 @@ class VoiceView(CsrfExemptMixin, FormView):
             response.say(message, voice=voice, language=language)
         else:
             response = VoiceResponse()
-            gather = Gather(input='speech', timeout=3, numDigits=5)
+            gather = Gather(input='dtmf speech', timeout=3, numDigits=5)
             gather.say('Please say or enter your location.', voice=voice, language=language)
             response.append(gather)
         response.redirect(reverse('voice'))
