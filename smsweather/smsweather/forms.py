@@ -6,10 +6,9 @@ import requests
 
 
 class WeatherForm(forms.Form):
-    Body = forms.CharField()
 
-    def get_location(self, location):
-        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': location})
+    def get_location(self, address):
+        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': address})
         json = r.json()
         if json['status'] == 'OK':
             return {
@@ -129,8 +128,8 @@ class WeatherForm(forms.Form):
         else:
             return phases['unknown']
 
-    def get_weather(self, body):
-        location = self.get_location(body)
+    def get_weather(self, address):
+        location = self.get_location(address)
         weather = {
             'location': location,
         }
@@ -141,3 +140,11 @@ class WeatherForm(forms.Form):
             weather['temperature'] = self.get_temperature(forecast)
             weather['moon'] = self.get_moon(forecast)
         return weather
+
+
+class SmsWeatherForm(WeatherForm)
+    Body = forms.CharField()
+
+
+class VoiceWeatherForm(WeatherForm)
+    SpeechResult = forms.CharField(required=False)
