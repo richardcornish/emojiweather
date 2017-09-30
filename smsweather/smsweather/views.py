@@ -6,9 +6,9 @@ from django.views.generic.edit import FormView
 
 from twilio.twiml.voice_response import Gather, VoiceResponse
 from twilio.twiml.messaging_response import MessagingResponse
-from .mixins import CsrfExemptMixin
 
 from .forms import SmsWeatherForm, VoiceWeatherForm
+from .mixins import CsrfExemptMixin
 
 
 class VoiceView(CsrfExemptMixin, FormView):
@@ -27,6 +27,7 @@ class VoiceView(CsrfExemptMixin, FormView):
         else:
             address = None
         if address:
+            # User spoke or entered digits
             weather = form.get_weather(address)
             try:
                 message = 'The weather for %s is %s degrees and %s.' % (
@@ -38,7 +39,7 @@ class VoiceView(CsrfExemptMixin, FormView):
                 message = weather['location']['error']
             response.say(message, voice=voice)
         else:
-            response = VoiceResponse()
+            # User calling first time
             gather = Gather(input='dtmf speech', timeout=3, numDigits=5)
             gather.say('Please say or enter your location.', voice=voice)
             response.append(gather)
