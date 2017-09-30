@@ -21,9 +21,9 @@ class VoiceView(CsrfExemptMixin, FormView):
         voice = 'alice'
         language = 'en-GB'
         response = VoiceResponse()
-        if form.cleaned_data['SpeechResult']:
+        if 'SpeechResult' in form.cleaned_data:
             address = form.cleaned_data['SpeechResult']
-        elif form.cleaned_data['Digits']:
+        if 'Digits' in form.cleaned_data:
             address = form.cleaned_data['Digits']
         else:
             address = None
@@ -40,7 +40,7 @@ class VoiceView(CsrfExemptMixin, FormView):
             response.say(message, voice=voice, language=language)
         else:
             response = VoiceResponse()
-            gather = Gather(input='speech', timeout=2, numDigits=5)
+            gather = Gather(input='speech', timeout=3, numDigits=5)
             gather.say('Please say or enter your location.', voice=voice, language=language)
             response.append(gather)
         response.redirect(reverse('voice'))
