@@ -24,7 +24,7 @@ class VoiceView(CsrfExemptMixin, FormView):
             address = form.cleaned_data['SpeechResult']
             weather = form.get_weather(address)
             try:
-                message = 'The weather for %s is %s° and %s.' % (
+                message = 'The weather for %s is %s degrees and %s.' % (
                     weather['location']['formatted_address'],
                     weather['temperature'],
                     weather['summary'],
@@ -33,15 +33,12 @@ class VoiceView(CsrfExemptMixin, FormView):
                 message = weather['location']['error']
             response = VoiceResponse()
             response.say(message, voice=voice, language=language)
-            response.redirect(reverse_lazy('voice'))
-            return HttpResponse(response, content_type='text/xml')
         else:
             response = VoiceResponse()
-            message = 'Thank you for calling.'
-            response.say(message, voice=voice, language=language)
             gather = Gather(input='speech')
-            gather.say('Please say your location.')
+            gather.say('Please say your location.', voice=voice, language=language)
             response.append(gather)
+        response.redirect(reverse_lazy('voice'))
         return HttpResponse(response, content_type='text/xml')
 
 
