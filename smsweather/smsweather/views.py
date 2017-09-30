@@ -11,9 +11,9 @@ from .forms import WeatherForm
 
 
 class SmsView(CsrfExemptMixin, FormView):
-    template_name = None
+    template_name = 'sms.html'
     form_class = WeatherForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('sms')
 
     def form_valid(self, form):
         body = form.cleaned_data['Body']
