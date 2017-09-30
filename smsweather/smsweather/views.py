@@ -11,9 +11,10 @@ from .forms import WeatherForm
 
 
 class SmsView(CsrfExemptMixin, FormView):
-    template_name = 'sms.html'
     form_class = WeatherForm
-    success_url = reverse_lazy('sms')
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse()
 
     def form_valid(self, form):
         body = form.cleaned_data['Body']
@@ -30,7 +31,7 @@ class SmsView(CsrfExemptMixin, FormView):
             )
         except IndexError:
             message = weather['location']['error']
-        response.message(message)
+        response.message(form.cleaned_data)
         return HttpResponse(response, content_type='text/xml')
 
 
