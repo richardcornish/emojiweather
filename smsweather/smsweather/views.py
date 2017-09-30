@@ -21,9 +21,9 @@ class VoiceView(CsrfExemptMixin, FormView):
         voice = 'alice'
         language = 'en-GB'
         response = VoiceResponse()
-        if 'SpeechResult' in form.cleaned_data:
+        if form.cleaned_data['SpeechResult']:
             address = form.cleaned_data['SpeechResult']
-        if 'Digits' in form.cleaned_data:
+        elif form.cleaned_data['Digits']:
             address = form.cleaned_data['Digits']
         else:
             address = None
