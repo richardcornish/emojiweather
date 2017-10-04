@@ -44,11 +44,10 @@ class VoiceView(CsrfExemptMixin, FormView):
             except KeyError:
                 message = weather['location']['error']
             response.say(message, voice=voice)
-        else:
-            gather = Gather(input='dtmf speech', timeout=2, numDigits=5)
-            gather.say('Please say or enter a location.', voice=voice)
-            response.append(gather)
-            response.redirect(reverse('voice'))
+        gather = Gather(input='dtmf speech', timeout=2, numDigits=5)
+        gather.say('Please say or enter a location.', voice=voice)
+        response.append(gather)
+        response.redirect(reverse('voice'))
         return HttpResponse(response, content_type='text/xml')
 
 
