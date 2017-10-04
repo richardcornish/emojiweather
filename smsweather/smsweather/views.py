@@ -25,24 +25,25 @@ class VoiceView(CsrfExemptMixin, FormView):
         elif form.cleaned_data['Digits']:
             address = form.cleaned_data['Digits']
         else:
-            address = None
-        if address:
-            # User spoke or entered digits
-            weather = form.get_weather(address)
-            try:
-                message = 'The weather for %s is %s degrees and %s.' % (
-                    weather['location']['formatted_address'],
-                    weather['temperature'],
-                    weather['summary'].lower(),
-                )
-            except KeyError:
-                message = weather['location']['error']
-            response.say(message, voice=voice)
-        else:
-            # User calling first time
-            gather = Gather(input='dtmf speech', timeout=3, numDigits=5)
-            gather.say('Please say or enter your location.', voice=voice)
-            response.append(gather)
+            address = '%s %s %s %s' % (
+                form.cleaned_data['FromCity'],
+                form.cleaned_data['FromState'],
+                form.cleaned_data['FromZip'],
+                form.cleaned_data['FromCountry'],
+            ).strip()
+        weather = form.get_weather(address)
+        try:
+            message = 'The weather for %s is %s degrees and %s.' % (
+                weather['location']['formatted_address'],
+                weather['temperature'],
+                weather['summary'].lower(),
+            )
+        except KeyError:
+            message = weather['location']['error']
+        response.say(message, voice=voice)
+        gather = Gather(input='dtmf speech', timeout=2, numDigits=5)
+        gather.say('Please say or enter a location.', voice=voice)
+        response.append(gather)
         response.redirect(reverse('voice'))
         return HttpResponse(response, content_type='text/xml')
 
