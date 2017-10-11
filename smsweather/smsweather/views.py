@@ -30,7 +30,6 @@ class VoiceView(CsrfExemptMixin, FormView):
                 form.cleaned_data['FromCountry'],
             )
             address = address.strip()
-        print(address)
         if address:
             weather = form.get_weather(address)
             try:
