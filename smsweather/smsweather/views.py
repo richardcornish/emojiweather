@@ -31,17 +31,9 @@ class VoiceView(CsrfExemptMixin, FormView):
             )
             address = address.strip()
         if address:
-            weather = form.get_weather(address)
-            try:
-                message = 'The weather for %s is %s degrees and %s.' % (
-                    weather['location']['formatted_address'],
-                    weather['temperature'],
-                    weather['summary'].lower(),
-                )
-            except KeyError:
-                message = weather['location']['error']
+            context = form.get_weather(address)
+            message = render_to_string('voice.txt', context)
         response = VoiceResponse()
-        message = '%s Please say or enter a location.' % message
         gather = Gather(input='dtmf speech', timeout=2, numDigits=5)
         gather.say(message, voice='alice')
         response.append(gather)
@@ -58,18 +50,8 @@ class SmsView(CsrfExemptMixin, FormView):
     def form_valid(self, form):
         # https://www.twilio.com/docs/api/twiml/sms/twilio_request
         address = form.cleaned_data['Body']
-        weather = form.get_weather(address)
-        try:
-            message = '%s %s and %s\u00B0. %s %s. %s.' % (
-                weather['icon'],
-                weather['summary'],
-                weather['temperature'],
-                weather['moon']['icon'],
-                weather['moon']['name'],
-                weather['location']['formatted_address'],
-            )
-        except KeyError:
-            message = weather['location']['error']
+        context = form.get_weather(address)
+        message = render_to_string('sms.txt', context)
         response = MessagingResponse()
         response.message(message)
         return HttpResponse(response, content_type='text/xml')
