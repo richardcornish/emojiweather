@@ -6,7 +6,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Website settings
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'y02fdsa0#16vq1%w18o*psk6r8@=o^_digu!hrk=61*dkdp7=%')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fake-key')
 
 DEBUG = os.environ.get('DEBUG', True)
 
