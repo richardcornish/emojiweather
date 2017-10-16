@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse, HttpResponseNotFound
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormView
