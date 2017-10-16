@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'sms',
+    'voice',
 
     # Third-party
     'debug_toolbar',
