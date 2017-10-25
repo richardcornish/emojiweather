@@ -70,7 +70,7 @@ class WeatherMixin(object):
             return icons['unknown']
 
     def get_summary(self, forecast):
-        return forecast['currently'].summary
+        return forecast['currently'].summary.lower()
 
     def get_temperature(self, forecast):
         return str(int(forecast['currently'].temperature))
