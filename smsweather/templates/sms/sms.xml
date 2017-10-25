@@ -1,1 +1,1 @@
-{% if location.formatted_address %}{{ icon }} {{ summary }} and {{ temperature }}&#176;. {{ moon.icon }} {{ moon.name }}. {{ location.formatted_address }}.{% else %}{{ location.error }}{% endif %}
+{% autoescape off %}{% if location.formatted_address %}{{ icon }} {{ summary }} and {{ temperature }}&#176;. {{ moon.icon }} {{ moon.name }}. {{ location.formatted_address }}.{% else %}{{ location.error }}{% endif %}{% endautoescape %}

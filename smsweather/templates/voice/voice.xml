@@ -1,1 +1,1 @@
-{% if location.formatted_address %}The weather for {{ location.formatted_address }} is {{ temperature }} degrees and {{ summary }}.{% else %}{{ location.error }}{% endif %} Please say or enter a location.
+{% autoescape off %}{% if location.formatted_address %}The weather for {{ location.formatted_address }} is {{ temperature }} degrees and {{ summary }}.{% else %}{{ location.error }}{% endif %} Please say or enter a location.{% endautoescape %}
