@@ -28,7 +28,7 @@ class VoiceView(CsrfExemptMixin, FormView):
                 form.cleaned_data['FromCountry'],
             )
             address = address.strip()
-        context = form.get_weather(address)
+        context = {'results': form.get_results(address)}
         message = render_to_string('voice/voice.xml', context)
         response = VoiceResponse()
         gather = Gather(input='dtmf speech', timeout=2, numDigits=5)

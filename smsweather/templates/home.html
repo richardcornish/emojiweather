@@ -3,6 +3,12 @@
 {% load staticfiles %}
 
 
+{% block title %}{{ request.site.name }}{% endblock %}
+
+
+{% block home_active %}active{% endblock %}
+
+
 {% block content_container %}
 <div class="container">
     <div class="row">
@@ -15,9 +21,9 @@
 
             <p><strong>{{ request.site.name }}</strong> allows someone to send a text message to or call a phone number and receive the weather forecast.</p>
 
-            <p><a href="sms:1-312-818-3823" class="btn btn-default">Text (312) 818-3823</a></p>
+            <p><a href="sms:1-312-818-3823" class="btn btn-primary">Text (312) 818-3823</a></p>
 
-            <p><a href="tel:1-312-818-3823" class="btn btn-default">Call (312) 818-3823</a></p>
+            <p><a href="tel:1-312-818-3823" class="btn btn-primary">Call (312) 818-3823</a></p>
 
             <ul>
                 <li><a href="https://github.com/richardcornish/smsweather">Code repository</a></li>

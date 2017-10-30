@@ -32,6 +32,8 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
+                        <li class="{% block home_active %}{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="{% block search_active %}{% endblock %}"><a href="{% url 'search' %}">Search</a></li>
                         <li><a href="sms:1-312-818-3823">Text</a></li>
                         <li><a href="tel:1-312-818-3823">Call</a></li>
                     </ul>

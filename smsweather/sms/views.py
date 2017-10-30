@@ -17,7 +17,7 @@ class SmsView(CsrfExemptMixin, FormView):
     def form_valid(self, form):
         # https://www.twilio.com/docs/api/twiml/sms/twilio_request
         address = form.cleaned_data['Body']
-        context = form.get_weather(address)
+        context = {'results': form.get_results(address)}
         message = render_to_string('sms/sms.xml', context)
         response = MessagingResponse()
         response.message(message)

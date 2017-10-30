@@ -32,11 +32,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'search',
     'sms',
     'voice',
+    'utils',
 
     # Third-party
     'debug_toolbar',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE_CLASSES = [

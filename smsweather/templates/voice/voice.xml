@@ -1,1 +1,1 @@
-{% if location.formatted_address %}The weather for {{ location.formatted_address }} is {{ temperature }} degrees and {{ summary }}.{% else %}{{ location.error }}{% endif %} Please say or enter a location.
+{% load weather_tags %}{% if results.geocode.formatted_address %}The weather for {{ results.geocode.formatted_address }} is {{ results.weather.currently.temperature|floatformat:"0" }} degrees and {{ results.weather.currently.summary|lower }}.{% else %}{{ results.geocode.error }}{% endif %} Please say or enter a location.
