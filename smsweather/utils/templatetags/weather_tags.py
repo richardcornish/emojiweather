@@ -82,3 +82,25 @@ def moonify(value):
         return phases['waning-crescent']
     else:
         return phases['unknown']
+
+
+@register.filter
+def flagify(value):
+    countries = [
+        {
+            'code': 'US',
+            'unicode': '\U0001F1FA\U0001F1F8',
+        }, {
+            'code': 'GB',
+            'unicode': '\U0001F1EC\U0001F1E7',
+        }
+    ]
+    for v in value:
+        for key in v:
+            if key == 'types':
+                for t in v['types']:
+                    if t == 'country':
+                        code = v['short_name']
+                        for c in countries:
+                            if c['code'] == code:
+                                return c
