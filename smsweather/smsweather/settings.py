@@ -162,7 +162,10 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 
-# Dark Sky Wrapper
-# https://github.com/ZeevG/python-forecast.io
+# Google Geocoding API
+# https://developers.google.com/maps/documentation/geocoding/start
+GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
 
-DARKSKY_API_KEY = os.environ.get('DARKSKY_API_KEY', '')
+# Dark Sky API
+# https://darksky.net/dev/docs
+DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')

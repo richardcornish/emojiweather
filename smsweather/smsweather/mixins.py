@@ -20,19 +20,20 @@ class WeatherMixin(object):
             'invalid_request': 'We\u2019re sorry, but we could not find that address.',
             'unknown_error': 'We\u2019re sorry, but an error occurred.',
         }
-        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': address})
-        json = r.json()
-        if json['status'] == 'OK':
-            return json['results'][0]
+        key = settings.GOOGLE_GEOCODING_API_KEY
+        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': address, 'key': key})
+        j = r.json()
+        if j['status'] == 'OK':
+            return j['results'][0]
         else:
             try:
-                error = errors[json['status'].lower()]
+                error = errors[j['status'].lower()]
             except KeyError:
                 error = errors['unknown_error']
             return 'Beep boop. %s \U0001F916' % error
 
     def get_weather(self, results):
-        key = settings.DARKSKY_API_KEY
+        key = settings.DARK_SKY_API_KEY
         latitude = results['geocode']['geometry']['location']['lat']
         longitude = results['geocode']['geometry']['location']['lng']
         units = 'us'
