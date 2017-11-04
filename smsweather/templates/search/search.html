@@ -3,7 +3,10 @@
 {% load staticfiles widget_tweaks weather_tags %}
 
 
-{% block title %}Search {% if query %}&#8220;{{ query }}&#8221;{% endif %} &#183; {{ block.super }}{% endblock %}
+{% block title %}{% if results.geocode.formatted_address %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}
+
+
+{% block favicon %}{% if results.weather %}{% with 'img/favicons/'|add:results.weather.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
 {% block search_active %}active{% endblock %}
