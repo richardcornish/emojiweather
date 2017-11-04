@@ -1,0 +1,47 @@
+{
+    "new-moon": {
+        "name": "New moon",
+        "emoji": "🌑",
+        "unicode": "\uD83C\uDF11"
+    },
+    "waxing-crescent": {
+        "name": "Waxing Crescent",
+        "emoji": "🌒",
+        "unicode": "\uD83C\uDF12"
+    },
+    "first-quarter": {
+        "name": "First Quarter",
+        "emoji": "🌓",
+        "unicode": "\uD83C\uDF13"
+    },
+    "waxing-gibbous": {
+        "name": "Waxing Gibbous",
+        "emoji": "🌔",
+        "unicode": "\uD83C\uDF14"
+    },
+    "full-moon": {
+        "name": "Full Moon",
+        "emoji": "🌕",
+        "unicode": "\uD83C\uDF15"
+    },
+    "waning-gibbous": {
+        "name": "Waning Gibbous",
+        "emoji": "🌖",
+        "unicode": "\uD83C\uDF16"
+    },
+    "last-quarter": {
+        "name": "Last Quarter",
+        "emoji": "🌗",
+        "unicode": "\uD83C\uDF17"
+    },
+    "waning-crescent": {
+        "name": "Waning Crescent",
+        "emoji": "🌘",
+        "unicode": "\uD83C\uDF18"
+    },
+    "unknown": {
+        "name": "Unknown moon",
+        "emoji": "🙁",
+        "unicode": "\uD83D\uDE41"
+    }
+}

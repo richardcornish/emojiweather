@@ -18,12 +18,25 @@
         </div>
         {% if results %}
         <div class="col-md-6">
-            <h1 class="h2">{{ results.geocode.formatted_address }} {% with results.geocode.address_components|flagify as flag %}{{ flag.unicode }}{% endwith %}</h1>
-            <h2 class="h1">{{ results.weather.currently.temperature|floatformat:"0" }}&#176;F {{ results.weather.currently.icon|iconify }} {{ results.weather.currently.summary|lower|capfirst }}</h2>
-            {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
-            <h3>{{ moon.icon }} {{ moon.name }}</h3>
-            {% endwith %}
-            <h3>{{ results.weather.daily.summary }}</h3>
+            <h1>
+                {{ results.weather.currently.temperature|floatformat:"0" }}&#176;F
+                {% with results.weather.currently.icon|iconify as icon %}
+                {{ icon.unicode }}
+                {% endwith %}
+                {{ results.weather.currently.summary|lower|capfirst }}
+            </h1>
+            <p>
+                {% with results.geocode.address_components|flagify as flag %}
+                {{ flag.unicode }}
+                {% endwith %}
+                {{ results.geocode.formatted_address }}
+            </p>
+            <p>
+                {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
+                {{ moon.unicode }} {{ moon.name }}
+                {% endwith %}
+            </p>
+            <p>{{ results.weather.daily.summary }}</p>
         </div>
         {% endif %}
     </div>

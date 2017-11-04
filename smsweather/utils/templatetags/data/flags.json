@@ -1,0 +1,12 @@
+{
+    "us": {
+        "name": "United States",
+        "emoji": "🇺🇸",
+        "unicode": "\uD83C\uDDFA\uD83C\uDDF8"
+    },
+    "gb": {
+        "name": "United Kingdom",
+        "emoji": "🇬🇧",
+        "unicode": "\uD83C\uDDEC\uD83C\uDDE7"
+    }
+}
