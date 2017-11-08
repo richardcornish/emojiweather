@@ -23,20 +23,20 @@
         <div class="col-md-6">
             <h1>
                 {{ results.weather.currently.temperature|floatformat:"0" }}&#176;F
-                {% with results.weather.currently.icon|iconify as icon %}
-                {{ icon.unicode }}
+                {% with results.weather.currently.icon|weatherify as icon %}
+                {{ icon.html|safe }}
                 {% endwith %}
                 {{ results.weather.currently.summary|lower|capfirst }}
             </h1>
             <p>
                 {% with results.geocode.address_components|flagify as flag %}
-                {{ flag.unicode }}
+                {{ flag.html|safe }}
                 {% endwith %}
                 {{ results.geocode.formatted_address }}
             </p>
             <p>
                 {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
-                {{ moon.unicode }} {{ moon.name }}
+                {{ moon.html|safe }} {{ moon.name }}
                 {% endwith %}
             </p>
             <p>{{ results.weather.daily.summary }}</p>

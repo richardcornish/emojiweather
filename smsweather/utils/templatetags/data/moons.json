@@ -1,47 +1,83 @@
-{
-    "new-moon": {
-        "name": "New moon",
+[
+    {
+        "name": "New Moon",
+        "slug": "new-moon-1",
         "emoji": "🌑",
-        "unicode": "\uD83C\uDF11"
-    },
-    "waxing-crescent": {
+        "unicode": "\uD83C\uDF11",
+        "html": "&#x1F311;",
+        "start": 0,
+        "finish": 6.25
+    }, {
         "name": "Waxing Crescent",
+        "slug": "waxing-crescent",
         "emoji": "🌒",
-        "unicode": "\uD83C\uDF12"
-    },
-    "first-quarter": {
+        "unicode": "\uD83C\uDF12",
+        "html": "&#x1F312;",
+        "start": 6.25,
+        "finish": 18.75
+    }, {
         "name": "First Quarter",
+        "slug": "first-quarter",
         "emoji": "🌓",
-        "unicode": "\uD83C\uDF13"
-    },
-    "waxing-gibbous": {
+        "unicode": "\uD83C\uDF13",
+        "html": "&#x1F313;",
+        "start": 18.75,
+        "finish": 31.25
+    }, {
         "name": "Waxing Gibbous",
+        "slug": "waxing-gibbous",
         "emoji": "🌔",
-        "unicode": "\uD83C\uDF14"
-    },
-    "full-moon": {
+        "unicode": "\uD83C\uDF14",
+        "html": "&#x1F314;",
+        "start": 31.25,
+        "finish": 43.75
+    }, {
         "name": "Full Moon",
+        "slug": "full-moon",
         "emoji": "🌕",
-        "unicode": "\uD83C\uDF15"
-    },
-    "waning-gibbous": {
+        "unicode": "\uD83C\uDF15",
+        "html": "&#x1F315;",
+        "start": 43.75,
+        "finish": 56.25
+    }, {
         "name": "Waning Gibbous",
+        "slug": "waning-gibbous",
         "emoji": "🌖",
-        "unicode": "\uD83C\uDF16"
-    },
-    "last-quarter": {
+        "unicode": "\uD83C\uDF16",
+        "html": "&#x1F316;",
+        "start": 56.25,
+        "finish": 68.75
+    }, {
         "name": "Last Quarter",
+        "slug": "last-quarter",
         "emoji": "🌗",
-        "unicode": "\uD83C\uDF17"
-    },
-    "waning-crescent": {
+        "unicode": "\uD83C\uDF17",
+        "html": "&#x1F317;",
+        "start": 68.75,
+        "finish": 81.25
+    }, {
         "name": "Waning Crescent",
+        "slug": "waning-crescent",
         "emoji": "🌘",
-        "unicode": "\uD83C\uDF18"
-    },
-    "unknown": {
+        "unicode": "\uD83C\uDF18",
+        "html": "&#x1F318;",
+        "start": 81.25,
+        "finish": 93.75
+    }, {
+        "name": "New Moon",
+        "slug": "new-moon-2",
+        "emoji": "🌑",
+        "unicode": "\uD83C\uDF11",
+        "html": "&#x1F312;",
+        "start": 93.75,
+        "finish": 100
+    }, {
         "name": "Unknown moon",
+        "slug": "unknown",
         "emoji": "🙁",
-        "unicode": "\uD83D\uDE41"
+        "unicode": "\uD83D\uDE41",
+        "html": "&#x1F641;",
+        "start": null,
+        "finish": null
     }
-}
+]

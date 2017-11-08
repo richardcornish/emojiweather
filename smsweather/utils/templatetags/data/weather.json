@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Clear day",
+        "slug": "clear-day",
+        "emoji": "☀",
+        "unicode": "\u2600",
+        "html": "&#x2600;"
+    }, {
+        "name": "Clear night",
+        "slug": "clear-night",
+        "emoji": "🌌",
+        "unicode": "\uD83C\uDF0C",
+        "html": "&#x1F30C;"
+    }, {
+        "name": "Rain",
+        "slug": "rain",
+        "emoji": "🌧",
+        "unicode": "\uD83C\uDF27",
+        "html": "&#x1F327;"
+    }, {
+        "name": "Snow",
+        "slug": "snow",
+        "emoji": "❄",
+        "unicode": "\u2744",
+        "html": "&#x2744;"
+    }, {
+        "name": "Sleet",
+        "slug": "sleet",
+        "emoji": "🌨",
+        "unicode": "\uD83C\uDF28",
+        "html": "&#x1F328;"
+    }, {
+        "name": "Wind",
+        "slug": "wind",
+        "emoji": "🌬",
+        "unicode": "\uD83C\uDF2C",
+        "html": "&#x1F32C;"
+    }, {
+        "name": "Fog",
+        "slug": "fog",
+        "emoji": "🌫",
+        "unicode": "\uD83C\uDF2B",
+        "html": "&#x1F32B;"
+    }, {
+        "name": "Cloudy",
+        "slug": "cloudy",
+        "emoji": "☁",
+        "unicode": "\u2601",
+        "html": "&#x2601;"
+    }, {
+        "name": "Partly cloudy day",
+        "slug": "partly-cloudy-day",
+        "emoji": "⛅",
+        "unicode": "\u26C5",
+        "html": "&#x26C5;"
+    }, {
+        "name": "Partly cloudy night",
+        "slug": "partly-cloudy-night",
+        "emoji": "☁",
+        "unicode": "\u2601",
+        "html": "&#x2601;"
+    }, {
+        "name": "Hail",
+        "slug": "hail",
+        "emoji": "🌧",
+        "unicode": "\uD83C\uDF27",
+        "html": "&#x1F327;"
+    }, {
+        "name": "Thunderstorm",
+        "slug": "thunderstorm",
+        "emoji": "⛈",
+        "unicode": "\u26C8",
+        "html": "&#x26C8;"
+    }, {
+        "name": "Tornado",
+        "slug": "tornado",
+        "emoji": "🌪",
+        "unicode": "\uD83C\uDF2A",
+        "html": "&#x1F32A;"
+    }, {
+        "name": "Unknown conditions",
+        "slug": "unknown",
+        "emoji": "🙁",
+        "unicode": "\uD83D\uDE41",
+        "html": "&#x1F641;"
+    }
+]
