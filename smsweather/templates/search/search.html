@@ -3,7 +3,7 @@
 {% load staticfiles widget_tweaks weather_tags %}
 
 
-{% block title %}{% if results.geocode.formatted_address %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}
+{% block title %}{% if results.geocode %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}
 
 
 {% block favicon %}{% if results.weather %}{% with 'img/favicons/'|add:results.weather.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
@@ -19,8 +19,12 @@
             <h1>Search</h1>
             {% include 'search/form.html' %}
         </div>
-        {% if results %}
         <div class="col-md-6">
+        {% if results.error %}
+            <h1>Location not found</h1>
+            <p>{{ results.error }}</p>
+        {% endif %}
+        {% if results.geocode and results.weather %}
             <h1>
                 {{ results.weather.currently.temperature|floatformat:"0" }}&#176;F
                 {% with results.weather.currently.icon|weatherify as icon %}
@@ -40,8 +44,8 @@
                 {% endwith %}
             </p>
             <p>{{ results.weather.daily.summary }}</p>
-        </div>
         {% endif %}
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">

@@ -22,10 +22,11 @@ def moonify(value):
     path = os.path.join(BASE_DIR, 'data', 'moons.json')
     with open(path, 'r') as f:
         data = json.load(f)
-        percentage = value * 100
-        for icon in data:
-            if icon['start'] <= percentage < icon['finish']:
-                return icon
+        if value:
+            percentage = value * 100
+            for icon in data:
+                if icon['start'] <= percentage < icon['finish']:
+                    return icon
 
 
 @register.filter
