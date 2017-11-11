@@ -21,8 +21,3 @@ class SearchView(FormMixin, TemplateView):
             form = self.get_form()
         context = self.get_context_data(form=form, query=query, results=results)
         return self.render_to_response(context)
-
-    def get_form_kwargs(self):
-        kwargs = super(SearchView, self).get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
