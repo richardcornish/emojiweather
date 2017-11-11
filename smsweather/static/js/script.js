@@ -1,8 +1,10 @@
 $(document).ready(function () {
     var $form = $('form');
     var $q = $form.find('input[name="q"]');
-    $q.focus();
-    $q.get(0).setSelectionRange(0, $q.val().length);
+    setTimeout(function () {
+        $q.focus().select();
+        $q.get(0).setSelectionRange(0, $q.val().length);
+    }, 0);
     if ('geolocation' in window.navigator && $form.length) {
         var success = function (pos) {
             var latitude = pos.coords.latitude;
