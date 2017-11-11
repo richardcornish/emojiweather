@@ -2,7 +2,6 @@ $(document).ready(function () {
     var $form = $('form');
     var $q = $form.find('input[name="q"]');
     if ($q.val().length) {
-        $q.focus().select();
         $q.get(0).setSelectionRange(0, $q.val().length);
     }
     if ('geolocation' in window.navigator && $form.length) {
