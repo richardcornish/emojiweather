@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var $form = $('form');
     var $q = $form.find('input[name="q"]');
-    if ('geolocation' in window.navigator) {
+    if ('geolocation' in window.navigator && $form.length) {
         var success = function (pos) {
             var latitude = pos.coords.latitude;
             var longitude = pos.coords.longitude;
