@@ -6,6 +6,6 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
-class FaviconView(RedirectView):
-    url = staticfiles_storage.url('img/favicon.ico')
-    permanent = True
+# class FaviconView(RedirectView):
+#     url = staticfiles_storage.url('img/favicon.ico')
+#     permanent = True
