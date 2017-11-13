@@ -53,13 +53,13 @@
                 {{ results.weather.currently.summary|lower|capfirst }}
             </p>
             <p class="text-center">
+                {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
+                {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}{% endwith %}
+            </p>
+            <p class="text-center">
                 {% with results.geocode.address_components|flagify as flag %}
                 {{ flag.html|safe }}&nbsp;{% endwith %}
                 {{ results.geocode.formatted_address }}
-            </p>
-            <p class="text-center">
-                {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
-                {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}{% endwith %}
             </p>
             <p class="text-center js-moment">{% now "F jS, Y, G:i:s A" %}</p>
             <p class="text-center">{{ results.weather.daily.summary }}</p>
