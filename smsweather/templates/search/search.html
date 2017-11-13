@@ -41,6 +41,7 @@
                 {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}
                 {% endwith %}
             </p>
+            <p class="text-center js-moment">&nbsp;</p>
             <p class="text-center">{{ results.weather.daily.summary }}</p>
             {% else %}
             <h1 class="text-center">Search</h1>
@@ -58,4 +59,16 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{% if results.weather %}
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $('.js-moment').text(moment().tz('{{ results.weather.timezone }}').format('MMMM Do YYYY, h:mm:ss A'));
+        }, 1000);
+    })
+</script>
+{% endif %}
 {% endblock %}
