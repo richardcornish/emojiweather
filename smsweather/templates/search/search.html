@@ -22,12 +22,12 @@
             {% endif %}
             {% if results.geocode and results.weather %}
             <h1 class="text-center display-1">
-                {{ results.weather.currently.temperature|floatformat:"0" }}&#176;
-            </h1>
-            <p class="text-center" style="font-size: 2rem">
                 {% with results.weather.currently.icon|weatherify as icon %}
                 {{ icon.html|safe }}
                 {% endwith %}
+                {{ results.weather.currently.temperature|floatformat:"0" }}&#176;
+            </h1>
+            <p class="text-center" style="font-size: 2rem">
                 {{ results.weather.currently.summary|lower|capfirst }}
             </p>
             <p class="text-center">
