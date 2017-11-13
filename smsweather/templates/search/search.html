@@ -15,7 +15,7 @@
 {% block description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
-{% block og_title %}{% if results.geocode %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %}{% endblock %}
+{% block og_title %}{% if results.weather %}{{ results.weather.currently.temperature|floatformat:"0" }}&#176; at {{ results.geocode.formatted_address }}{% else %}Search{% endif %}{% endblock %}
 
 {% block og_image %}{% if results.weather %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% with 'img/touchicons/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
