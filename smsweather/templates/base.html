@@ -9,9 +9,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="{% block description %}SMS Weather allows you to text or call to get the weather.{% endblock %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" href="{% block favicon %}{% static 'img/favicons/default.ico' %}{% endblock %}">
+    <link rel="apple-touch-icon" href="{% block touchicon %}{% static 'img/touchicons/default.png' %}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="{% get_current_language as language %}{{ language }}">
+    <meta property="og:site_name" content="{{ request.site.name }}">
+    <meta property="og:title" content="{% block og_title %}Home{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}SMS Weather allows you to text or call to get the weather.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}http{% if request.site.is_secure %}s{% endif %}://{{ request.site.domain }}{% static 'img/touchicons/default.png' %}{% endblock %}">
+    <meta property="og:url" content="http{% if request.site.is_secure %}s{% endif %}://{{ request.site.domain }}{{ request.get_full_path }}">
+    {% block extra_head %}
+    {% endblock %}
 </head>
 <body>
 

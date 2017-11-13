@@ -1,12 +1,35 @@
 {% extends "base.html" %}
 
-{% load staticfiles widget_tweaks weather_tags %}
+{% load i18n staticfiles widget_tweaks weather_tags %}
 
 
 {% block title %}{% if results.geocode %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}
 
 
 {% block favicon %}{% if results.weather %}{% with 'img/favicons/'|add:results.weather.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+
+{% block touchicon %}{% if results.weather %}{% with 'img/touchicons/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+
+{% block description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+
+{% block og_title %}{% if results.geocode %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %}{% endblock %}
+
+{% block og_image %}{% if results.weather %}http{% if request.site.is_secure %}s{% endif %}://{{ request.site.domain }}{% with 'img/touchicons/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block og_description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+
+{% block extra_head %}
+    {% if results.weather %}
+    <meta name="ICBM" content="{{ results.weather.latitude }}, {{ results.weather.longitude }}">
+    <meta name="geo.position" content="{{ results.weather.latitude }};{{ results.weather.longitude }}">
+    <meta name="geo.region" content="{% with results.geocode.address_components|flagify as flag %}{{ flag.code }}{% endwith %}">
+    <meta name="geo.placename" content="{{ results.geocode.formatted_address }}">
+    {% endif %}
+{% endblock %}
 
 
 {% block search_active %}active{% endblock %}
@@ -23,8 +46,7 @@
             {% if results.geocode and results.weather %}
             <h1 class="text-center display-1">
                 {% with results.weather.currently.icon|weatherify as icon %}
-                {{ icon.html|safe }}
-                {% endwith %}
+                {{ icon.html|safe }}{% endwith %}
                 {{ results.weather.currently.temperature|floatformat:"0" }}&#176;
             </h1>
             <p class="text-center" style="font-size: 2rem">
@@ -32,14 +54,12 @@
             </p>
             <p class="text-center">
                 {% with results.geocode.address_components|flagify as flag %}
-                {{ flag.html|safe }}&nbsp;
-                {% endwith %}
+                {{ flag.html|safe }}&nbsp;{% endwith %}
                 {{ results.geocode.formatted_address }}
             </p>
             <p class="text-center">
                 {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
-                {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}
-                {% endwith %}
+                {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}{% endwith %}
             </p>
             <p class="text-center js-moment">{% now "F jS, Y, G:i:s A" %}</p>
             <p class="text-center">{{ results.weather.daily.summary }}</p>
