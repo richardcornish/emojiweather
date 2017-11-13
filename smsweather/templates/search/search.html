@@ -15,34 +15,40 @@
 {% block content_container %}
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 offset-lg-3">
+        <div class="col-lg-12">
             {% if results.error %}
-            <h1>Location not found</h1>
-            <p>{{ results.error }}</p>
+            <h1 class="text-center">Location not found</h1>
+            <p class="text-center">{{ results.error }}</p>
             {% endif %}
             {% if results.geocode and results.weather %}
-            <h1>
-                {{ results.weather.currently.temperature|floatformat:"0" }}&#176;F
+            <h1 class="text-center display-1">
+                {{ results.weather.currently.temperature|floatformat:"0" }}&#176;
+            </h1>
+            <p class="text-center" style="font-size: 2rem">
                 {% with results.weather.currently.icon|weatherify as icon %}
                 {{ icon.html|safe }}
                 {% endwith %}
                 {{ results.weather.currently.summary|lower|capfirst }}
-            </h1>
-            <p>
+            </p>
+            <p class="text-center">
                 {% with results.geocode.address_components|flagify as flag %}
                 {{ flag.html|safe }}&nbsp;
                 {% endwith %}
                 {{ results.geocode.formatted_address }}
             </p>
-            <p>
+            <p class="text-center">
                 {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
                 {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}
                 {% endwith %}
             </p>
-            <p>{{ results.weather.daily.summary }}</p>
+            <p class="text-center">{{ results.weather.daily.summary }}</p>
             {% else %}
-            <h1>Search</h1>
+            <h1 class="text-center">Search</h1>
             {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
             {% include 'search/form.html' %}
         </div>
     </div>
