@@ -19,11 +19,15 @@
     <div class="row">
         <div class="col-md-6 col-lg-6">
 
-            <p><strong>{{ request.site.name }}</strong> allows someone to send a text message to or call a phone number and receive the weather forecast.</p>
+            <p><strong>{{ request.site.name }}</strong> allows a user to text or call a phone number and receive the weather forecast.</p>
 
-            <p><a href="sms:1-312-818-3823" class="btn btn-primary">Text (312) 818-3823</a></p>
-
-            <p><a href="tel:1-312-818-3823" class="btn btn-primary">Call (312) 818-3823</a></p>
+            <div class="row">
+                <div class="col-lg-8">
+                    <p><a href="sms:1-312-818-3823" class="btn btn-block btn-primary">Text (312) 818-3823</a></p>
+                    <p><a href="tel:1-312-818-3823" class="btn btn-block btn-outline-primary">Call (312) 818-3823</a></p>
+                    <p><a href="{% url 'search' %}" class="btn btn-block btn-outline-primary">Search</a></p>
+                </div>
+            </div>
 
             <ul>
                 <li><a href="https://github.com/richardcornish/smsweather">Code repository</a></li>
