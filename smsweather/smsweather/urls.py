@@ -6,7 +6,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 import debug_toolbar
 
-from .views import FaviconView, HomeView
+from .views import HomeView
 
 
 urlpatterns = [
@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^search/', include('search.urls')),
     url(r'^sms/', include('sms.urls')),
     url(r'^voice/', include('voice.urls')),
-    url(r'^favicon\.ico$', FaviconView.as_view(), name='favicon'),
+    # url(r'^favicon\.ico$', FaviconView.as_view(), name='favicon'),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
 
