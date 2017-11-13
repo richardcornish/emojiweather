@@ -5,3 +5,7 @@ h1 {
 .navbar {
     padding: .5rem 0;
 }
+
+button {
+    cursor: pointer;
+}
