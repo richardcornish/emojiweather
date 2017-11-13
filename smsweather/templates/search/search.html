@@ -15,7 +15,7 @@
 {% block content_container %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-lg-6 offset-lg-3">
             {% if results.error %}
             <h1>Location not found</h1>
             <p>{{ results.error }}</p>
@@ -30,13 +30,13 @@
             </h1>
             <p>
                 {% with results.geocode.address_components|flagify as flag %}
-                {{ flag.html|safe }}
+                {{ flag.html|safe }}&nbsp;
                 {% endwith %}
                 {{ results.geocode.formatted_address }}
             </p>
             <p>
                 {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
-                {{ moon.html|safe }} {{ moon.name }}
+                {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}
                 {% endwith %}
             </p>
             <p>{{ results.weather.daily.summary }}</p>
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <p>&nbsp;</p>
         </div>
     </div>

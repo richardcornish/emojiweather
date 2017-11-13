@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var $form = $('form');
     var $q = $form.find('input[name="q"]');
-    if ($q.val().length) {
+    if ($q.val() !== undefined && $q.val().length) {
         $q.get(0).setSelectionRange(0, $q.val().length);
     }
     if ('geolocation' in window.navigator && $form.length) {
