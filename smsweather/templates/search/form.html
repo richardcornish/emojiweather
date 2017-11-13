@@ -5,7 +5,7 @@
     {% endfor %}
 </div>
 {% endif %}
-<form method="get" action="{% url 'search' %}">
+<form method="get" action="{% url 'search' %}" class="js-search">
     {% for field in form %}
         {% if field.is_hidden %}
         {{ field }}
@@ -24,5 +24,5 @@
         </div>
         {% endif %}
     {% endfor %}
-    <button type="submit" class="btn btn-primary btn-block btn-lg">Search</button>
+    <p><button type="submit" class="btn btn-primary btn-block btn-lg">Search</button></p>
 </form>

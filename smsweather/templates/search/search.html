@@ -41,7 +41,7 @@
                 {{ moon.html|safe }}&nbsp;&nbsp;{{ moon.name }}
                 {% endwith %}
             </p>
-            <p class="text-center js-moment">{% now "F jS, Y, G:i:s a" %}</p>
+            <p class="text-center js-moment">{% now "F jS, Y, G:i:s A" %}</p>
             <p class="text-center">{{ results.weather.daily.summary }}</p>
             {% else %}
             <h1 class="text-center">Search</h1>
@@ -51,24 +51,17 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             {% include 'search/form.html' %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>&nbsp;</p>
+            <p><button type="button" class="js-geolocate btn btn-outline-primary btn-block btn">Or geolocate me</button></p>
         </div>
     </div>
 </div>
 {% endblock %}
 
+
 {% block scripts %}
 {% if results.weather %}
 <script>
-    $(document).ready(function () {
-        setInterval(function () {
-            $('.js-moment').text(moment().tz('{{ results.weather.timezone }}').format('MMMM Do, YYYY, H:mm:ss a'));
-        }, 1000);
-    })
+    SmsWeather.moment('{{ results.weather.timezone }}');
 </script>
 {% endif %}
 {% endblock %}
