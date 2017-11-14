@@ -14,10 +14,10 @@ class CsrfExemptMixin(object):
 class WeatherMixin(object):
     def get_geocode(self, address):
         errors = {
-            'zero_results': 'We\u2019re sorry, but we could not find that location.',
+            'zero_results': 'We\u2019re sorry, but we could not find %s.' % address,
             'over_query_limit': 'We\u2019re sorry, but the request quota has been reached.',
-            'request_denied': 'We\u2019re sorry, but your request was denied.',
-            'invalid_request': 'We\u2019re sorry, but we could not find that location.',
+            'request_denied': 'We\u2019re sorry, but the request was denied.',
+            'invalid_request': 'We\u2019re sorry, but the request was invalid.',
             'unknown': 'We\u2019re sorry, but an error occurred.',
         }
         key = settings.GOOGLE_GEOCODING_API_KEY
@@ -30,7 +30,7 @@ class WeatherMixin(object):
                 error = errors[j['status'].lower()]
             except KeyError:
                 error = errors['unknown']
-            return 'Beep boop. %s \U0001F916' % error
+            return '\U0001F916 Beep boop. %s' % error
 
     def get_weather(self, geocode):
         key = settings.DARK_SKY_API_KEY
