@@ -19,7 +19,7 @@
             <p class="{% if field.html_name == 'q' %}sr-only{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
             {{ field }}
             {% if field.help_text %}
-                <p class="help-block">{{ field.help_text|safe }}</p>
+                <p class="form-text">{{ field.help_text|safe }}</p>
             {% endif %}
         </div>
         {% endif %}
