@@ -61,7 +61,7 @@
             <p class="text-center">{{ results.weather.daily.summary }}</p>
             {% elif results.error %}
             <h1 class="text-center">{{ query }} not found</h1>
-            <p class="text-center">{{ results.error }}</p>
+            <p class="text-center">&#x1F916;&nbsp;&nbsp;Beep boop. {{ results.error }}</p>
             {% else %}
             <h1 class="text-center">Search</h1>
             {% endif %}

@@ -27,10 +27,9 @@ class WeatherMixin(object):
             return j['results'][0]
         else:
             try:
-                error = errors[j['status'].lower()]
+                return errors[j['status'].lower()]
             except KeyError:
-                error = errors['unknown']
-            return '\U0001F916 Beep boop. %s' % error
+                return errors['unknown']
 
     def get_weather(self, geocode):
         key = settings.DARK_SKY_API_KEY
