@@ -9,9 +9,6 @@
 {% block favicon %}{% if results.weather %}{% with 'img/favicons/'|add:results.weather.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
-{% block touchicon %}{% if results.weather %}{% with 'img/touchicons/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% elif results.error %}{% static 'img/touchicons/error.png' %}{% else %}{{ block.super }}{% endif %}{% endblock %}
-
-
 {% block description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}&#x1F916; Beep boop. {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
