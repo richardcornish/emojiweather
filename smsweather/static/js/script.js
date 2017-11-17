@@ -1,10 +1,10 @@
 SmsWeather = (function ($) {
     return {
-        focusForm: function () {
+        emptyForm: function () {
             var $form = $('.js-search');
-            var $q = $form.find('input[name="q"]');
-            $q.get(0).focus();
-            $q.get(0).setSelectionRange(0, $q.val().length);
+            if ($form.hasClass('js-search-success')) {
+                $form.find('input[name="q"]').val('');
+            }
         },
         submitSeachForm: function () {
             var $form = $('.js-search');
@@ -66,7 +66,7 @@ SmsWeather = (function ($) {
         },
         init: function () {
             var self = this;
-            self.focusForm();
+            self.emptyForm();
             self.submitSeachForm();
             self.geolocateAndSubmit();
         }

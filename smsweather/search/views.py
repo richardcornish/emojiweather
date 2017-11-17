@@ -11,13 +11,15 @@ class SearchView(FormMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         query = None
         results = None
+        success = None
         if 'q' in self.request.GET:
             form_class = self.get_form_class()
             form = form_class(self.request.GET)
             if form.is_valid():
                 query = form.cleaned_data['q']
                 results = form.get_results(query)
+                success = True
         else:
             form = self.get_form()
-        context = self.get_context_data(form=form, query=query, results=results)
+        context = self.get_context_data(form=form, query=query, success=success, results=results)
         return self.render_to_response(context)
