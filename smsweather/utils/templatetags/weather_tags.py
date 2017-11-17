@@ -3,8 +3,18 @@ import os
 
 from django import template
 
+from ua_parser import user_agent_parser
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def get_os(context):
+    request = context['request']
+    ua = request.META['HTTP_USER_AGENT']
+    os = user_agent_parser.ParseOS(ua)
+    return os.get('family', '')
 
 
 @register.filter

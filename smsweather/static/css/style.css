@@ -9,3 +9,15 @@ h1 {
 button {
     cursor: pointer;
 }
+
+svg {
+    vertical-align: middle;
+}
+
+.icon-location {
+    vertical-align: middle;
+}
+
+.icon-location .path {
+    fill: #fff;
+}
