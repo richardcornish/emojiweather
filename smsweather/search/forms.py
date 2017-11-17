@@ -8,6 +8,7 @@ class SearchWeatherForm(WeatherMixin, forms.Form):
         'type': 'search',
         'autocapitalize': 'words',
         'autocorrect': 'off',
+        'autofocus': True,
         'class': 'form-control form-control-lg text-center',
         'placeholder': 'Search for a location',
     }))
