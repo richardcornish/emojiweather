@@ -16,7 +16,7 @@
 
             <h1 class="text-center">{{ request.site.name }}</h1>
 
-            <p class="text-center"><a href="{% url 'search' %}">Search</a>, <a href="{% url 'sms' %}">text</a>, or <a href="{% url 'voice' %}">call</a> for the weather. &#x2600;</p>
+            <p class="text-center"><a href="{% url 'search' %}">Search</a>, <a href="sms:1-312-818-3823">text</a>, or <a href="tel:1-312-818-3823">call</a> for the weather. &#x2600;</p>
             <p class="text-center text-lead">{% get_location as location %}<a href="{% url 'search' %}?q={{ location.query }}" class="btn btn-sm">{{ location.emoji|safe }} {{ location.title }}</a>{# &nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-sm">Someplace random</a>#}</p>
 
             <form method="get" action="{% url 'search' %}" class="js-search{% if success %} js-search-success{% endif %}">
