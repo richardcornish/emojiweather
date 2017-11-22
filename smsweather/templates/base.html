@@ -17,7 +17,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="{% get_current_language as language %}{{ language }}">
     <meta property="og:site_name" content="{{ request.site.name }}">
-    <meta property="og:title" content="{% block og_title %}Home{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ request.site.name }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}SMS Weather allows you to text or call to get the weather.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% static 'img/touchicons/default.png' %}{% endblock %}">
     <meta property="og:url" content="http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{{ request.get_full_path }}">

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load staticfiles weather_tags %}
+
+
+{% block title %}Page not found &#183; {{ block.super }}{% endblock %}
+
+
+{% block content_container %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 offset-md-3">
+
+            <h1 class="text-center">Page not found &#x1F916;</h1>
+
+            <p>&nbsp;</p>
+
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/itYFTh8hPfA?rel=0" allowfullscreen></iframe>
+            </div>
+
+            <p>&nbsp;</p>
+
+            <p class="text-center"><a href="{% url 'home' %}" class="btn btn-outline-primary">Back to home</a></p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
