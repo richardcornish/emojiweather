@@ -10,6 +10,7 @@ from .views import FaviconView, HomeView
 
 
 urlpatterns = [
+    url(r'^about/', include('about.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^search/', include('search.urls')),
     url(r'^sms/', include('sms.urls')),

@@ -1,12 +1,48 @@
 import json
 import os
+import random
 
 from django import template
 
 from ua_parser import user_agent_parser
 
+try:
+    from urllib import quote_plus
+except ImportError:
+    from urllib.parse import quote_plus
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 register = template.Library()
+
+
+@register.simple_tag
+def get_location():
+    locations = [
+        {'title': 'Wrigley Field', 'code': 'US'},
+        {'title': 'Walt Disney World', 'code': 'US'},
+        {'title': 'Statue of Liberty', 'code': 'US'},
+        {'title': 'Hollywood', 'code': 'US'},
+        {'title': 'The White House', 'code': 'US'},
+        {'title': 'Buckingham Palace', 'code': 'GB'},
+        {'title': 'The Eiffel Tower', 'code': 'FR'},
+        {'title': 'The Great Pyramid of Egypt', 'code': 'EG'},
+        {'title': 'The Forbidden City', 'code': 'CN'},
+        {'title': 'The Great Barrier Reef', 'code': 'AU'},
+        {'title': 'Mount Everest', 'code': 'NP'},
+        {'title': 'Antarctica', 'code': 'AQ'},
+    ]
+    location = random.choice(locations)
+    path = os.path.join(BASE_DIR, 'data', 'flags.json')
+    with open(path, 'r') as f:
+        data = json.load(f)
+        for icon in data:
+            if icon['code'] == location['code']:
+                emoji = icon['html']
+    return {
+        'title': location['title'],
+        'emoji': emoji,
+        'query': quote_plus(location['title'].lower()),
+    }
 
 
 @register.simple_tag(takes_context=True)
