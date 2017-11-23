@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no">
-    <meta name="description" content="{% block description %}Emoji Weather allows you to text or call to get the weather.{% endblock %}">
+    <meta name="description" content="{% block description %}{{ request.site.name }} allows a user to search, text, or call for the weather conditions.{% endblock %}">
     <meta name="apple-mobile-web-app-title" content="{{ request.site.name }}">
     <link rel="stylesheet" href="{% static 'css/emojiweather.min.css' %}">
     <link rel="shortcut icon" href="{% block favicon %}{% static 'img/favicons/default.ico' %}{% endblock %}">
@@ -18,7 +18,7 @@
     <meta property="og:locale" content="{% get_current_language as language %}{{ language }}">
     <meta property="og:site_name" content="{{ request.site.name }}">
     <meta property="og:title" content="{% block og_title %}{{ request.site.name }}{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Emoji Weather allows you to text or call to get the weather.{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ request.site.name }} allows a user to search, text, or call for the weather conditions.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% static 'img/touchicons/default.png' %}{% endblock %}">
     <meta property="og:url" content="http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{{ request.get_full_path }}">
     {% block extra_head %}
