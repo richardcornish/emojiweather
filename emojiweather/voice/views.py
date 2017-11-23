@@ -5,7 +5,7 @@ from django.views.generic.edit import FormView
 
 from twilio.twiml.voice_response import Gather, VoiceResponse
 
-from smsweather.mixins import CsrfExemptMixin
+from emojiweather.mixins import CsrfExemptMixin
 from .forms import VoiceWeatherForm
 
 

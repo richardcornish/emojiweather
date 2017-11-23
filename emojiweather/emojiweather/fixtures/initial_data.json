@@ -4,15 +4,15 @@
         "model": "sites.site", 
         "fields": {
             "domain": "127.0.0.1:8000",
-            "name": "SMS Weather"
+            "name": "Emoji Weather"
         }
     },
     {
         "pk": 2, 
         "model": "sites.site", 
         "fields": {
-            "domain": "smsweather.herokuapp.com",
-            "name": "SMS Weather"
+            "domain": "emojiweather.herokuapp.com",
+            "name": "Emoji Weather"
         }
     }
 ]

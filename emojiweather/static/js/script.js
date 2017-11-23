@@ -1,4 +1,4 @@
-SmsWeather = (function ($) {
+EmojiWeather = (function ($) {
     return {
         emptyForm: function () {
             var $form = $('.js-search');
@@ -75,5 +75,5 @@ SmsWeather = (function ($) {
 
 jQuery(function () {
     'use strict';
-    SmsWeather.init();
+    EmojiWeather.init();
 });

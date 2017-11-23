@@ -56,7 +56,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
 
-ROOT_URLCONF = 'smsweather.urls'
+ROOT_URLCONF = 'emojiweather.urls'
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'smsweather.wsgi.application'
+WSGI_APPLICATION = 'emojiweather.wsgi.application'
 
 
 # Database
@@ -148,7 +148,7 @@ MEDIA_URL = '/media/'
 # Sites
 # https://docs.djangoproject.com/en/1.10/ref/contrib/sites/
 
-SITE_ID = 1
+SITE_ID = os.environ.get('SITE_ID', 1)
 
 
 # Heroku

@@ -1,6 +1,6 @@
 from django import forms
 
-from smsweather.mixins import WeatherMixin
+from emojiweather.mixins import WeatherMixin
 
 
 class VoiceWeatherForm(WeatherMixin, forms.Form):

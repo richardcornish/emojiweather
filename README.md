@@ -1,8 +1,8 @@
-# SMS Weather
+# Emoji Weather
 
-**SMS Weather** allows someone to send a text message of a location to a phone number and to receive the location's weather forecast.
+**Emoji Weather** allows someone to search, text, or call to receive the weather conditions.
 
-- [Code repository](https://github.com/richardcornish/smsweather)
-- [Deployed app](https://smsweather.herokuapp.com/)
+- [Code repository](https://github.com/richardcornish/emojiweather)
+- [Deployed app](https://emojiweather.herokuapp.com/)
 
-![Screenshot](smsweather/static/img/screenshot.png)
+![Screenshot](emojiweather/static/img/screenshot.png)

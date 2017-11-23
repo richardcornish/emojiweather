@@ -4,12 +4,12 @@ from django.views.generic.edit import FormView
 
 from twilio.twiml.messaging_response import MessagingResponse
 
-from smsweather.mixins import CsrfExemptMixin
-from .forms import SmsWeatherForm
+from emojiweather.mixins import CsrfExemptMixin
+from .forms import EmojiWeatherForm
 
 
 class SmsView(CsrfExemptMixin, FormView):
-    form_class = SmsWeatherForm
+    form_class = EmojiWeatherForm
 
     def get(self, request, *args, **kwargs):
         return HttpResponseNotFound()

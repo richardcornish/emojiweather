@@ -1,1 +1,1 @@
-web: gunicorn smsweather.wsgi --pythonpath smsweather --workers $WEB_CONCURRENCY --log-file -
+web: gunicorn emojiweather.wsgi --pythonpath emojiweather --workers $WEB_CONCURRENCY --log-file -
