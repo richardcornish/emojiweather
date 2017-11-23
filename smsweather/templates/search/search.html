@@ -52,7 +52,7 @@
             <p class="text-center">
                 {% with results.geocode.address_components|flagify as flag %}
                 {{ flag.html|safe }}&nbsp;{% endwith %}
-                {{ results.geocode.formatted_address }}
+                <a href="http://maps.{% get_os as os %}{% if os == 'iOS' %}apple{% else %}google{% endif %}.com/?q={{ results.geocode.formatted_address|quote_plus }}">{{ results.geocode.formatted_address }}</a>
             </p>
             <p class="text-center js-moment">{% now "F jS, Y, G:i:s A" %}</p>
             <p class="text-center">{{ results.weather.daily.summary }}</p>

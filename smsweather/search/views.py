@@ -1,6 +1,11 @@
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
+try:
+    from urllib import quote_plus
+except ImportError:
+    from urllib.parse import quote_plus
+
 from .forms import SearchWeatherForm
 
 

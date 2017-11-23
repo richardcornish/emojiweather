@@ -15,6 +15,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 register = template.Library()
 
 
+@register.filter(name='quote_plus')
+def _quote_plus(value):
+    return quote_plus(value)
+
+
 @register.simple_tag
 def get_location():
     locations = [
