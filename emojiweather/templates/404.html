@@ -3,7 +3,17 @@
 {% load staticfiles weather_tags %}
 
 
-{% block title %}Page not found &#183; {{ block.super }}{% endblock %}
+{% block title %}Not found &#x1F916; &#183; {{ block.super }}{% endblock %}
+
+
+{% block description %}We're sorry, but the page you were looking for could not be found.{% endblock %}
+
+
+{% block og_title %}Not found &#x1F916;{% endblock %}
+
+{% block og_image %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% static 'img/touchicons/error.png' %}{% endblock %}
+
+{% block og_description %}We're sorry, but the page you were looking for could not be found.{% endblock %}
 
 
 {% block content_container %}
@@ -11,7 +21,7 @@
     <div class="row">
         <div class="col-md-6 col-lg-6 offset-md-3">
 
-            <h1 class="text-center">Page not found &#x1F916;</h1>
+            <h1 class="text-center">Not found &#x1F916;</h1>
 
             <p>&nbsp;</p>
 
