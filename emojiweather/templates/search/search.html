@@ -9,14 +9,14 @@
 {% block favicon %}{% if results.weather %}{% with 'img/favicons/'|add:results.weather.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
-{% block description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}&#x1F916; Beep boop. {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}Beep boop. &#x1F916; {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
 {% block og_title %}{% if results.weather %}{{ results.weather.currently.temperature|floatformat:"0" }}&#176; at {{ results.geocode.formatted_address }}{% elif results.error %}Search error{% else %}Search{% endif %}{% endblock %}
 
 {% block og_image %}{% if results.weather or results.error %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% if results.weather %}{% with 'img/touchicons/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% elif results.error %}{% static 'img/touchicons/error.png' %}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
-{% block og_description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}&#x1F916; Beep boop. {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block og_description %}{% if results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}Beep boop. &#x1F916; {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
 {% block extra_head %}
@@ -52,7 +52,7 @@
             </p>
             <p class="text-center">
                 {% with results.geocode.address_components|flagify as flag %}
-                <a href="http://maps.{% get_os as os %}{% if os == 'iOS' %}apple{% else %}google{% endif %}.com/?q={{ results.geocode.formatted_address|quote_plus }}">{{ results.geocode.formatted_address }}</a>
+                <a href="https://maps.google.com/?q={{ results.geocode.formatted_address|quote_plus }}">{{ results.geocode.formatted_address }}</a>
                 {{ flag.html|safe }}
                 {% endwith %}
             </p>
