@@ -29,7 +29,7 @@ class VoiceView(CsrfExemptMixin, FormView):
         context = {'results': form.get_results(address)}
         message = render_to_string('voice/voice.xml', context)
         response = VoiceResponse()
-        gather = Gather(input='dtmf speech', timeout=2, numDigits=5)
+        gather = Gather(input='dtmf speech', timeout=0, numDigits=5)
         gather.say(message, voice='alice')
         response.append(gather)
         response.redirect(reverse('voice'))
