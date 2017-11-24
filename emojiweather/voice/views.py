@@ -14,22 +14,18 @@ class VoiceView(CsrfExemptMixin, FormView):
     form_class = VoiceWeatherForm
 
     def form_valid(self, form):
+        # https://www.twilio.com/docs/api/twiml/gather
         if form.cleaned_data['SpeechResult']:
             address = form.cleaned_data['SpeechResult']
         elif form.cleaned_data['Digits']:
             address = form.cleaned_data['Digits']
         else:
-            address = '%s %s %s %s' % (
-                form.cleaned_data['FromCity'],
-                form.cleaned_data['FromState'],
-                form.cleaned_data['FromZip'],
-                form.cleaned_data['FromCountry'],
-            )
-            address = address.strip()
-        context = {'results': form.get_results(address)}
+            address = None
+        results = form.get_results(address) if address else None
+        context = {'results': results}
         message = render_to_string('voice/voice.xml', context)
         response = VoiceResponse()
-        gather = Gather(input='dtmf speech', timeout=1, numDigits=5)
+        gather = Gather(input='dtmf speech', timeout=2, numDigits=5, finishOnKey='#')
         gather.say(message, voice='alice')
         response.append(gather)
         response.redirect(reverse('voice'))
