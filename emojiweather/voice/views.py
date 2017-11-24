@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic.edit import FormView
@@ -10,10 +10,8 @@ from .forms import VoiceWeatherForm
 
 
 class VoiceView(CsrfExemptMixin, FormView):
+    template_name = 'voice/voice.html'
     form_class = VoiceWeatherForm
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseNotFound()
 
     def form_valid(self, form):
         if form.cleaned_data['SpeechResult']:

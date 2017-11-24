@@ -1,1 +1,26 @@
-<a href="{% static 'img/screenshot.png' %}"><img src="{% static 'img/screenshot.png' %}" alt="Screenshot" class="img-fluid img-thumbnail"></a>
+{% extends "base.html" %}
+
+{% load staticfiles weather_tags %}
+
+
+{% block title %}Text &#183; {{ block.super }}{% endblock %}
+
+
+{% block sms_active %}active{% endblock %}
+
+
+{% block content_container %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 offset-md-3">
+
+            <h1 class="text-center">Text</h1>
+
+            <p><a href="sms:1-312-818-3823" class="btn btn-block btn-primary btn-lg">(312) 818-3823</a></p>
+
+            <p><a href="{% static 'img/text-screenshot.png' %}"><img src="{% static 'img/text-screenshot.png' %}" alt="Text screenshot" class="img-fluid img-thumbnail"></a></p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

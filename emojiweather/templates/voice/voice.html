@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load staticfiles weather_tags %}
+
+
+{% block title %}Call &#183; {{ block.super }}{% endblock %}
+
+
+{% block voice_active %}active{% endblock %}
+
+
+{% block content_container %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 offset-md-3">
+
+            <h1 class="text-center">Call</h1>
+
+            <p><a href="tel:1-312-818-3823" class="btn btn-block btn-primary btn-lg">(312) 818-3823</a></p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

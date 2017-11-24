@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.views.generic.edit import FormView
 
@@ -9,10 +9,8 @@ from .forms import EmojiWeatherForm
 
 
 class SmsView(CsrfExemptMixin, FormView):
+    template_name = 'sms/sms.html'
     form_class = EmojiWeatherForm
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseNotFound()
 
     def form_valid(self, form):
         # https://www.twilio.com/docs/api/twiml/sms/twilio_request
