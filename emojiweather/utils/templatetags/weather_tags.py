@@ -15,11 +15,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 register = template.Library()
 
 
-@register.filter(name='quote_plus')
-def _quote_plus(value):
-    return quote_plus(value)
-
-
 @register.simple_tag
 def get_location():
     locations = [
@@ -93,3 +88,23 @@ def flagify(value):
                     for icon in data:
                         if icon['code'] == component['short_name']:
                             return icon
+
+
+@register.filter(name='quote_plus')
+def _quote_plus(value):
+    return quote_plus(value)
+
+
+@register.tag
+def strip(parser, token):
+    nodelist = parser.parse(('endstrip',))
+    parser.delete_first_token()
+    return StripNode(nodelist)
+
+class StripNode(template.Node):
+    def __init__(self, nodelist):
+        self.nodelist = nodelist
+
+    def render(self, context):
+        output = self.nodelist.render(context)
+        return " ".join(output.split())
