@@ -25,6 +25,7 @@ class VoiceView(CsrfExemptMixin, FormView):
         context = {'results': results}
         message = render_to_string('voice/voice.xml', context)
         response = VoiceResponse()
+        response.record()
         gather = Gather(input='dtmf speech', timeout=2, numDigits=5, finishOnKey='#')
         gather.say(message, voice='alice')
         response.append(gather)
