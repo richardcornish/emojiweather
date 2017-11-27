@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "32a598e722327256e568f0fde6f51ce0c9c2e6dc4653b7d7d6562a275f8eeb40"
+            "sha256": "df088f52bd0bf51045ad42b3bb7b9dd6fff0809f79f11216f4435a352144d9c3"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -224,10 +224,17 @@
         },
         "pyopenssl": {
             "hashes": [
-                "sha256:aade9985b93eaec51b0c0a2a60d14bb8dcff1ff8e36fe542e3c22812ec07315e",
-                "sha256:29630b9064a82e04d8242ea01d7c93d70ec320f5e3ed48e95fcabc6b1d0f6c76"
+                "sha256:b8a8797c50598da10526511a4a9b992b155932f86dde509906c8bee3a705b480",
+                "sha256:2d96b6a3d768bf466c56240d6dd6f035cc8e9c356d20da0583886e77ce9cf6ab"
             ],
-            "version": "==17.3.0"
+            "version": "==17.4.0"
+        },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:95511bae634d69bc7329ba55e646499a842bc4ec342ad54a8cdb65645a0aad3c",
+                "sha256:891c38b2a02f5bb1be3e4793866c8df49c7d19baabf9c1bad62547e0b4866aca"
+            ],
+            "version": "==2.6.1"
         },
         "pytz": {
             "hashes": [
@@ -266,10 +273,10 @@
         },
         "twilio": {
             "hashes": [
-                "sha256:3a763c73eeb6971499d008dd74ab42a08a6d915bfb8d7fd6176ec94b4dd12862",
-                "sha256:e9ea259db954f3f074ddab6297069bb74b1ad08e2f335cdc32696099172dbd02"
+                "sha256:e600501334bc410a944d5e939f4e10f2530f9eaaaead8337cb34ce93bd2c22f8",
+                "sha256:dcb133803881d6ebbbdd1b898f5f7860d9efbf80f96d0ee4fa4df434bb15fcbd"
             ],
-            "version": "==6.8.4"
+            "version": "==6.9.0"
         },
         "ua-parser": {
             "hashes": [

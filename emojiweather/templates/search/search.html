@@ -37,6 +37,14 @@
     <div class="row">
         <div class="col-lg-12">
             {% strip %}
+            {% get_holidays results.weather.timezone as holidays %}
+            {% if holidays %}
+            <p class="text-center" style="margin: 1.5rem 0 -1rem">
+                {% for holiday in holidays %}
+                {{ holiday.greeting }} {{ holiday.name }} {{ holiday.html|safe }}
+                {% endfor %}
+            </p>
+            {% endif %}
             {% if results.geocode and results.weather %}
             <h1 class="text-center display-1">
                 {% with results.weather.currently.icon|weatherify as icon %}
