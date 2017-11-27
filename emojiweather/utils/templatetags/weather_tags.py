@@ -98,6 +98,11 @@ def get_holidays(tz):
     return [holiday for holiday in holidays if holiday['date'] == today]
 
 
+@register.filter(is_safe=True)
+def minusify(value):
+    return value.replace('-', '&#8722;')
+
+
 @register.filter
 def weatherify(value):
     path = os.path.join(BASE_DIR, 'data', 'weather.json')
