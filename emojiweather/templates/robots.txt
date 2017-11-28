@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: 
+
+Sitemap: http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% url 'sitemap' %}
