@@ -14,7 +14,7 @@
 
 {% block og_title %}{% if results.geocode and results.weather %}{{ results.weather.currently.temperature|floatformat:"0" }}&#176; at {{ results.geocode.formatted_address }}{% elif results.error %}Search error{% else %}Search{% endif %}{% endblock %}
 
-{% block og_image %}{% if results.weather or results.error %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% if results.weather %}{% with 'img/touchicons/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% elif results.error %}{% static 'img/touchicons/error.png' %}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block og_image %}{% if results.weather or results.error %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% if results.weather %}{% with 'img/weather/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% elif results.error %}{% static 'img/error.png' %}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 {% block og_description %}{% if results.geocode and results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|floatformat:"0" }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}Beep boop. &#x1F916; {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 

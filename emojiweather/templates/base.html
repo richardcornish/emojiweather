@@ -10,16 +10,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no">
     <meta name="description" content="{% block description %}{{ request.site.name }} allows a user to search, text, or call for the weather conditions.{% endblock %}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="{{ request.site.name }}">
+    <link rel="apple-touch-icon" href="{% static 'img/touch-icon-iphone.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/touch-icon-ipad.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/touch-icon-iphone-retina.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'img/touch-icon-ipad-retina.png' %}">
     <link rel="stylesheet" href="{% static 'css/emojiweather.min.css' %}">
     <link rel="shortcut icon" href="{% block favicon %}{% static 'img/favicons/default.ico' %}{% endblock %}">
-    <link rel="apple-touch-icon" href="{% static 'img/touchicons/default.png' %}">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="{% get_current_language as language %}{{ language }}">
     <meta property="og:site_name" content="{{ request.site.name }}">
     <meta property="og:title" content="{% block og_title %}{{ request.site.name }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}{{ request.site.name }} allows a user to search, text, or call for the weather conditions.{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% static 'img/touchicons/default.png' %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% static 'img/touch-icon-iphone-retina.png' %}{% endblock %}">
     <meta property="og:url" content="http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{{ request.get_full_path }}">
     {% block extra_head %}
     {% endblock %}
