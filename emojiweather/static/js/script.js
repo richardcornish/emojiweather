@@ -61,7 +61,7 @@ EmojiWeather = (function ($) {
         },
         insertDateTime: function (tz) {
             setInterval(function () {
-                $('.js-moment').text(moment().tz(tz).format('MMMM Do, YYYY, H:mm:ss A'));
+                $('.js-moment').text(moment().tz(tz).format('MMMM Do, YYYY, h:mm:ss A'));
             }, 1000);
         },
         init: function () {
