@@ -14,5 +14,5 @@ class SearchWeatherForm(WeatherFormMixin, forms.Form):
     }))
 
     def __init__(self, *args, **kwargs):
-        super(SearchWeatherForm, self).__init__(*args, **kwargs)
         self.fields['q'].initial = kwargs.pop('q', None)
+        super(SearchWeatherForm, self).__init__(*args, **kwargs)
