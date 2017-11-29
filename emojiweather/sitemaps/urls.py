@@ -1,9 +1,9 @@
 from django.conf.urls import url
-from django.contrib.sitemaps.views import sitemap
+from django.contrib.sitemaps import views
 
 from .sitemaps import sitemaps
 
 
 urlpatterns = [
-    url(r'^$', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    url(r'^sitemap\.xml$', views.sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]

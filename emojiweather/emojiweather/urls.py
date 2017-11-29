@@ -15,9 +15,9 @@ urlpatterns = [
     url(r'^search/', include('search.urls')),
     url(r'^sms/', include('sms.urls')),
     url(r'^voice/', include('voice.urls')),
-    url(r'^sitemap\.xml', include('sitemaps.urls')),
     url(r'^favicon\.ico$', FaviconView.as_view(), name='favicon'),
     url(r'^robots\.txt$', RobotsView.as_view(), name='robots'),
+    url(r'^', include('sitemaps.urls')),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
 
