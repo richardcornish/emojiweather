@@ -1,9 +1,9 @@
 from django import forms
 
-from emojiweather.mixins import WeatherMixin
+from emojiweather.mixins import WeatherFormMixin
 
 
-class SearchWeatherForm(WeatherMixin, forms.Form):
+class SearchWeatherForm(WeatherFormMixin, forms.Form):
     q = forms.CharField(label='Query', widget=forms.TextInput(attrs={
         'type': 'search',
         'autocapitalize': 'words',
@@ -12,3 +12,7 @@ class SearchWeatherForm(WeatherMixin, forms.Form):
         'class': 'form-control form-control-lg text-center',
         'placeholder': 'Search for a location',
     }))
+
+    def __init__(self, q, *args, **kwargs):
+        super(SearchWeatherForm, self).__init__(*args, **kwargs)
+        self.fields['q'].initial = q

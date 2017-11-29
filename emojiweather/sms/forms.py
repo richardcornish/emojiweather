@@ -1,7 +1,7 @@
 from django import forms
 
-from emojiweather.mixins import WeatherMixin
+from emojiweather.mixins import WeatherFormMixin
 
 
-class EmojiWeatherForm(WeatherMixin, forms.Form):
+class EmojiWeatherForm(WeatherFormMixin, forms.Form):
     Body = forms.CharField()

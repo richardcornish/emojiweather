@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "df088f52bd0bf51045ad42b3bb7b9dd6fff0809f79f11216f4435a352144d9c3"
+            "sha256": "8c3ddb9045c3eea7f0f14bb86bb1d0fc1f019a78f5d269633d548026e6b66d4c"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -134,6 +134,12 @@
             ],
             "version": "==1.9.1"
         },
+        "django-ipware": {
+            "hashes": [
+                "sha256:93a90f9dd8caf2c633172aa8c8ba4e76e2b44f92a6942fa35e7624281e81ea03"
+            ],
+            "version": "==1.1.6"
+        },
         "django-widget-tweaks": {
             "hashes": [
                 "sha256:0e8e3b7ebd1aafb2250d0f7614cfbad27017b3c727858ee3aee23748dd1f147d",
@@ -214,6 +220,13 @@
                 "sha256:99a8ca03e29851d96616ad0404b4aad7d9ee16f25c9f9708a11faf2810f7b226"
             ],
             "version": "==2.18"
+        },
+        "pygeoip": {
+            "hashes": [
+                "sha256:1938b9dac7b00d77f94d040b9465ea52c938f3fcdcd318b5537994f3c16aef96",
+                "sha256:f22c4e00ddf1213e0fae36dc60b46ee7c25a6339941ec1a975539014c1f9a96d"
+            ],
+            "version": "==0.3.2"
         },
         "pyjwt": {
             "hashes": [

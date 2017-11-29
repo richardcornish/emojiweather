@@ -3,6 +3,7 @@ from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormMixin
 
 from search.forms import SearchWeatherForm
+from .mixins import FormKwargsMixin
 
 
 class FaviconView(RedirectView):
@@ -10,7 +11,7 @@ class FaviconView(RedirectView):
     permanent = True
 
 
-class HomeView(FormMixin, TemplateView):
+class HomeView(FormKwargsMixin, FormMixin, TemplateView):
     form_class = SearchWeatherForm
     template_name = 'home.html'
 

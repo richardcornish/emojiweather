@@ -1,9 +1,9 @@
 from django import forms
 
-from emojiweather.mixins import WeatherMixin
+from emojiweather.mixins import WeatherFormMixin
 
 
-class VoiceWeatherForm(WeatherMixin, forms.Form):
+class VoiceWeatherForm(WeatherFormMixin, forms.Form):
     Digits = forms.CharField(required=False)
     SpeechResult = forms.CharField(required=False)
     FromCity = forms.CharField(required=False)

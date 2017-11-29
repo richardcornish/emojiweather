@@ -2,7 +2,9 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
+import pygeoip
 import requests
+from ipware.ip import get_real_ip
 
 
 class CsrfExemptMixin(object):
@@ -11,7 +13,20 @@ class CsrfExemptMixin(object):
         return super(CsrfExemptMixin, self).dispatch(*args, **kwargs)
 
 
-class WeatherMixin(object):
+class FormKwargsMixin(object):
+    def get_form_kwargs(self):
+        kwargs = super(FormInitialMixin, self).get_form_kwargs()
+        ip = get_real_ip(self.request)
+        if ip is not None:
+            gi = pygeoip.GeoIP(settings.GEOLITE2_DB)
+            addr = gi.record_by_addr(ip)
+            if addr:
+                kwargs['q'] = '%s, %s' % (addr.get('city', ''), addr.get('region_code', ''))
+        return kwargs
+
+
+class WeatherFormMixin(object):
+
     def get_geocode(self, address):
         errors = {
             'zero_results': 'We\u2019re sorry, but we could not find %s.' % address,
