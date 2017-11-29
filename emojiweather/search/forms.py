@@ -13,6 +13,6 @@ class SearchWeatherForm(WeatherFormMixin, forms.Form):
         'placeholder': 'Search for a location',
     }))
 
-    def __init__(self, q, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(SearchWeatherForm, self).__init__(*args, **kwargs)
-        self.fields['q'].initial = q
+        self.fields['q'].initial = kwargs.pop('q', None)
