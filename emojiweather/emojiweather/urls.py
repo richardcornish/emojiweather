@@ -2,12 +2,10 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 import debug_toolbar
 
-from sitemaps.sitemaps import sitemaps
 from .views import FaviconView, HomeView, RobotsView
 
 
@@ -17,9 +15,9 @@ urlpatterns = [
     url(r'^search/', include('search.urls')),
     url(r'^sms/', include('sms.urls')),
     url(r'^voice/', include('voice.urls')),
+    url(r'^sitemap\.xml', include('sitemaps.urls')),
     url(r'^favicon\.ico$', FaviconView.as_view(), name='favicon'),
     url(r'^robots\.txt$', RobotsView.as_view(), name='robots'),
-    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
 
