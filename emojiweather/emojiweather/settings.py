@@ -174,4 +174,4 @@ DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 
 # MaxMind GeoLite2
 # http://dev.maxmind.com/geoip/legacy/geolite/
-GEOLITE2_DB = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLiteCity.dat.gz')
+GEOLITE2_DB = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLiteCity.dat')
