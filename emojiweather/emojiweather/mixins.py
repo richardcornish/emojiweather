@@ -15,7 +15,7 @@ class CsrfExemptMixin(object):
 
 class FormKwargsMixin(object):
     def get_form_kwargs(self):
-        kwargs = super(FormInitialMixin, self).get_form_kwargs()
+        kwargs = super(FormKwargsMixin, self).get_form_kwargs()
         ip = get_real_ip(self.request)
         if ip is not None:
             gi = pygeoip.GeoIP(settings.GEOLITE2_DB)
