@@ -10,7 +10,6 @@ EmojiWeather = (function ($) {
             var $form = $('.js-search');
             var $submit = $form.find(':submit');
             $form.on('submit', function () {
-                $(this).find('button').prop('disabled', true);
                 var icon = $submit.find('svg').prop('outerHTML');
                 var feedback = ['Searching', 'Searching.', 'Searching..', 'Searching...'];
                 var counter = 0;
@@ -28,7 +27,6 @@ EmojiWeather = (function ($) {
             $('.js-geolocate').on('click', function () {
                 var $form = $('.js-search');
                 var $q = $form.find('input[name="q"]');
-                $q.prop('disabled', true);
                 var feedback = ['Locating', 'Locating.', 'Locating..', 'Locating...'];
                 var counter = 0;
                 var insertLocating = setInterval(function () {
@@ -44,7 +42,7 @@ EmojiWeather = (function ($) {
                         clearInterval(insertLocating);
                         var latitude = pos.coords.latitude;
                         var longitude = pos.coords.longitude;
-                        $q.prop('disabled', false).val(latitude + ', ' + longitude);
+                        $q.val(latitude + ', ' + longitude);
                         $form.trigger('submit');
                     };
                     var error = function (err) {
