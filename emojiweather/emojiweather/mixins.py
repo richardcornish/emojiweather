@@ -18,7 +18,7 @@ class FormKwargsMixin(object):
         kwargs = super(FormKwargsMixin, self).get_form_kwargs()
         ip = get_real_ip(self.request)
         if ip is not None:
-            gi = pygeoip.GeoIP(settings.GEOLITE2_DB)
+            gi = pygeoip.GeoIP(settings.GEOLITECITY_DB)
             addr = gi.record_by_addr(ip)
             if addr:
                 kwargs['q'] = '%s, %s' % (addr.get('city', ''), addr.get('region_code', ''))

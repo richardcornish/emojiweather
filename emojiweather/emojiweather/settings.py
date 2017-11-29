@@ -172,6 +172,6 @@ GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
 # https://darksky.net/dev/docs
 DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 
-# MaxMind GeoLite2
+# MaxMind GeoLiteCity
 # http://dev.maxmind.com/geoip/legacy/geolite/
-GEOLITE2_DB = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLiteCity.dat')
+GEOLITECITY_DB = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLiteCity.dat')
