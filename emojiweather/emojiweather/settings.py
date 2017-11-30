@@ -164,6 +164,10 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 
+# Google Maps JavaScript API
+# https://developers.google.com/maps/documentation/javascript/tutorial
+GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', '')
+
 # Google Geocoding API
 # https://developers.google.com/maps/documentation/geocoding/start
 GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
@@ -172,6 +176,7 @@ GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
 # https://darksky.net/dev/docs
 DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 
-# MaxMind GeoLiteCity
-# http://dev.maxmind.com/geoip/legacy/geolite/
-GEOLITECITY_DB = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLiteCity.dat')
+# MaxMind GeoLite2
+# http://dev.maxmind.com/geoip/geoip2/geolite2/
+# https://geoip2.readthedocs.io/en/latest/
+GEOLITE2_CITY = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLite2-City.mmdb')
