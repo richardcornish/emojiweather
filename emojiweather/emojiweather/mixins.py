@@ -20,7 +20,10 @@ class FormKwargsMixin(object):
         if ip is not None:
             reader = geoip2.database.Reader(settings.GEOLITE2_CITY_DB)
             response = reader.city(ip)
-            kwargs['q'] = '%s, %s' % (response.city.name, response.subdivisions.most_specific.name)
+            city = response.city.name if response.city.name else ''
+            state = response.subdivisions.most_specific.name if response.subdivisions.most_specific.name else ''
+            delimeter = ', ' if city and state else ''
+            kwargs['q'] = '%s%s%s' % (city, delimeter, state)
         return kwargs
 
 
