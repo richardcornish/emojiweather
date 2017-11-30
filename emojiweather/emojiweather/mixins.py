@@ -21,9 +21,10 @@ class FormKwargsMixin(object):
             reader = geoip2.database.Reader(settings.GEOLITE2_CITY_DB)
             response = reader.city(ip)
             city = response.city.name if response.city.name else ''
-            state = response.subdivisions.most_specific.name if response.subdivisions.most_specific.name else ''
-            delimeter = ', ' if city and state else ''
-            kwargs['q'] = '%s%s%s' % (city, delimeter, state)
+            country = response.country.name if response.country.name else ''
+            delimeter = ', ' if city and country else ''
+            kwargs['q'] = '%s%s%s' % (city, delimeter, country)
+            reader.close()
         return kwargs
 
 
