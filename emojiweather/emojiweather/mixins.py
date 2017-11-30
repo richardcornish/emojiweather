@@ -2,7 +2,7 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-import pygeoip
+import geoip2.database
 import requests
 from ipware.ip import get_real_ip
 
@@ -18,10 +18,10 @@ class FormKwargsMixin(object):
         kwargs = super(FormKwargsMixin, self).get_form_kwargs()
         ip = get_real_ip(self.request)
         if ip is not None:
-            gi = pygeoip.GeoIP(settings.GEOLITECITY_DB)
-            addr = gi.record_by_addr(ip)
+            reader = geoip2.database.Reader(settings.GEOLITE2_CITY_DB)
+            response = reader.city(ip)
             if addr:
-                kwargs['q'] = '%s, %s' % (addr.get('city', ''), addr.get('region_code', ''))
+                kwargs['q'] = '%s, %s' % (response.city.name, response.subdivisions.most_specific.name)
         return kwargs
 
 
