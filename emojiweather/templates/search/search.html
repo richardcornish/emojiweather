@@ -130,9 +130,10 @@
 
 
 {% block scripts %}
-{% if results.weather.timezone %}
+{{ block.super }}
 <script>
+    {% if results.weather.timezone %}
     EmojiWeather.insertDateTime('{{ results.weather.timezone }}');
+    {% endif %}
 </script>
-{% endif %}
 {% endblock %}
