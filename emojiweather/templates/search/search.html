@@ -33,6 +33,7 @@
 
 
 {% block content_container %}
+<div id="map"></div>
 {% strip %}
 <div class="container">
     <div class="row">
@@ -134,6 +135,9 @@
 <script>
     {% if results.weather.timezone %}
     EmojiWeather.insertDateTime('{{ results.weather.timezone }}');
+    {% endif %}
+    {% if results.weather.latitude and results.weather.longitude %}
+    EmojiWeather.drawMap('#map', {{ results.weather.latitude }}, {{ results.weather.longitude }});
     {% endif %}
 </script>
 {% endblock %}

@@ -1,8 +1,9 @@
 from django.conf import settings
+from django.contrib.gis.geoip2 import GeoIP2
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-import geoip2.database
+
 import requests
 from ipware.ip import get_real_ip
 
@@ -18,13 +19,12 @@ class FormKwargsMixin(object):
         kwargs = super(FormKwargsMixin, self).get_form_kwargs()
         ip = get_real_ip(self.request)
         if ip is not None:
-            reader = geoip2.database.Reader(settings.GEOLITE2_CITY_DB)
-            response = reader.city(ip)
-            city = response.city.name if response.city.name else ''
-            country = response.country.name if response.country.name else ''
+            g = GeoIP2()
+            record = g.city(ip)
+            city = record.city if record.city else ''
+            country = record.country_name if record.country_name else ''
             delimeter = ', ' if city and country else ''
             kwargs['q'] = '%s%s%s' % (city, delimeter, country)
-            reader.close()
         return kwargs
 
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% spaceless %}
-{% load i18n staticfiles %}
+{% load i18n staticfiles weather_tags %}
 
 <html lang="{% get_current_language as language %}{{ language }}">
 <head>
@@ -81,6 +81,7 @@
     </div>
 </footer>
 
+<script src="https://maps.googleapis.com/maps/api/js?key={% get_google_maps_key as key %}{{ key }}" async defer></script>
 <script src="{% static 'js/emojiweather.min.js' %}"></script>
 {% block scripts %}{% endblock %}
 

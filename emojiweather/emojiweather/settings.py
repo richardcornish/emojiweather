@@ -176,7 +176,7 @@ GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
 # https://darksky.net/dev/docs
 DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 
-# MaxMind GeoLite2
+# Geolocation
+# https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
 # http://dev.maxmind.com/geoip/geoip2/geolite2/
-# https://geoip2.readthedocs.io/en/latest/
-GEOLITE2_CITY_DB = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind', 'GeoLite2-City.mmdb')
+GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind')

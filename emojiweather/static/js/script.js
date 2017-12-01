@@ -1,4 +1,4 @@
-EmojiWeather = (function ($) {
+EmojiWeather = (function ($, google) {
     return {
         emptyForm: function () {
             var $form = $('.js-search');
@@ -62,6 +62,69 @@ EmojiWeather = (function ($) {
                 $('.js-moment').text(moment().tz(tz).format('MMMM Do, YYYY, h:mm:ss A'));
             }, 1000);
         },
+        drawMap: function (selector, latitude, longitude) {
+            var minimal = [
+                {
+                    "elementType": "labels",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "administrative.neighborhood",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "poi",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "road",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels.icon",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "transit",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                }
+            ];
+            var el = $(selector).get(0);
+            var options = {
+                zoom: 10,
+                center: new google.maps.LatLng(latitude, longitude),
+                mapTypeId: 'roadmap',
+                styles: emo,
+                disableDefaultUI: true
+            };
+            var map = new google.maps.Map(el, options);
+        },
         init: function () {
             var self = this;
             self.emptyForm();
@@ -69,7 +132,7 @@ EmojiWeather = (function ($) {
             self.geolocateAndSubmit();
         }
     };
-})(jQuery);
+})(jQuery, google);
 
 jQuery(function () {
     'use strict';

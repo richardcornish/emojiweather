@@ -4,6 +4,7 @@ import random
 from datetime import date
 
 from django import template
+from django.conf import settings
 from django.utils import timezone
 
 import pytz
@@ -96,6 +97,11 @@ def get_holidays(tz):
                         holiday['date'] += rd(days=item['days'])
             holidays.append(holiday)
     return [holiday for holiday in holidays if holiday['date'] == today]
+
+
+@register.simple_tag
+def get_google_maps_key():
+    return settings.GOOGLE_MAPS_API_KEY
 
 
 @register.filter(is_safe=True)
