@@ -120,10 +120,10 @@ EmojiWeather = (function ($, google) {
                 zoom: 10,
                 center: new google.maps.LatLng(latitude, longitude),
                 mapTypeId: 'roadmap',
-                styles: emo,
+                styles: minimal,
                 disableDefaultUI: true
             };
-            var map = new google.maps.Map(el, options);
+            new google.maps.Map(el, options);
         },
         init: function () {
             var self = this;

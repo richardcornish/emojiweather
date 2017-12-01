@@ -131,6 +131,7 @@
 
 
 {% block scripts %}
+{% strip %}
 {{ block.super }}
 <script>
     {% if results.weather.timezone %}
@@ -140,4 +141,5 @@
     EmojiWeather.drawMap('#map', {{ results.weather.latitude }}, {{ results.weather.longitude }});
     {% endif %}
 </script>
+{% endstrip %}
 {% endblock %}
