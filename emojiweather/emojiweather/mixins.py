@@ -21,8 +21,8 @@ class FormKwargsMixin(object):
         if ip is not None:
             g = GeoIP2()
             record = g.city(ip)
-            city = record.city if record.city else ''
-            country = record.country_name if record.country_name else ''
+            city = record['city'] if record['city'] else ''
+            country = record['country_name'] if record['country_name'] else ''
             delimeter = ', ' if city and country else ''
             kwargs['q'] = '%s%s%s' % (city, delimeter, country)
         return kwargs
