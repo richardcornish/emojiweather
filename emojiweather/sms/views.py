@@ -5,12 +5,12 @@ from django.views.generic.edit import FormView
 from twilio.twiml.messaging_response import MessagingResponse
 
 from emojiweather.mixins import CsrfExemptMixin
-from .forms import EmojiWeatherForm
+from .forms import SmsWeatherForm
 
 
 class SmsView(CsrfExemptMixin, FormView):
     template_name = 'sms/sms.html'
-    form_class = EmojiWeatherForm
+    form_class = SmsWeatherForm
 
     def form_valid(self, form):
         # https://www.twilio.com/docs/api/twiml/sms/twilio_request
