@@ -6,40 +6,10 @@ EmojiWeather = (function ($, google) {
                 $form.find('input[name="q"]').val('');
             }
         },
-        submitSeachForm: function () {
-            var $form = $('.js-search');
-            var $submit = $form.find(':submit');
-            $form.on('submit', function () {
-                var icon = $submit.find('svg').prop('outerHTML');
-                var feedback = ['Searching', 'Searching.', 'Searching..', 'Searching...'];
-                var counter = 0;
-                setInterval(function () {
-                    $submit.html(icon + feedback[counter]);
-                    if (counter < feedback.length - 1) {
-                        counter++;
-                    } else {
-                        counter = 0;
-                    }
-                }, 300);
-            });
-        },
         geolocateAndSubmit: function () {
             $('.js-geolocate').on('click', function () {
-                var $form = $('.js-search');
-                var $q = $form.find('input[name="q"]');
-                var feedback = ['Locating', 'Locating.', 'Locating..', 'Locating...'];
-                var counter = 0;
-                var insertLocating = setInterval(function () {
-                    $q.val(feedback[counter]);
-                    if (counter < feedback.length - 1) {
-                        counter++;
-                    } else {
-                        counter = 0;
-                    }
-                }, 300);
                 if ('geolocation' in window.navigator && $form.length) {
                     var success = function (pos) {
-                        clearInterval(insertLocating);
                         var latitude = pos.coords.latitude;
                         var longitude = pos.coords.longitude;
                         $q.val(latitude + ', ' + longitude);
@@ -128,7 +98,6 @@ EmojiWeather = (function ($, google) {
         init: function () {
             var self = this;
             self.emptyForm();
-            self.submitSeachForm();
             self.geolocateAndSubmit();
         }
     };

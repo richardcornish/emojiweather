@@ -137,7 +137,7 @@
     EmojiWeather.insertDateTime('{{ results.weather.timezone }}');
     {% endif %}
     {% if results.weather.latitude and results.weather.longitude %}
-    EmojiWeather.drawMap('#map', {{ results.weather.latitude }}, {{ results.weather.longitude }});
+    // EmojiWeather.drawMap('#map', {{ results.weather.latitude }}, {{ results.weather.longitude }});
     {% endif %}
 </script>
 {% endstrip %}
