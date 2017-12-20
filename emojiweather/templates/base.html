@@ -80,7 +80,9 @@
         <div class="row">
             <div class="col">
                 {% block footer %}
+                <p>&nbsp;</p>
                 <p class="small text-center text-muted">&copy; {% now "Y" %}. <a href="{% url 'home' %}">{{ request.site.name }}</a>. &#183; <a href="{% url 'search' %}">Search</a> &#183; <a href="{% url 'sms' %}">Text</a> &#183; <a href="{% url 'voice' %}">Call</a></p>
+                <p>&nbsp;</p>
                 {% endblock %}
             </div>
         </div>

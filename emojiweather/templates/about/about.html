@@ -12,9 +12,12 @@
 {% block content_container %}
 <div class="container">
     <div class="row">
-        <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-
+        <div class="col-md-12">
             <h1 class="text-center">About</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-4 offset-lg-2">
 
             <p><strong>Emoji Weather</strong> is a website that allows a user to search, text, or call to receive the weather conditions.</p>
 
@@ -29,7 +32,21 @@
             <h2>What is the point of this?</h2>
 
             <p>I made it for fun.</p>
-
+            <p></p>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <figure class="figure">
+                <a href="{% url 'search' %}"><img src="{% static 'img/about-search.png' %}" class="figure-img img-fluid img-thumbnail" alt="Web search screenshot"></a>
+                <figcaption class="figure-caption">Web search</figcaption>
+            </figure>
+            <figure class="figure">
+                <a href="{% url 'sms' %}"><img src="{% static 'img/about-sms.png' %}" class="figure-img img-fluid img-thumbnail" alt="Text message screenshot"></a>
+                <figcaption class="figure-caption">Text message</figcaption>
+            </figure>
+            <figure class="figure">
+                <a href="{% url 'voice' %}"><img src="{% static 'img/about-voice.png' %}" class="figure-img img-fluid img-thumbnail" alt="Phone call screenshot"></a>
+                <figcaption class="figure-caption">Phone call</figcaption>
+            </figure>
         </div>
     </div>
 </div>
