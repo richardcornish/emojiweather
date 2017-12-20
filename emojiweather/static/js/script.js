@@ -9,6 +9,7 @@ EmojiWeather = (function ($, google) {
         geolocateAndSubmit: function () {
             $('.js-geolocate').on('click', function () {
                 var $form = $('.js-search');
+                var $q = $form.find('input[name="q"]');
                 if ('geolocation' in window.navigator && $form.length) {
                     var success = function (pos) {
                         var latitude = pos.coords.latitude;
