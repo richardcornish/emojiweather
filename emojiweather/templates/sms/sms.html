@@ -12,17 +12,17 @@
 {% block content_container %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-lg-6 offset-md-3">
+        <div class="col-md-4 offset-md-4">
 
             <h1 class="text-center">Text</h1>
 
             <p><a href="sms:1-312-818-3823" class="btn btn-block btn-primary btn-lg">(312) 818-3823</a></p>
 
-            <hr>
-
-            <p>Texting looks like:</p>
-
-            <p><a href="{% static 'img/sms-screenshot.png' %}"><img src="{% static 'img/sms-screenshot.png' %}" alt="Text screenshot" class="img-fluid img-thumbnail"></a></p>
+            <video poster="{% static 'img/screenshot-sms.png' %}" controls class="img-fluid img-thumbnail">
+                <source src="{% static 'video/demo-sms.mp4' %}" type="video/mp4">
+                <p><a href="{% static 'video/demo-sms.mp4' %}">Download the video</a>.</p>
+            </video>
+            <p></p>
 
         </div>
     </div>

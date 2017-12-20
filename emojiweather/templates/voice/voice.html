@@ -12,11 +12,17 @@
 {% block content_container %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-lg-6 offset-md-3">
+        <div class="col-md-4 offset-md-4">
 
             <h1 class="text-center">Call</h1>
 
             <p><a href="tel:1-312-818-3823" class="btn btn-block btn-primary btn-lg">(312) 818-3823</a></p>
+
+            <video poster="{% static 'img/screenshot-voice.png' %}" controls class="img-fluid img-thumbnail">
+                <source src="{% static 'video/demo-voice.mp4' %}" type="video/mp4">
+                <p><a href="{% static 'video/demo-voice.mp4' %}">Download the video</a>.</p>
+            </video>
+            <p></p>
 
         </div>
     </div>
