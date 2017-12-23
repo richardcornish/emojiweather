@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import SmsView
 
 
 urlpatterns = [
-    url(r'^$', SmsView.as_view(), name='sms'),
+    path('', SmsView.as_view(), name='sms'),
 ]

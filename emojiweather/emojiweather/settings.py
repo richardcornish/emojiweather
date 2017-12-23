@@ -1,10 +1,12 @@
+# Settings
+# https://docs.djangoproject.com/en/2.0/topics/settings/
+# https://docs.djangoproject.com/en/2.0/ref/settings/
+
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-
-# Website settings
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fake-key')
 
@@ -13,7 +15,7 @@ DEBUG = os.environ.get('DEBUG', True)
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '.herokuapp.com'
+    '.herokuapp.com',
 ]
 
 INTERNAL_IPS = (
@@ -24,7 +26,6 @@ INTERNAL_IPS = (
 # Application definition
 
 INSTALLED_APPS = [
-    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,18 +34,16 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'debug_toolbar',
+    'widget_tweaks',
     'about',
     'search',
     'sms',
     'voice',
     'utils',
-
-    # Third-party
-    'debug_toolbar',
-    'widget_tweaks',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -81,7 +80,7 @@ WSGI_APPLICATION = 'emojiweather.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -90,9 +89,15 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -111,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
+# https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -125,7 +130,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+# https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
@@ -139,7 +144,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Media
-# https://docs.djangoproject.com/en/1.10/topics/files/
+# https://docs.djangoproject.com/en/2.0/topics/files/
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets', 'media')
 
@@ -147,36 +152,37 @@ MEDIA_URL = '/media/'
 
 
 # Sites
-# https://docs.djangoproject.com/en/1.10/ref/contrib/sites/
+# https://docs.djangoproject.com/en/2.0/ref/contrib/sites/
 
 SITE_ID = os.environ.get('SITE_ID', 1)
 
 
-# Heroku
-# https://devcenter.heroku.com/articles/getting-started-with-django
+# Geolocation
+# https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
+# http://dev.maxmind.com/geoip/geoip2/geolite2/
 
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind')
+
+
+# Heroku
+# https://devcenter.heroku.com/articles/getting-started-with-python
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Update database configuration with $DATABASE_URL.
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
+# Google Geocoding API
+# https://developers.google.com/maps/documentation/geocoding/start
+
+GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
 
 
 # Google Maps JavaScript API
 # https://developers.google.com/maps/documentation/javascript/tutorial
+
 GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', '')
 
-# Google Geocoding API
-# https://developers.google.com/maps/documentation/geocoding/start
-GOOGLE_GEOCODING_API_KEY = os.environ.get('GOOGLE_GEOCODING_API_KEY', '')
 
 # Dark Sky API
 # https://darksky.net/dev/docs
-DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 
-# Geolocation
-# https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
-# http://dev.maxmind.com/geoip/geoip2/geolite2/
-GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind')
+DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
