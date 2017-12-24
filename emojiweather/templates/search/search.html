@@ -42,7 +42,7 @@
                 {% get_holidays results.weather.timezone as holidays %}
                 {% if holidays %}
                 {% for holiday in holidays %}
-                <div class="alert alert-primary text-center small" role="alert" style="background-color: rgba(204, 229, 255, .5); border: 0">
+                <div class="alert alert-primary text-center" role="alert" style="background-color: rgba(204, 229, 255, .5); border: 0">
                     {{ holiday.greeting }} {{ holiday.name }} {{ holiday.html|safe }}
                 </div>
                 {% endfor %}
