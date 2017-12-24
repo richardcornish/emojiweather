@@ -99,7 +99,7 @@
             </div>
             {% endif %}
 
-            <form method="get" action="{% url 'search' %}" class="js-search">
+            <form method="get" action="{% url 'search' %}" class="js-search{% if results.weather %} js-search-success{% endif %}">
                 {% for field in form %}
                     {% if field.is_hidden %}
                     {{ field }}
