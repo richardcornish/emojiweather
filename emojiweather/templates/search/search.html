@@ -41,11 +41,11 @@
             {% if results.weather.timezone %}
                 {% get_holidays results.weather.timezone as holidays %}
                 {% if holidays %}
-                <p class="text-center" style="margin: 1.5rem 0 -1rem">
-                    {% for holiday in holidays %}
+                {% for holiday in holidays %}
+                <div class="alert alert-primary text-center small" role="alert" style="background-color: rgba(204, 229, 255, .5); border: 0">
                     {{ holiday.greeting }} {{ holiday.name }} {{ holiday.html|safe }}
-                    {% endfor %}
-                </p>
+                </div>
+                {% endfor %}
                 {% endif %}
             {% endif %}
 

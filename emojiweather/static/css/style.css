@@ -1,9 +1,14 @@
-h1 {
-    margin: 2rem 0 1rem;
+.masthead {
+    margin-bottom: 1rem;
 }
 
 .navbar {
-    padding: .5rem 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.site-footer {
+    margin: 1rem 0;
 }
 
 button {
@@ -37,4 +42,13 @@ svg {
     z-index: -1;
     width: 100%;
     height: 100%;
+}
+
+@media (min-width: 768px) {
+    .masthead {
+        margin-bottom: 2rem;
+    }
+    h1, .h1 {
+        margin-bottom: 2rem;
+    }
 }
