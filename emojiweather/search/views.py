@@ -6,11 +6,10 @@ try:
 except ImportError:
     from urllib.parse import quote_plus
 
-from emojiweather.mixins import FormKwargsMixin
 from .forms import SearchWeatherForm
 
 
-class SearchView(FormKwargsMixin, FormMixin, TemplateView):
+class SearchView(FormMixin, TemplateView):
     form_class = SearchWeatherForm
     template_name = 'search/search.html'
 

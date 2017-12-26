@@ -1,6 +1,9 @@
+from django.contrib.gis.geoip2 import GeoIP2
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormMixin
+
+from ipware.ip import get_real_ip
 
 from .forms import HomeSearchWeatherForm
 

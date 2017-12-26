@@ -1,11 +1,9 @@
 from django.conf import settings
-from django.contrib.gis.geoip2 import GeoIP2
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 
 import requests
-from ipware.ip import get_real_ip
 
 
 class CsrfExemptMixin(object):
