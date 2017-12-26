@@ -2,6 +2,11 @@
     margin-bottom: 1rem;
 }
 
+.site-footer {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 .navbar {
     padding-left: 0;
     padding-right: 0;
@@ -39,16 +44,6 @@ svg {
     fill: #fff;
 }
 
-.text-lead {
-    margin: 0 0 1.5rem;
-}
-
-.btn {
-    -ms-word-break: break-all;
-    word-break: break-all;
-    word-break: break-word;
-}
-
 #map {
     position: absolute;
     z-index: -1;
@@ -62,9 +57,5 @@ svg {
     }
     h1, .h1 {
         margin-bottom: 2rem;
-    }
-    .site-footer {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
     }
 }

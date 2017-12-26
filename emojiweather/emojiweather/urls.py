@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path, re_path
 
-from .views import FaviconView, HomeView, RobotsView
+from .views import FaviconView, HomeView, NotFoundView, RobotsView
 
 
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path('search/', include('search.urls')),
     path('text/', include('sms.urls')),
     path('call/', include('voice.urls')),
+    path('404/', NotFoundView.as_view(), name='404'),
     path('favicon.ico', FaviconView.as_view(), name='favicon'),
     path('robots.txt', RobotsView.as_view(), name='robots'),
     path('', include('sitemaps.urls')),
