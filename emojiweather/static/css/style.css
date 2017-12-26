@@ -2,11 +2,6 @@
     margin-bottom: 1rem;
 }
 
-.site-footer {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
 .navbar {
     padding-left: 0;
     padding-right: 0;
@@ -57,5 +52,9 @@ svg {
     }
     h1, .h1 {
         margin-bottom: 2rem;
+    }
+    .site-footer {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 }
