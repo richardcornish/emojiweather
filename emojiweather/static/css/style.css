@@ -7,12 +7,20 @@
     padding-right: 0;
 }
 
-.site-footer {
-    margin: 1rem 0;
+.navbar-dark .navbar-toggler {
+    border-color: transparent;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url(data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1'));
 }
 
 h1, .h1 {
     margin-bottom: 1rem;
+}
+
+.display-1 {
+    margin-bottom: 0;
 }
 
 button {
@@ -54,5 +62,9 @@ svg {
     }
     h1, .h1 {
         margin-bottom: 2rem;
+    }
+    .site-footer {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 }
