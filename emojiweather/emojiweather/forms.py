@@ -1,4 +1,3 @@
-from emojiweather.mixins import WeatherFormMixin
 from search.forms import SearchWeatherForm
 
 
