@@ -30,10 +30,6 @@ class HomeView(FormMixin, TemplateView):
         return kwargs
 
 
-class NotFoundView(TemplateView):
-    template_name = '404.html'
-
-
 class RobotsView(TemplateView):
     template_name = 'robots.txt'
     content_type = 'text/plain'
