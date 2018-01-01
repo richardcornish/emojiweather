@@ -6,6 +6,7 @@ from datetime import date
 from django import template
 from django.conf import settings
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 
 import pytz
 from dateutil.easter import easter
@@ -144,6 +145,11 @@ def flagify(value):
                     for item in data:
                         if item['code'] == component['short_name']:
                             return item
+
+
+@register.filter
+def curlify(value):
+    return mark_safe(value.replace("'", '&#8217;'))
 
 
 @register.filter(name='quote_plus')
