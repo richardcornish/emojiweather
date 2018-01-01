@@ -105,9 +105,9 @@ def get_google_maps_key():
     return settings.GOOGLE_MAPS_API_KEY
 
 
-@register.filter(is_safe=True)
+@register.filter
 def minusify(value):
-    return value.replace('-', '&#8722;')
+    return mark_safe(value.replace('-', '&#8722;'))
 
 
 @register.filter
