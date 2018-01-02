@@ -100,16 +100,6 @@ def get_holidays(tz):
     return [holiday for holiday in holidays if holiday['date'] == today]
 
 
-@register.simple_tag
-def get_google_maps_key():
-    return settings.GOOGLE_MAPS_API_KEY
-
-
-@register.filter
-def minusify(value):
-    return mark_safe(value.replace('-', '&#8722;'))
-
-
 @register.filter
 def weatherify(value):
     path = os.path.join(BASE_DIR, 'data', 'weather.json')
@@ -145,6 +135,21 @@ def flagify(value):
                     for item in data:
                         if item['code'] == component['short_name']:
                             return item
+
+
+@register.simple_tag
+def get_google_maps_key():
+    return settings.GOOGLE_MAPS_API_KEY
+
+
+@register.filter
+def roundify(value):
+    return round(value)
+
+
+@register.filter
+def minusify(value):
+    return mark_safe(str(value).replace('-', '&#8722;'))
 
 
 @register.filter

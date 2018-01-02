@@ -58,7 +58,7 @@
                 <h1 class="text-center display-1">
                     {% with results.weather.currently.icon|weatherify as icon %}
                     {{ icon.html|safe }}{% endwith %}
-                    {{ results.weather.currently.temperature|floatformat:"0"|minusify }}&#176;
+                    {{ results.weather.currently.temperature|roundify|minusify }}&#176;
                 </h1>
             {% endif %}
 
