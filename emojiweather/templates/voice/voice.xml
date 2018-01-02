@@ -6,7 +6,7 @@
 
 {% if results.geocode and results.weather %}
     The weather for {{ results.geocode.formatted_address }} 
-    is {{ results.weather.currently.temperature|floatformat:"0" }} degrees and 
+    is {{ results.weather.currently.temperature|roundify }} degrees and 
     {{ results.weather.currently.summary|lower }}.
 {% endif %}
 

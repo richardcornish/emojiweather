@@ -7,7 +7,7 @@
 {% if results.geocode and results.weather %}
 
     {{ results.weather.currently.summary|lower|capfirst }} and 
-    {{ results.weather.currently.temperature|floatformat:"0" }}° 
+    {{ results.weather.currently.temperature|roundify }}° 
     {% with results.weather.currently.icon|weatherify as icon %}
         {{ icon.unicode }}
     {% endwith %}
