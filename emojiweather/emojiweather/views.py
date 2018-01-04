@@ -10,7 +10,7 @@ from .forms import HomeSearchWeatherForm
 
 class FaviconView(RedirectView):
     url = staticfiles_storage.url('img/favicons/default.ico')
-    permanent = True
+    permanent = False
 
 
 class HomeView(FormMixin, TemplateView):
@@ -20,13 +20,14 @@ class HomeView(FormMixin, TemplateView):
     def get_form_kwargs(self):
         kwargs = super(HomeView, self).get_form_kwargs()
         ip = get_real_ip(self.request)
-        if ip is not None:
+        if ip:
             g = GeoIP2()
             record = g.city(ip)
-            city = record['city'] if record['city'] else ''
-            country = record['country_name'] if record['country_name'] else ''
-            delimeter = ', ' if city and country else ''
-            kwargs['q'] = '%s%s%s' % (city, delimeter, country)
+            if record:
+                city = record['city'] if 'city' in record and record['city'] else ''
+                country = record['country_name'] if 'country_name' in record and record['country_name'] else ''
+                delimeter = ', ' if city and country else ''
+                kwargs['q'] = '%s%s%s' % (city, delimeter, country)
         return kwargs
 
 

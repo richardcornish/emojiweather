@@ -2,7 +2,6 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-
 import requests
 
 
@@ -13,21 +12,21 @@ class CsrfExemptMixin(object):
 
 
 class WeatherFormMixin(object):
-
     def get_geocode(self, address):
-        errors = {
-            'zero_results': 'We\u2019re sorry, but we could not find %s.' % address,
-            'over_query_limit': 'We\u2019re sorry, but the request quota has been reached.',
-            'request_denied': 'We\u2019re sorry, but the request was denied.',
-            'invalid_request': 'We\u2019re sorry, but the request was invalid.',
-            'unknown': 'We\u2019re sorry, but an error occurred.',
-        }
         key = settings.GOOGLE_GEOCODING_API_KEY
-        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={'address': address, 'key': key})
+        url = 'https://maps.googleapis.com/maps/api/geocode/json'
+        r = requests.get(url, params={'address': address, 'key': key})
         j = r.json()
         if j['status'] == 'OK':
             return j['results'][0]
         else:
+            errors = {
+                'zero_results': 'We\u2019re sorry, but we could not find %s.' % address,
+                'over_query_limit': 'We\u2019re sorry, but the request quota has been reached.',
+                'request_denied': 'We\u2019re sorry, but the request was denied.',
+                'invalid_request': 'We\u2019re sorry, but the request was invalid.',
+                'unknown': 'We\u2019re sorry, but an error occurred.',
+            }
             try:
                 return errors[j['status'].lower()]
             except KeyError:
@@ -38,7 +37,8 @@ class WeatherFormMixin(object):
         latitude = geocode['geometry']['location']['lat']
         longitude = geocode['geometry']['location']['lng']
         units = 'us'
-        r = requests.get('https://api.darksky.net/forecast/%s/%s,%s' % (key, latitude, longitude), params={'units': units})
+        url = 'https://api.darksky.net/forecast/%s/%s,%s' % (key, latitude, longitude)
+        r = requests.get(url, params={'units': units})
         return r.json()
 
     def get_results(self, address):
