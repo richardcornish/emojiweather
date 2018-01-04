@@ -32,7 +32,7 @@ def get_location():
         {'title': 'The White House', 'code': 'US'},
         {'title': 'Buckingham Palace', 'code': 'GB'},
         {'title': 'The Eiffel Tower', 'code': 'FR'},
-        {'title': 'The Great Pyramid of Egypt', 'code': 'EG'},
+        {'title': 'The Great Pyramid of Giza', 'code': 'EG'},
         {'title': 'The Forbidden City', 'code': 'CN'},
         {'title': 'The Great Barrier Reef', 'code': 'AU'},
         {'title': 'Mount Everest', 'code': 'NP'},
