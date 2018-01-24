@@ -20,3 +20,8 @@ requests = "*"
 twilio = "*"
 ua-parser = "*"
 whitenoise = "*"
+
+
+[requires]
+
+python_version = "3.6"
