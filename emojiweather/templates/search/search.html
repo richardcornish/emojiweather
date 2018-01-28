@@ -36,7 +36,7 @@
 {% strip %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
             {% if results.weather.timezone %}
                 {% get_holidays results.weather.timezone as holidays %}
@@ -52,7 +52,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
 
             {% if results.geocode and results.weather %}
                 <h1 class="text-center display-1">
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
             {% if results.geocode and results.weather %}
                 <p class="text-center" style="font-size: 2rem">
