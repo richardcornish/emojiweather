@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 
 import pytz
 from dateutil.easter import easter
-from dateutil.relativedelta import relativedelta as rd, MO, TU, WE, TH, FR, SA, SU
+from dateutil.relativedelta import FR, MO, SA, SU, TH, TU, WE, relativedelta as rd
 from ua_parser import user_agent_parser
 
 try:
@@ -97,7 +97,7 @@ def get_holidays(tz):
                     if 'days' in item and item['days']:
                         holiday['date'] += rd(days=item['days'])
             holidays.append(holiday)
-    return [holiday for holiday in holidays if holiday['date'] == today]
+    return [h for h in holidays if holiday['date'] == today]
 
 
 @register.filter
@@ -167,6 +167,7 @@ def strip(parser, token):
     nodelist = parser.parse(('endstrip',))
     parser.delete_first_token()
     return StripNode(nodelist)
+
 
 class StripNode(template.Node):
     def __init__(self, nodelist):
