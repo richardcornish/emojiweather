@@ -97,7 +97,7 @@ def get_holidays(tz):
                     if 'days' in item and item['days']:
                         holiday['date'] += rd(days=item['days'])
             holidays.append(holiday)
-    return [h for h in holidays if holiday['date'] == today]
+    return [h for h in holidays if h['date'] == today]
 
 
 @register.filter
