@@ -3,6 +3,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormMixin
 
+from geoip2.errors import GeoIP2Error
 from ipware.ip import get_real_ip
 
 from .forms import HomeSearchWeatherForm
@@ -22,7 +23,10 @@ class HomeView(FormMixin, TemplateView):
         ip = get_real_ip(self.request)
         if ip:
             g = GeoIP2()
-            record = g.city(ip)
+            try:
+                record = g.city(ip)
+            except GeoIP2Error:
+                return None
             if record:
                 city = record['city'] if 'city' in record and record['city'] else ''
                 country = record['country_name'] if 'country_name' in record and record['country_name'] else ''
