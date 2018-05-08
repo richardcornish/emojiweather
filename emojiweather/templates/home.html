@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load staticfiles weather_tags %}
+{% load staticfiles weather_tags widget_tweaks %}
 
 
 {% block title %}{{ request.site.name }}{% endblock %}
@@ -22,25 +22,36 @@
             <form method="get" action="{% url 'search' %}" class="js-search{% if success %} js-search-success{% endif %}">
                 {% for field in form %}
                     {% if field.is_hidden %}
-                    {{ field }}
-                    {% else %}
-                    <div class="form-group{% if field.errors %} has-error{% endif %}">
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                                <p class="text-muted"><small>{{ error|safe }}</small></p>
-                            {% endfor %}
-                        {% endif %}
-                        <p class="{% if field.html_name == 'q' %}sr-only{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
                         {{ field }}
-                        {% if field.help_text %}
-                            <p class="form-text">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                    </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="sr-only">
+                                {{ field.label }}
+                            </label>
+                            {% if form.is_bound %}
+                                {% if field.errors %}
+                                    {{ field|add_class:"is-invalid" }}
+                                {% else %}
+                                    {{ field|add_class:"is-valid" }}
+                                {% endif %}
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="small invalid-feedback">{{ error|safe }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if field.help_text %}
+                                <div class="form-text small text-muted">{{ field.help_text|safe }}</div>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endfor %}
                 <p><button type="submit" class="btn btn-primary btn-block btn-lg">{% get_os as os %}{% if os == 'Android' %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm8.9 3c-.5-4.2-3.8-7.5-7.9-7.9V1h-2v2.1c-4.2.5-7.5 3.8-7.9 7.9H1v2h2.1c.5 4.2 3.8 7.5 7.9 7.9V23h2v-2.1c4.2-.5 7.5-3.8 7.9-7.9H23v-2h-2.1zM12 19c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z" class="path"/></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path class="path" d="M23 0L0 11h12v12z"/></svg>{% endif %} Search</button></p>
                 <p><button type="button" class="js-geolocate btn btn-outline-primary btn-block btn">Or geolocate me</button></p>
             </form>
+
         </div>
     </div>
 </div>
