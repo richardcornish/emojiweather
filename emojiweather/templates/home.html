@@ -32,7 +32,8 @@
                                 {% if field.errors %}
                                     {{ field|add_class:"is-invalid" }}
                                 {% else %}
-                                    {{ field|add_class:"is-valid" }}
+                                    {# {{ field|add_class:"is-valid" }} #}
+                                    {{ field }}
                                 {% endif %}
                             {% else %}
                                 {{ field }}
