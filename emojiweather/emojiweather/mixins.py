@@ -36,7 +36,7 @@ class WeatherFormMixin(object):
         key = settings.DARK_SKY_API_KEY
         latitude = geocode['geometry']['location']['lat']
         longitude = geocode['geometry']['location']['lng']
-        units = 'us'
+        units = 'auto'
         url = 'https://api.darksky.net/forecast/%s/%s,%s' % (key, latitude, longitude)
         r = requests.get(url, params={'units': units})
         return r.json()
