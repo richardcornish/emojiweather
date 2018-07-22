@@ -82,7 +82,7 @@
                     {{ flag.html|safe }}
                     {% endwith %}
                 </p>
-                <p class="text-center js-moment">{% now "F jS, Y, g:i:s A" %}</p>
+                <p class="text-center js-moment">{% now "l, F j, Y. g:i:s A" %}</p>
                 <p class="text-center">{{ results.weather.daily.summary }} &#x1F321;&#xFE0F;</p>
             {% elif results.error %}
                 <h1 class="text-center">{{ query }} not found</h1>
