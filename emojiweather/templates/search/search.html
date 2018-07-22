@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n static weather_tags widget_tweaks %}
+{% load i18n static utils_tags widget_tweaks %}
 
 
 {% block title %}{% if results.geocode %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}

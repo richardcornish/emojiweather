@@ -1,4 +1,4 @@
-{% load weather_tags %}{% strip %}
+{% load utils_tags %}{% strip %}
 
 {% if results.error %}
     {{ results.error }}
