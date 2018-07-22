@@ -39,7 +39,7 @@ def get_location():
         {'title': 'Antarctica', 'code': 'AQ'},
     ]
     location = random.choice(locations)
-    path = os.path.join(BASE_DIR, 'data', 'flags.json')
+    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'flags.json')
     with open(path, 'r') as f:
         data = json.load(f)
         for icon in data:
@@ -78,7 +78,7 @@ def get_holidays(tz):
         'Saturday': SA,
         'Sunday': SU,
     }
-    path = os.path.join(BASE_DIR, 'data', 'holidays.json')
+    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'holidays.json')
     with open(path, 'r') as f:
         data = json.load(f)
         for item in data:
@@ -102,7 +102,7 @@ def get_holidays(tz):
 
 @register.filter
 def weatherify(value):
-    path = os.path.join(BASE_DIR, 'data', 'weather.json')
+    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'weather.json')
     with open(path, 'r') as f:
         data = json.load(f)
         for item in data:
@@ -112,7 +112,7 @@ def weatherify(value):
 
 @register.filter
 def moonify(value):
-    path = os.path.join(BASE_DIR, 'data', 'moons.json')
+    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'moons.json')
     with open(path, 'r') as f:
         data = json.load(f)
         if value:
@@ -124,7 +124,7 @@ def moonify(value):
 
 @register.filter
 def flagify(value):
-    path = os.path.join(BASE_DIR, 'data', 'flags.json')
+    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'flags.json')
     with open(path, 'r') as f:
         data = json.load(f)
         # loop through json
