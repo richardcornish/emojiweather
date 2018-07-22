@@ -1,0 +1,18 @@
+[
+    {
+        "pk": 1, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "127.0.0.1:8000",
+            "name": "Emoji Weather"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "emojiweather.herokuapp.com",
+            "name": "Emoji Weather"
+        }
+    }
+]
