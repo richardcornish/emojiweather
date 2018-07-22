@@ -184,8 +184,8 @@
         "greeting": "happy",
         "month": 7,
         "day": 4,
-        "weekday": "Sunday",
-        "week": 3
+        "weekday": null,
+        "week": null
     }, {
         "name": "Labor Day",
         "slug": "labor-day",
