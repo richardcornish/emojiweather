@@ -58,7 +58,7 @@
                 <h1 class="text-center display-1">
                     {% with results.weather.currently.icon|weatherify as icon %}
                     {{ icon.html|safe }}{% endwith %}
-                    <span class="js-toggle-units" data-f="{{ results.temperature.f|roundify|minusify }}" data-c="{{ results.temperature.c|roundify|minusify }}">{{ results.weather.currently.temperature|roundify|minusify }}</span>&#176;
+                    <span class="js-toggle-units" data-f="{{ results.temperature.f|roundify }}" data-c="{{ results.temperature.c|roundify }}" data-units="{{ results.weather.flags.units }}">{{ results.weather.currently.temperature|roundify|minusify }}</span>&#176;
                 </h1>
             {% endif %}
 
