@@ -58,7 +58,7 @@
                 <h1 class="text-center display-1">
                     {% with results.weather.currently.icon|weatherify as icon %}
                     {{ icon.html|safe }}{% endwith %}
-                    {{ results.weather.currently.temperature|roundify|minusify }}&#176;
+                    <span class="js-toggle-units" data-f="{{ results.temperature.f|roundify|minusify }}" data-c="{{ results.temperature.c|roundify|minusify }}">{{ results.weather.currently.temperature|roundify|minusify }}</span>&#176;
                 </h1>
             {% endif %}
 
@@ -142,6 +142,7 @@
 {% strip %}
 {{ block.super }}
 <script>
+    EmojiWeather.toggleUnits('.js-toggle-units');
     {% if results.weather.timezone %}
     EmojiWeather.insertDateTime('{{ results.weather.timezone }}');
     {% endif %}

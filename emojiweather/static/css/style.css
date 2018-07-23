@@ -39,6 +39,10 @@ svg {
     fill: #fff;
 }
 
+.js-toggle-units {
+    cursor: pointer;
+}
+
 #map {
     position: absolute;
     z-index: -1;

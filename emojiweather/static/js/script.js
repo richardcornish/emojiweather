@@ -34,6 +34,16 @@ EmojiWeather = (function ($) {
                 $('.js-moment').text(moment().tz(tz).format('dddd, MMMM D, YYYY. h:mm:ss A'));
             }, 1000);
         },
+        toggleUnits: function (el) {
+            $(el).click(function(){
+                $(this).text(function (i, text) {
+                    var original = parseInt(text, 10);
+                    var fahrenheit = parseInt($(this).data('f'), 10);
+                    var celsius = parseInt($(this).data('c'), 10);
+                    return original === fahrenheit ? celsius : fahrenheit;
+                });
+            });
+        },
         init: function () {
             var self = this;
             self.emptyForm();

@@ -41,6 +41,18 @@ class WeatherFormMixin(object):
         r = requests.get(url, params={'units': units})
         return r.json()
 
+    def get_temperature(self, weather):
+        temp = weather['currently']['temperature']
+        units = weather['flags']['units']
+        data = {}
+        if units == 'us':
+            data['f'] = temp
+            data['c'] = (temp - 32) * 5 / 9
+        else:
+            data['f'] = (temp * 9 / 5) + 32
+            data['c'] = temp
+        return data
+
     def get_results(self, address):
         results = {}
         geocode = self.get_geocode(address)
@@ -49,4 +61,5 @@ class WeatherFormMixin(object):
         else:
             results['geocode'] = geocode
             results['weather'] = self.get_weather(geocode)
+            results['temperature'] = self.get_temperature(results['weather'])
         return results
