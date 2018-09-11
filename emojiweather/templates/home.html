@@ -16,9 +16,9 @@
 
             <p class="text-center small"><a href="https://www.redcross.org/donate/hurricane-florence-donations.html/">Help victims of Hurricane Florence</a> &#x1F300;<span style="font-weight: bold; color: red; font-size: 1.5rem">+</span></p>
 
-            <h1 class="text-center">{{ request.site.name }} &#x2600;</h1>
+            <h1 class="text-center">{{ request.site.name }}</h1>
 
-            <p class="text-center">{% get_location as location %}<a href="{% url 'search' %}?q={{ location.query }}" class="btn btn-sm">{{ location.title }}&nbsp;&nbsp;{{ location.emoji|safe }}</a></p>
+            <p class="text-center">{% get_location as location %}<a href="{% url 'search' %}?q={{ location.query }}" class="btn btn-sm">{{ location.title }} {{ location.emoji|safe }}</a></p>
 
             <form method="get" action="{% url 'search' %}" class="js-search{% if success %} js-search-success{% endif %}">
                 {% for field in form %}
