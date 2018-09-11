@@ -14,9 +14,9 @@
     <div class="row">
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
-            <p class="text-center"><a href="https://www.redcross.org/donate/hurricane-florence-donations.html/">Help victims of Hurricane Florence</a> &#x1F300;<span style="font-weight: bold; color: red; font-size: 1.5rem">+</span></p>
+            <p class="text-center small"><a href="https://www.redcross.org/donate/hurricane-florence-donations.html/">Help victims of Hurricane Florence</a> &#x1F300;<span style="font-weight: bold; color: red; font-size: 1.5rem">+</span></p>
 
-            <h1 class="text-center">{{ request.site.name }} <span style="font-size: 2rem">&#x2600;</span></h1>
+            <h1 class="text-center">{{ request.site.name }} &#x2600;</h1>
 
             <p class="text-center">{% get_location as location %}<a href="{% url 'search' %}?q={{ location.query }}" class="btn btn-sm">{{ location.title }}&nbsp;&nbsp;{{ location.emoji|safe }}</a></p>
 
