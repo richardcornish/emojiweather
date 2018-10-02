@@ -8,6 +8,7 @@ from .forms import SearchWeatherForm
 class SearchView(FormMixin, TemplateView):
     form_class = SearchWeatherForm
     template_name = 'search/search.html'
+    query_field = 'q'
     query = None
     results = None
 
@@ -28,13 +29,13 @@ class SearchView(FormMixin, TemplateView):
     def get_form_kwargs(self):
         kwargs = super(SearchView, self).get_form_kwargs()
         if self.request.method in ('GET'):
-            if 'q' in self.request.GET and self.request.GET['q'] is not None:
+            if self.query_field in self.request.GET and self.request.GET[self.query_field] is not None:
                 kwargs.update({
                     'data': self.request.GET,
                 })
         return kwargs
 
     def form_valid(self, form):
-        self.query = form.cleaned_data['q']
+        self.query = form.cleaned_data[self.query_field]
         self.results = form.get_results(self.query)
         return self.render_to_response(self.get_context_data(form=form))
