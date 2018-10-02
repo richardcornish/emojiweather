@@ -1,6 +1,5 @@
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
-from django.urls import reverse_lazy
 
 from .forms import SearchWeatherForm
 
