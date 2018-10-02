@@ -33,14 +33,6 @@ class SearchView(FormMixin, TemplateView):
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
-        if 'query' not in kwargs:
-            kwargs['query'] = self.get_query()
-        if 'results' not in kwargs:
-            kwargs['results'] = self.get_results()
+        kwargs['query'] = self.query
+        kwargs['results'] = self.results
         return super(SearchView, self).get_context_data(**kwargs)
-
-    def get_query(self):
-        return self.query
-
-    def get_results(self):
-        return self.results
