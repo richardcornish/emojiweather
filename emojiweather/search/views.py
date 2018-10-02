@@ -15,9 +15,7 @@ class SearchView(FormMixin, TemplateView):
         kwargs = super(SearchView, self).get_form_kwargs()
         if self.request.method in ('GET'):
             if self.query_field in self.request.GET and self.request.GET[self.query_field]:
-                kwargs.update({
-                    'data': self.request.GET,
-                })
+                kwargs['data'] = self.request.GET
         return kwargs
 
     def form_valid(self, form):
