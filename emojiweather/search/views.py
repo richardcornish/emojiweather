@@ -27,8 +27,7 @@ class SearchView(FormMixin, TemplateView):
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        return super(SearchView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         kwargs['query'] = self.query
