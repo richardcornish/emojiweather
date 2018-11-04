@@ -3,10 +3,6 @@ from django.contrib.gis.geoip2 import GeoIP2
 from geoip2.errors import GeoIP2Error
 from ipware.ip import get_real_ip
 
-__all__ = [
-    'get_ip_location',
-]
-
 
 def get_location_from_ip(request):
     ip = get_real_ip(request)
