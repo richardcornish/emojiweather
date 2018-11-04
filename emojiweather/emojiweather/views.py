@@ -1,12 +1,9 @@
-from django.contrib.gis.geoip2 import GeoIP2
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormMixin
 
-from geoip2.errors import GeoIP2Error
-from ipware.ip import get_real_ip
-
 from .forms import HomeSearchWeatherForm
+from utils import get_location_from_ip
 
 
 class FaviconView(RedirectView):
@@ -20,18 +17,7 @@ class HomeView(FormMixin, TemplateView):
 
     def get_form_kwargs(self):
         kwargs = super(HomeView, self).get_form_kwargs()
-        ip = get_real_ip(self.request)
-        if ip:
-            g = GeoIP2()
-            try:
-                record = g.city(ip)
-            except GeoIP2Error:
-                return None
-            if record:
-                city = record['city'] if 'city' in record and record['city'] else ''
-                country = record['country_name'] if 'country_name' in record and record['country_name'] else ''
-                delimeter = ', ' if city and country else ''
-                kwargs['q'] = '%s%s%s' % (city, delimeter, country)
+        kwargs['q'] = get_location_from_ip(self.request)
         return kwargs
 
 
