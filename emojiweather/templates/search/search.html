@@ -38,9 +38,11 @@
     <div class="row">
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
+            {% comment %}
             {% if results.geocode and results.weather %}
             <p class="text-center"><a href="https://www.redcross.org/donate/hurricane-michael-donations.html">Help the victims of Hurricane Michael</a> &#x1F300;<span style="font-weight: bold; color: red; font-size: 1.5rem">+</span></p>
             {% endif %}
+            {% endcomment %}
 
             {% if results.weather.timezone %}
                 {% get_holidays results.weather.timezone as holidays %}
