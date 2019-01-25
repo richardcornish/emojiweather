@@ -2,9 +2,10 @@
 # https://docs.djangoproject.com/en/2.0/topics/settings/
 # https://docs.djangoproject.com/en/2.0/ref/settings/
 
+
 import os
 
-import dj_database_url
+import django_heroku
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -16,8 +17,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fake-key')
 DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
     '.herokuapp.com',
     '.emojiweather.app',
 ]
@@ -49,7 +48,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -93,10 +91,6 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-
-DATABASES['default'].update(db_from_env)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -134,23 +128,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'static')),
+    os.path.join(BASE_DIR, 'static'),
 ]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-# Media
-# https://docs.djangoproject.com/en/2.0/topics/files/
-
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets', 'media')
-
-MEDIA_URL = '/media/'
 
 
 # Sites
@@ -163,13 +145,7 @@ SITE_ID = os.environ.get('SITE_ID', 1)
 # https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 # http://dev.maxmind.com/geoip/geoip2/geolite2/
 
-GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_ROOT), 'utils', 'maxmind')
-
-
-# Heroku
-# https://devcenter.heroku.com/articles/getting-started-with-python
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+GEOIP_PATH = os.path.join(BASE_DIR, 'utils', 'maxmind'),
 
 
 # Google Geocoding API
@@ -188,3 +164,9 @@ GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', '')
 # https://darksky.net/dev/docs
 
 DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
+
+
+# Heroku
+# https://devcenter.heroku.com/articles/django-app-configuration
+
+django_heroku.settings(locals())

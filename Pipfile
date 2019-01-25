@@ -1,27 +1,19 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
-dj-database-url = "*"
-django = "*"
 django-debug-toolbar = "*"
 django-ipware = "*"
 django-widget-tweaks = "*"
 geoip2 = "*"
 gunicorn = "*"
-psycopg2-binary = "*"
 python-dateutil = "*"
 requests = "*"
 twilio = "*"
 ua-parser = "*"
-whitenoise = "*"
-
+django-heroku = "*"
 
 [requires]
-
 python_version = "3.7"
