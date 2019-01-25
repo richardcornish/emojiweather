@@ -1,7 +1,7 @@
 # Settings
 # https://docs.djangoproject.com/en/2.0/topics/settings/
 # https://docs.djangoproject.com/en/2.0/ref/settings/
-
+# https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 import os
 
@@ -9,8 +9,6 @@ import django_heroku
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fake-key')
 
@@ -145,7 +143,7 @@ SITE_ID = os.environ.get('SITE_ID', 1)
 # https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 # http://dev.maxmind.com/geoip/geoip2/geolite2/
 
-GEOIP_PATH = os.path.join(BASE_DIR, 'utils', 'maxmind'),
+GEOIP_PATH = os.path.join(BASE_DIR, 'utils', 'maxmind')
 
 
 # Google Geocoding API
