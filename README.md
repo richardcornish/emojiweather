@@ -4,3 +4,4 @@
 
 - [Code repository](https://github.com/richardcornish/emojiweather)
 - [Deployed app](https://emojiweather.herokuapp.com/)
+- [Public domain](https://www.emojiweather.app)
