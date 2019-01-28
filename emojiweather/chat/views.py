@@ -29,9 +29,15 @@ class ChatView(CsrfExemptMixin, FormView):
         # https://developers.mattermost.com/integrate/slash-commands/
         token = form.cleaned_data['token']
         if token == settings.MATTERMOST_TOKEN:
+            self.extra_context = form.cleaned_data
             if form.cleaned_data['command'][1:] == 'hot':
+                try:
+                    length = int(form.cleaned_data['text'])
+                except ValueError:
+                    length = 0
+                self.extra_context['fires'] = list(range(length))
                 data = {
-                    'text': render_to_string('chat/hot.md', form.cleaned_data),
+                    'text': render_to_string('chat/hot.md', self.get_context_data()),
                     'response_type': 'in_channel',
                     'username': 'csibot',
                     'icon_url': self.get_icon_url('img/chat-icon.png'),

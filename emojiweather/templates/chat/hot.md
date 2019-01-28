@@ -1,1 +1,1 @@
-Q: How hot is CSI? A: So hot. {% if text %}{% for emoji in text %}:fire: {% endfor %}{% endif %}
+Q: How hot is CSI? A: So hot. {% if fires %}{% for fire in fires %}:fire: {% endfor %}{% endif %}
