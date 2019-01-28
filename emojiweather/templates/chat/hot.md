@@ -1,1 +1,1 @@
-Q: How hot is CSI? A: So hot. {% if fires %}{% for fire in fires %}:fire: {% endfor %}{% endif %}
+CSI is so hot. {% if fires %}{% for fire in fires %}:fire: {% endfor %}{% endif %}
