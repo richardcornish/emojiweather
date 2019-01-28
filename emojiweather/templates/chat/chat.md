@@ -1,0 +1,1 @@
+Hey @lucy. Q: How hot is CSI? A: So hot. {% if text %}{% for emoji in text %}:fire: {% endfor %}{% endif %}

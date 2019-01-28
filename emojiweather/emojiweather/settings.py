@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'widget_tweaks',
     'about',
+    'chat',
     'search',
     'sms',
     'voice',
@@ -162,6 +163,13 @@ GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', '')
 # https://darksky.net/dev/docs
 
 DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
+
+
+# Mattermost API
+# https://docs.mattermost.com/developer/slash-commands.html
+# https://developers.mattermost.com/integrate/slash-commands/
+
+MATTERMOST_TOKEN = os.environ.get('MATTERMOST_TOKEN', '')
 
 
 # Heroku
