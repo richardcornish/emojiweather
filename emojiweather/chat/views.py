@@ -31,7 +31,7 @@ class ChatView(CsrfExemptMixin, FormView):
         if token == settings.MATTERMOST_TOKEN:
             if form.cleaned_data['command'][1:] == 'hot':
                 data = {
-                    'text': render_to_string('chat/chat.md', form.cleaned_data),
+                    'text': render_to_string('chat/hot.md', form.cleaned_data),
                     'response_type': 'in_channel',
                     'username': 'csibot',
                     'icon_url': self.get_icon_url('img/chat-icon.png'),
