@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'widget_tweaks',
     'about',
-    'chat',
+    'commands',
     'search',
     'sms',
     'voice',
@@ -168,8 +168,16 @@ DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 # Mattermost API
 # https://docs.mattermost.com/developer/slash-commands.html
 # https://developers.mattermost.com/integrate/slash-commands/
+# https://docs.mattermost.com/help/messaging/formatting-text.html
 
-MATTERMOST_TOKEN = os.environ.get('MATTERMOST_TOKEN', '')
+MATTERMOST_TOKENS = {
+    'ask': os.environ.get('MATTERMOST_TOKENS_ASK', ''),
+    'fact': os.environ.get('MATTERMOST_TOKENS_FACT', ''),
+    'chuck': os.environ.get('MATTERMOST_TOKENS_CHUCK', ''),
+    'print': os.environ.get('MATTERMOST_TOKENS_PRINT', ''),
+    'hot': os.environ.get('MATTERMOST_TOKENS_HOT', ''),
+    'weather': os.environ.get('MATTERMOST_TOKENS_WEATHER', ''),
+}
 
 
 # Heroku

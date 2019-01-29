@@ -1,0 +1,1 @@
+CSI is so hot. {% if list %}{% for item in list %}:fire: {% endfor %}{% endif %}

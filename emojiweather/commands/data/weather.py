@@ -1,0 +1,15 @@
+WEATHER_ICONS = {
+    'clear-day': ':sunny:',
+    'clear-night': ':milky_way:',
+    'rain': ':cloud_with_rain: ',
+    'snow': ':snowflake: ',
+    'sleet': ':cloud_with_snow: ',
+    'wind': ':wind_face: ',
+    'fog': ':fog: ',
+    'cloudy': ':cloud:',
+    'partly-cloudy-day': ':sun_behind_small_cloud: ',
+    'partly-cloudy-night': ':cloud:',
+    'hail': ':cloud_with_rain: ',
+    'thunderstorm': ':cloud_with_lightning_and_rain: ',
+    'tornado': ':tornado: ',
+}

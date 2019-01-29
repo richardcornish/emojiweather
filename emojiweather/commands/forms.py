@@ -1,7 +1,9 @@
 from django import forms
 
+from emojiweather.mixins import WeatherFormMixin
 
-class ChatForm(forms.Form):
+
+class CommandForm(WeatherFormMixin, forms.Form):
     channel_id = forms.CharField(required=False)
     channel_name = forms.CharField(required=False)
     command = forms.CharField(required=False)
