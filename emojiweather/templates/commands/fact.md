@@ -1,1 +1,1 @@
-:point_up: {{ fact }}
+Random fact: {{ fact }} :point_up:

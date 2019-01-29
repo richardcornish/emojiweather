@@ -1,1 +1,1 @@
-:boom: {{ chuck|safe }}
+:boom: {{ chuck|safe }} :boom:
