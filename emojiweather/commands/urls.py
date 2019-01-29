@@ -4,10 +4,10 @@ from .views import AskCommandView, ChuckCommandView, PrintCommandView, FactComma
 
 
 urlpatterns = [
-    path('ask', AskCommandView.as_view()),
-    path('fact', FactCommandView.as_view()),
-    path('chuck', ChuckCommandView.as_view()),
-    path('print', PrintCommandView.as_view()),
-    path('hot', HotCommandView.as_view()),
-    path('weather', WeatherCommandView.as_view()),
+    path('ask/', AskCommandView.as_view()),
+    path('fact/', FactCommandView.as_view()),
+    path('chuck/', ChuckCommandView.as_view()),
+    path('print/', PrintCommandView.as_view()),
+    path('hot/', HotCommandView.as_view()),
+    path('weather/', WeatherCommandView.as_view()),
 ]
