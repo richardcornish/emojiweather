@@ -1,5 +1,5 @@
 import random
-from datetime import datetime, timezone
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
@@ -7,8 +7,10 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.syndication.views import add_domain
 from django.http import HttpResponseForbidden, JsonResponse
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.views.generic.edit import FormView
 
+import pytz
 import requests
 
 from .data.ask import MAGIC_8_BALL_RESPONSES
@@ -127,27 +129,29 @@ class WeatherCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandVie
         query = form.cleaned_data['text'] or self.DEFAULT_QUERY
         results = form.get_results(query)
         if 'error' in results:
-            context = {'error': results['error']}
+            kwargs = {'error': results['error']}
         else:
             location = results['geocode']['formatted_address']
-            alerts = results['weather'].get('alerts')
+            tz = pytz.timezone(results['weather']['timezone'])
+            timezone.activate(tz)
+            alerts = results['weather'].get('alerts', [])
             for alert in alerts:
                 alert.update({
-                    'time': datetime.fromtimestamp(alert['time'], timezone.utc),
-                    'expires': datetime.fromtimestamp(alert['expires'], timezone.utc),
+                    'time': datetime.fromtimestamp(alert['time'], tz=tz),
+                    'expires': datetime.fromtimestamp(alert['expires'], tz=tz),
                 })
             forecast = []
             for day in results['weather']['daily']['data']:
                 forecast.append({
-                    'date': datetime.fromtimestamp(day['time'], timezone.utc),
-                    'summary': day['summary'],
+                    'date': datetime.fromtimestamp(day['time'], tz=tz),
+                    'conditions': day['summary'],
                     'high': int(day['temperatureHigh']),
                     'low': int(day['temperatureLow']),
                     'icon': WEATHER_ICONS.get(day['icon'], ':confused:'),
                 })
-            context = {
+            kwargs = {
                 'alerts': alerts,
                 'location': location,
                 'forecast': forecast,
             }
-        return self.render_to_response(self.get_context_data(**context))
+        return self.render_to_response(self.get_context_data(**kwargs))
