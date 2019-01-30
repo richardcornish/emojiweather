@@ -131,6 +131,11 @@ class WeatherCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandVie
         else:
             location = results['geocode']['formatted_address']
             alerts = results['weather'].get('alerts')
+            for alert in alerts:
+                alert.update({
+                    'time': datetime.fromtimestamp(alert['time'], timezone.utc),
+                    'expires': datetime.fromtimestamp(alert['expires'], timezone.utc),
+                })
             forecast = []
             for day in results['weather']['daily']['data']:
                 forecast.append({
