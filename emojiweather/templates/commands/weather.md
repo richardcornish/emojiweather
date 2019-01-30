@@ -1,7 +1,5 @@
 {% spaceless %}
 
-{% if error %}{{ error }}{% endif %}
-
 {% if location and forecast %}
 #### Weather
 
