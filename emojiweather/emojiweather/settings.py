@@ -170,14 +170,12 @@ DARK_SKY_API_KEY = os.environ.get('DARK_SKY_API_KEY', '')
 # https://developers.mattermost.com/integrate/slash-commands/
 # https://docs.mattermost.com/help/messaging/formatting-text.html
 
-MATTERMOST_TOKENS = {
-    'ask': os.environ.get('MATTERMOST_TOKENS_ASK', ''),
-    'fact': os.environ.get('MATTERMOST_TOKENS_FACT', ''),
-    'chuck': os.environ.get('MATTERMOST_TOKENS_CHUCK', ''),
-    'print': os.environ.get('MATTERMOST_TOKENS_PRINT', ''),
-    'hot': os.environ.get('MATTERMOST_TOKENS_HOT', ''),
-    'weather': os.environ.get('MATTERMOST_TOKENS_WEATHER', ''),
-}
+MATTERMOST_TOKEN_ASK = os.environ.get('MATTERMOST_TOKEN_ASK', '')
+MATTERMOST_TOKEN_CHUCK = os.environ.get('MATTERMOST_TOKEN_CHUCK', '')
+MATTERMOST_TOKEN_FACT = os.environ.get('MATTERMOST_TOKEN_FACT', '')
+MATTERMOST_TOKEN_HOT = os.environ.get('MATTERMOST_TOKEN_HOT', '')
+MATTERMOST_TOKEN_PRINT = os.environ.get('MATTERMOST_TOKEN_PRINT', '')
+MATTERMOST_TOKEN_WEATHER = os.environ.get('MATTERMOST_TOKEN_WEATHER', '')
 
 
 # Heroku

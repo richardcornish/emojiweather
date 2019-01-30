@@ -15,7 +15,7 @@ import requests
 
 from .data.ask import MAGIC_8_BALL_RESPONSES
 from .data.fact import RANDOM_FACTS
-from .data.weather import WEATHER_ICONS
+from .data.weather import WEATHER_EMOJI
 from .forms import CommandForm
 from emojiweather.mixins import CsrfExemptMixin
 
@@ -24,7 +24,7 @@ class AuthenticateTokenMixin(object):
 
     def form_valid(self, form):
         token = form.cleaned_data['token']
-        if token != settings.MATTERMOST_TOKENS.get(self.token_key, ''):
+        if token != getattr(settings, self.token_name, ''):
             return HttpResponseForbidden()
         return super(AuthenticateTokenMixin, self).form_valid(form)
 
@@ -32,7 +32,7 @@ class AuthenticateTokenMixin(object):
 class BaseCommandView(FormView):
     form_class = CommandForm
     response_class = JsonResponse
-    token_key = ''
+    token_name = ''
     data = {
         'response_type': 'in_channel',
         'username': 'csibot',
@@ -43,7 +43,7 @@ class BaseCommandView(FormView):
     def dispatch(self, request, *args, **kwargs):
         current_site = get_current_site(request)
         path = staticfiles_storage.url('img/chat-icon.png')
-        self.data['icon_url'] = add_domain(current_site.domain, path, self.request.is_secure())
+        self.data['icon_url'] = add_domain(current_site.domain, path, request.is_secure())
         return super(BaseCommandView, self).dispatch(request, *args, **kwargs)
 
     def get(self, *args, **kwargs):
@@ -58,8 +58,8 @@ class BaseCommandView(FormView):
 
 
 class AskCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
-    token_key = 'ask'
     template_name = 'commands/ask.md'
+    token_name = 'MATTERMOST_TOKEN_ASK'
     DEFAULT_ERROR = 'Please state your query in the form of a question.'
 
     def form_valid(self, form):
@@ -68,47 +68,36 @@ class AskCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
                 response = random.choice(MAGIC_8_BALL_RESPONSES)
             else:
                 response = self.DEFAULT_ERROR
-            kwargs = {'response': response}
-            kwargs.update(form.cleaned_data)
-            return self.render_to_response(self.get_context_data(**kwargs))
+            context = {'response': response}
+            context.update(form.cleaned_data)
+            return self.render_to_response(self.get_context_data(**context))
         return HttpResponseForbidden()
 
 
 class ChuckCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
-    token_key = 'chuck'
     template_name = 'commands/chuck.md'
+    token_name = 'MATTERMOST_TOKEN_CHUCK'
 
     def form_valid(self, form):
         r = requests.get('http://api.icndb.com/jokes/random')
         if r.status_code == 200 and r.json()['type'] == 'success':
-            chuck = r.json()['value']['joke']
-            return self.render_to_response(self.get_context_data(chuck=chuck))
-        return HttpResponseForbidden()
-
-
-class PrintCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
-    token_key = 'print'
-    template_name = 'commands/print.md'
-
-    def form_valid(self, form):
-        if form.cleaned_data['text']:
-            p = form.cleaned_data['text']
-            return self.render_to_response(self.get_context_data(print=p))
+            context = {'text': r.json()['value']['joke']}
+            return self.render_to_response(self.get_context_data(**context))
         return HttpResponseForbidden()
 
 
 class FactCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
-    token_key = 'fact'
     template_name = 'commands/fact.md'
+    token_name = 'MATTERMOST_TOKEN_FACT'
 
     def form_valid(self, form):
-        fact = random.choice(RANDOM_FACTS)
-        return self.render_to_response(self.get_context_data(fact=fact))
+        context = {'text': random.choice(RANDOM_FACTS)}
+        return self.render_to_response(self.get_context_data(**context))
 
 
 class HotCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
-    token_key = 'hot'
     template_name = 'commands/hot.md'
+    token_name = 'MATTERMOST_TOKEN_HOT'
     DEFAULT_LENGTH = 1
 
     def form_valid(self, form):
@@ -116,20 +105,32 @@ class HotCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
             length = int(form.cleaned_data['text'])
         except ValueError:
             length = self.DEFAULT_LENGTH
-        l = list(range(length))
-        return self.render_to_response(self.get_context_data(list=l))
+        context = {'list': list(range(length))}
+        return self.render_to_response(self.get_context_data(**context))
+
+
+class PrintCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
+    template_name = 'commands/print.md'
+    token_name = 'MATTERMOST_TOKEN_PRINT'
+
+    def form_valid(self, form):
+        if form.cleaned_data['text']:
+            context = {'text': form.cleaned_data['text']}
+            return self.render_to_response(self.get_context_data(**context))
+        return HttpResponseForbidden()
 
 
 class WeatherCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandView):
-    token_key = 'weather'
     template_name = 'commands/weather.md'
+    token_name = 'MATTERMOST_TOKEN_WEATHER'
     DEFAULT_QUERY = '2100 E Lake Cook Rd, Buffalo Grove, IL 60089'
+    DEFAULT_UNKNOWN_EMOJI = ':confused:'
 
     def form_valid(self, form):
         query = form.cleaned_data['text'] or self.DEFAULT_QUERY
         results = form.get_results(query)
         if 'error' in results:
-            kwargs = {'error': results['error']}
+            context = {'error': results['error']}
         else:
             location = results['geocode']['formatted_address']
             tz = pytz.timezone(results['weather']['timezone'])
@@ -147,11 +148,11 @@ class WeatherCommandView(CsrfExemptMixin, AuthenticateTokenMixin, BaseCommandVie
                     'conditions': day['summary'],
                     'high': int(day['temperatureHigh']),
                     'low': int(day['temperatureLow']),
-                    'icon': WEATHER_ICONS.get(day['icon'], ':confused:'),
+                    'icon': WEATHER_EMOJI.get(day['icon'], self.DEFAULT_UNKNOWN_EMOJI),
                 })
-            kwargs = {
+            context = {
                 'alerts': alerts,
                 'location': location,
                 'forecast': forecast,
             }
-        return self.render_to_response(self.get_context_data(**kwargs))
+        return self.render_to_response(self.get_context_data(**context))
