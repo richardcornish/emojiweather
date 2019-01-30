@@ -3,11 +3,9 @@
 {% if error %}{{ error }}{% endif %}
 
 {% if location and forecast %}
-###### Weather
+#### Weather
 
-{{ location }}
-
-Week of {% now 'F dS, Y' %}
+**{{ location }}** for **Week of {% now 'F dS, Y' %}**
 
 | Date                          |                | Conditions           | High            | Low            |
 |:------------------------------|:---------------|:---------------------|----------------:|---------------:|{% for day in forecast %}
@@ -15,7 +13,7 @@ Week of {% now 'F dS, Y' %}
 {% endif %}
 
 {% if alerts %}
-**Alerts** :rotating_light:
+##### Alerts :rotating_light:
 {% for alert in alerts %}
 - [{{ alert.title }}]({{ alert.uri }}) ({{ alert.time|date:'n/j P' }}–{{ alert.expires|date:'n/j P' }}): {{ alert.description|lower|capfirst|truncatechars:75 }}
 {% endfor %}
