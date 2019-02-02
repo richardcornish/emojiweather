@@ -3,7 +3,7 @@
 {% if location and forecast %}
 #### Weather
 
-**{{ location }}** for **Week of {% now 'F dS, Y' %}**
+**{{ location }}** for **Week of {% now 'F jS, Y' %}**
 
 | Date                          |                | Conditions           | High            | Low            |
 |:------------------------------|:---------------|:---------------------|----------------:|---------------:|{% for day in forecast %}
