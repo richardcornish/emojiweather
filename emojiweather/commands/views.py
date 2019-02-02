@@ -34,20 +34,23 @@ class BaseCommandView(FormView):
         current_site = get_current_site(request)
         path = staticfiles_storage.url('img/chat-icon.png')
         self.data['icon_url'] = add_domain(current_site.domain, path, request.is_secure())
-        return super(BaseCommandView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, *args, **kwargs):
         return HttpResponseForbidden()
 
     def get_form_kwargs(self):
-        kwargs = super(BaseCommandView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['token_name'] = self.token_name
         return kwargs
+
+    def form_valid(self, form):
+        return self.render_to_response(self.get_context_data())
 
     def form_invalid(self, form):
         return HttpResponseForbidden()
 
-    def render_to_response(self, context, **response_kwargs):
+    def render_to_response(self, context):
         self.data['text'] = render_to_string(self.template_name, context)
         return self.response_class(self.data)
 
@@ -62,9 +65,12 @@ class AskCommandView(CsrfExemptMixin, BaseCommandView):
             response = random.choice(MAGIC_8_BALL_RESPONSES)
         else:
             response = self.DEFAULT_ERROR
-        context = {'response': response}
-        context.update(form.cleaned_data)
-        return self.render_to_response(self.get_context_data(**context))
+        self.extra_context = {
+            'user_name': form.cleaned_data['user_name'],
+            'text': form.cleaned_data['text'],
+            'response': response,
+        }
+        return super().form_valid(form)
 
 
 class ChuckCommandView(CsrfExemptMixin, BaseCommandView):
@@ -73,10 +79,10 @@ class ChuckCommandView(CsrfExemptMixin, BaseCommandView):
 
     def form_valid(self, form):
         r = requests.get('http://api.icndb.com/jokes/random')
-        if r.status_code == 200 and r.json()['type'] == 'success':
-            context = {'text': r.json()['value']['joke']}
-            return self.render_to_response(self.get_context_data(**context))
-        return HttpResponseForbidden()
+        if r.status_code != 200 or r.json()['type'] != 'success':
+            return HttpResponseForbidden()
+        self.extra_context = {'text': r.json()['value']['joke']}
+        return super().form_valid(form)
 
 
 class FactCommandView(CsrfExemptMixin, BaseCommandView):
@@ -84,8 +90,8 @@ class FactCommandView(CsrfExemptMixin, BaseCommandView):
     token_name = 'MATTERMOST_TOKEN_FACT'
 
     def form_valid(self, form):
-        context = {'text': random.choice(RANDOM_FACTS)}
-        return self.render_to_response(self.get_context_data(**context))
+        self.extra_context = {'text': random.choice(RANDOM_FACTS)}
+        return super().form_valid(form)
 
 
 class HotCommandView(CsrfExemptMixin, BaseCommandView):
@@ -98,8 +104,8 @@ class HotCommandView(CsrfExemptMixin, BaseCommandView):
             length = int(form.cleaned_data['text'])
         except ValueError:
             length = self.DEFAULT_LENGTH
-        context = {'list': list(range(length))}
-        return self.render_to_response(self.get_context_data(**context))
+        self.extra_context = {'list': list(range(length))}
+        return super().form_valid(form)
 
 
 class PrintCommandView(CsrfExemptMixin, BaseCommandView):
@@ -107,10 +113,10 @@ class PrintCommandView(CsrfExemptMixin, BaseCommandView):
     token_name = 'MATTERMOST_TOKEN_PRINT'
 
     def form_valid(self, form):
-        if form.cleaned_data['text']:
-            context = {'text': form.cleaned_data['text']}
-            return self.render_to_response(self.get_context_data(**context))
-        return HttpResponseForbidden()
+        if not form.cleaned_data['text']:
+            return HttpResponseForbidden()
+        self.extra_context = {'text': form.cleaned_data['text']}
+        return super().form_valid(form)
 
 
 class WeatherCommandView(CsrfExemptMixin, BaseCommandView):
@@ -122,29 +128,29 @@ class WeatherCommandView(CsrfExemptMixin, BaseCommandView):
     def form_valid(self, form):
         query = form.cleaned_data['text'] or self.DEFAULT_QUERY
         results = form.get_results(query)
-        if 'error' not in results:
-            location = results['geocode']['formatted_address']
-            tz = pytz.timezone(results['weather']['timezone'])
-            timezone.activate(tz)
-            alerts = results['weather'].get('alerts', [])
-            for alert in alerts:
-                alert.update({
-                    'time': datetime.fromtimestamp(alert['time'], tz=tz),
-                    'expires': datetime.fromtimestamp(alert['expires'], tz=tz),
-                })
-            forecast = []
-            for day in results['weather']['daily']['data']:
-                forecast.append({
-                    'date': datetime.fromtimestamp(day['time'], tz=tz),
-                    'conditions': day['summary'],
-                    'high': int(day['temperatureHigh']),
-                    'low': int(day['temperatureLow']),
-                    'icon': WEATHER_EMOJI.get(day['icon'], self.DEFAULT_UNKNOWN_EMOJI),
-                })
-            context = {
-                'alerts': alerts,
-                'location': location,
-                'forecast': forecast,
-            }
-            return self.render_to_response(self.get_context_data(**context))
-        return HttpResponseForbidden()
+        if 'error' in results:
+            return HttpResponseForbidden()
+        location = results['geocode']['formatted_address']
+        tz = pytz.timezone(results['weather']['timezone'])
+        timezone.activate(tz)
+        alerts = results['weather'].get('alerts', [])
+        for alert in alerts:
+            alert.update({
+                'time': datetime.fromtimestamp(alert['time'], tz=tz),
+                'expires': datetime.fromtimestamp(alert['expires'], tz=tz),
+            })
+        forecast = []
+        for day in results['weather']['daily']['data']:
+            forecast.append({
+                'date': datetime.fromtimestamp(day['time'], tz=tz),
+                'conditions': day['summary'],
+                'high': int(day['temperatureHigh']),
+                'low': int(day['temperatureLow']),
+                'icon': WEATHER_EMOJI.get(day['icon'], self.DEFAULT_UNKNOWN_EMOJI),
+            })
+        self.extra_context = {
+            'alerts': alerts,
+            'location': location,
+            'forecast': forecast,
+        }
+        return super().form_valid(form)

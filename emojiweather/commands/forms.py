@@ -18,7 +18,7 @@ class CommandForm(WeatherFormMixin, forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.token_name = kwargs.pop('token_name', None)
-        super(CommandForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean_token(self):
         token = self.cleaned_data['token']
