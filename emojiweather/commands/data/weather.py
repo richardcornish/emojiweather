@@ -1,7 +1,7 @@
 WEATHER_EMOJI = {
     'clear-day': ':sunny:',
     'clear-night': ':milky_way:',
-    'rain': ':cloud_with_rain:',
+    'rain': ':umbrella:',
     'snow': ':snowflake:',
     'sleet': ':cloud_with_snow:',
     'wind': ':wind_face:',
