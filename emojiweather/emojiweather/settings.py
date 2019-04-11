@@ -1,7 +1,7 @@
 # Settings
-# https://docs.djangoproject.com/en/2.0/topics/settings/
-# https://docs.djangoproject.com/en/2.0/ref/settings/
-# https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
+# https://docs.djangoproject.com/en/2.2/topics/settings/
+# https://docs.djangoproject.com/en/2.2/ref/settings/
+# https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 import os
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',  # must be first
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',  # must be last
 ]
 
 ROOT_URLCONF = 'emojiweather.urls'
@@ -78,7 +80,7 @@ WSGI_APPLICATION = 'emojiweather.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -89,7 +91,7 @@ DATABASES = {
 
 
 # Password validation
-# https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -108,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/2.0/topics/i18n/
+# https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -122,7 +124,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
@@ -132,13 +134,13 @@ STATICFILES_DIRS = [
 
 
 # Sites
-# https://docs.djangoproject.com/en/2.0/ref/contrib/sites/
+# https://docs.djangoproject.com/en/2.2/ref/contrib/sites/
 
 SITE_ID = os.environ.get('SITE_ID', 1)
 
 
 # Geolocation
-# https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
+# https://docs.djangoproject.com/en/2.2/ref/contrib/gis/geoip2/
 # http://dev.maxmind.com/geoip/geoip2/geolite2/
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'utils', 'maxmind')
@@ -173,6 +175,49 @@ MATTERMOST_TOKEN_FACT = os.environ.get('MATTERMOST_TOKEN_FACT', '')
 MATTERMOST_TOKEN_HOT = os.environ.get('MATTERMOST_TOKEN_HOT', '')
 MATTERMOST_TOKEN_PRINT = os.environ.get('MATTERMOST_TOKEN_PRINT', '')
 MATTERMOST_TOKEN_WEATHER = os.environ.get('MATTERMOST_TOKEN_WEATHER', '')
+
+
+# Caching
+# https://docs.djangoproject.com/en/2.2/topics/cache/
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+
+CACHE_MIDDLEWARE_SECONDS = 604800
+
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+            'TIMEOUT': None,
+            'LOCATION': os.environ.get('MEMCACHIER_SERVERS', ''),
+            'OPTIONS': {
+                'binary': True,
+                'username': os.environ.get('MEMCACHIER_USERNAME', ''),
+                'password': os.environ.get('MEMCACHIER_PASSWORD', ''),
+                'behaviors': {
+                    'no_block': True,
+                    'tcp_nodelay': True,
+                    'tcp_keepalive': True,
+                    'connect_timeout': 2000,  # ms
+                    'send_timeout': 750 * 1000,  # us
+                    'receive_timeout': 750 * 1000,  # us
+                    '_poll_timeout': 2000,  # ms
+                    'ketama': True,
+                    'remove_failed': 1,
+                    'retry_timeout': 2,
+                    'dead_timeout': 30,
+                }
+            }
+        }
+    }
 
 
 # Heroku
