@@ -141,7 +141,7 @@ SITE_ID = os.environ.get('SITE_ID', 1)
 # https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 # http://dev.maxmind.com/geoip/geoip2/geolite2/
 
-GEOIP_PATH = os.path.join(BASE_DIR, 'utils', 'maxmind'),
+GEOIP_PATH = os.path.join(BASE_DIR, 'utils', 'maxmind')
 
 
 # Google Geocoding API
