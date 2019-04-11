@@ -1,0 +1,1 @@
+:boom: {{ text|safe }} :boom:

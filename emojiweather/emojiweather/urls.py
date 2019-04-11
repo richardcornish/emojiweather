@@ -11,6 +11,7 @@ urlpatterns = [
     path('search/', include('search.urls')),
     path('text/', include('sms.urls')),
     path('call/', include('voice.urls')),
+    path('commands/', include('commands.urls')),
     path('favicon.ico', FaviconView.as_view(), name='favicon'),
     path('robots.txt', RobotsView.as_view(), name='robots'),
     path('', include('sitemaps.urls')),

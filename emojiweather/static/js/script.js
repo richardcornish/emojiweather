@@ -37,10 +37,14 @@ EmojiWeather = (function ($) {
         toggleUnits: function (el) {
             $(el).click(function(){
                 $(this).text(function (i, text) {
-                    var original = parseInt(text, 10);
-                    var fahrenheit = parseInt($(this).data('f'), 10);
-                    var celsius = parseInt($(this).data('c'), 10);
-                    return original === fahrenheit ? celsius : fahrenheit;
+                    if ($(this).data('units') === 'si') {
+                        $(this).data('units', 'us');
+                        temp = parseInt($(this).data('f'), 10);
+                    } else {
+                        $(this).data('units', 'si');
+                        temp = parseInt($(this).data('c'), 10);
+                    }
+                    return temp.toString().replace('-', '\u2212');
                 });
             });
         },

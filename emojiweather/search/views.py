@@ -1,22 +1,36 @@
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormView
 
 from .forms import SearchWeatherForm
 
 
-class SearchView(FormMixin, TemplateView):
+class SearchView(FormView):
     form_class = SearchWeatherForm
     template_name = 'search/search.html'
+    query_field = 'q'
+    query = None
+    results = None
+
+    def get_form_kwargs(self):
+        kwargs = super(SearchView, self).get_form_kwargs()
+        if self.request.method in ('GET') and self.query_field in self.request.GET:
+            kwargs.update({'data': self.request.GET})
+        return kwargs
+
+    def form_valid(self, form):
+        self.query = form.cleaned_data[self.query_field]
+        self.results = form.get_results(self.query)
+        return self.render_to_response(self.get_context_data())
 
     def get(self, request, *args, **kwargs):
-        query = None
-        results = None
-        if 'q' in request.GET:
-            form = self.form_class(request.GET)
+        form = self.get_form()
+        if form.is_bound:
             if form.is_valid():
-                query = form.cleaned_data['q']
-                results = form.get_results(query)
-        else:
-            form = self.get_form()
-        context = self.get_context_data(form=form, query=query, results=results)
-        return self.render_to_response(context)
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+        return super(SearchView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        kwargs['query'] = self.query
+        kwargs['results'] = self.results
+        return super(SearchView, self).get_context_data(**kwargs)
