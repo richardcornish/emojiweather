@@ -14,5 +14,13 @@
             "domain": "emojiweather.herokuapp.com",
             "name": "Emoji Weather"
         }
+    },
+    {
+        "pk": 3, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "www.emojiweather.app",
+            "name": "Emoji Weather"
+        }
     }
 ]
