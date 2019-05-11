@@ -1,20 +1,20 @@
 from django.contrib.gis.geoip2 import GeoIP2
 
 from geoip2.errors import GeoIP2Error
-from ipware.ip import get_real_ip
+from ipware import get_client_ip
 
 
 def get_location_from_ip(request):
-    ip = get_real_ip(request)
-    if ip:
+    client_ip, is_routable = get_client_ip(request)
+    if client_ip is not None:
         g = GeoIP2()
         try:
-            record = g.city(ip)
+            record = g.city(client_ip)
         except GeoIP2Error:
             return None
         if record:
-            city = record['city'] if 'city' in record and record['city'] else ''
-            country = record['country_name'] if 'country_name' in record and record['country_name'] else ''
+            city = record.get('city') or ''
+            country = record.get('country') or ''
             delimeter = ', ' if city and country else ''
-            return '%s%s%s' % (city, delimeter, country)
+            return f'{city}{delimeter}{country}'
     return None
