@@ -11,8 +11,8 @@ class SearchView(FormView):
     results = None
 
     def get_form_kwargs(self):
-        kwargs = super(SearchView, self).get_form_kwargs()
-        if self.request.method in ('GET') and self.query_field in self.request.GET:
+        kwargs = super().get_form_kwargs()
+        if self.request.method == 'GET'
             kwargs.update({'data': self.request.GET})
         return kwargs
 
@@ -28,9 +28,9 @@ class SearchView(FormView):
                 return self.form_valid(form)
             else:
                 return self.form_invalid(form)
-        return super(SearchView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         kwargs['query'] = self.query
         kwargs['results'] = self.results
-        return super(SearchView, self).get_context_data(**kwargs)
+        return super().get_context_data(**kwargs)

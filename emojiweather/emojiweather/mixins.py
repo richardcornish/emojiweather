@@ -5,13 +5,13 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 
 
-class CsrfExemptMixin(object):
+class CsrfExemptMixin:
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
-        return super(CsrfExemptMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
-class WeatherFormMixin(object):
+class WeatherFormMixin:
     def get_geocode(self, address):
         key = settings.GOOGLE_GEOCODING_API_KEY
         url = 'https://maps.googleapis.com/maps/api/geocode/json'

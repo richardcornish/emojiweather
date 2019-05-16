@@ -16,7 +16,7 @@ class HomeView(FormMixin, TemplateView):
     template_name = 'home.html'
 
     def get_form_kwargs(self):
-        kwargs = super(HomeView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['q'] = get_location_from_ip(self.request)
         return kwargs
 
