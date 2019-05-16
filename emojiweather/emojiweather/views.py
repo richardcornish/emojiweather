@@ -1,4 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormMixin
 
@@ -14,6 +16,10 @@ class FaviconView(RedirectView):
 class HomeView(FormMixin, TemplateView):
     form_class = SearchWeatherForm
     template_name = 'home.html'
+
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_initial(self):
         initial = super().get_initial()
