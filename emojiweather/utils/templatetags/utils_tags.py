@@ -14,11 +14,12 @@ from dateutil.relativedelta import FR, MO, SA, SU, TH, TU, WE, relativedelta as 
 from ua_parser import user_agent_parser
 
 try:
-    from urllib import quote_plus
+    from urllib import quote_plus as _quote_plus
 except ImportError:
-    from urllib.parse import quote_plus
+    from urllib.parse import quote_plus as _quote_plus
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 register = template.Library()
 
 
@@ -86,7 +87,7 @@ def get_location():
         {'title': 'Antarctica', 'code': 'AQ'},
     ]
     location = random.choice(locations)
-    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'flags.json')
+    path = os.path.join(BASE_DIR, 'data', 'flags.json')
     with open(path, 'r') as f:
         data = json.load(f)
         for icon in data:
@@ -95,7 +96,7 @@ def get_location():
     return {
         'title': location['title'],
         'emoji': emoji,
-        'query': quote_plus(location['title'].lower()),
+        'query': _quote_plus(location['title'].lower()),
     }
 
 
@@ -125,7 +126,7 @@ def get_holidays(tz):
         'Saturday': SA,
         'Sunday': SU,
     }
-    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'holidays.json')
+    path = os.path.join(BASE_DIR, 'data', 'holidays.json')
     with open(path, 'r') as f:
         data = json.load(f)
         for item in data:
@@ -149,7 +150,7 @@ def get_holidays(tz):
 
 @register.filter
 def weatherify(value):
-    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'weather.json')
+    path = os.path.join(BASE_DIR, 'data', 'weather.json')
     with open(path, 'r') as f:
         data = json.load(f)
         for item in data:
@@ -159,7 +160,7 @@ def weatherify(value):
 
 @register.filter
 def moonify(value):
-    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'moons.json')
+    path = os.path.join(BASE_DIR, 'data', 'moons.json')
     with open(path, 'r') as f:
         data = json.load(f)
         if value:
@@ -171,7 +172,7 @@ def moonify(value):
 
 @register.filter
 def flagify(value):
-    path = os.path.join(os.path.dirname(BASE_DIR), 'data', 'flags.json')
+    path = os.path.join(BASE_DIR, 'data', 'flags.json')
     with open(path, 'r') as f:
         data = json.load(f)
         # loop through json
@@ -186,7 +187,7 @@ def flagify(value):
 
 @register.simple_tag
 def get_google_maps_key():
-    return settings.GOOGLE_MAPS_API_KEY
+    return getattr(settings, 'GOOGLE_MAPS_API_KEY', '')
 
 
 @register.filter
@@ -204,9 +205,9 @@ def curlify(value):
     return mark_safe(value.replace("'", '&#8217;'))
 
 
-@register.filter(name='quote_plus')
-def _quote_plus(value):
-    return quote_plus(value)
+@register.filter
+def quote_plus(value):
+    return _quote_plus(value)
 
 
 @register.tag
