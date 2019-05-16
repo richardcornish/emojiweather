@@ -2,7 +2,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormMixin
 
-from .forms import HomeSearchWeatherForm
+from search.forms import SearchWeatherForm
 from utils import get_location_from_ip
 
 
@@ -12,13 +12,13 @@ class FaviconView(RedirectView):
 
 
 class HomeView(FormMixin, TemplateView):
-    form_class = HomeSearchWeatherForm
+    form_class = SearchWeatherForm
     template_name = 'home.html'
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['q'] = get_location_from_ip(self.request)
-        return kwargs
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['q'] = get_location_from_ip(self.request)
+        return initial
 
 
 class RobotsView(TemplateView):
