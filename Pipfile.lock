@@ -182,11 +182,11 @@
         },
         "twilio": {
             "hashes": [
-                "sha256:be51f482e8df17ae224263e0533ab68283d9a0158d5aaa58ac9ff35f954c8f3c",
-                "sha256:d6e9272fb8f76b03805decce97cc7c79a73fe24878751e1fd628a35704ce3747"
+                "sha256:6b66444b8d51fa7b6acd875565d78733dae304d4ad155f0100c3b0c1c280a435",
+                "sha256:d52d4251bbee53d787782b0a7a2be0a3fc90d1a1682d8f8f675ea0cb2cc20c3f"
             ],
             "index": "pypi",
-            "version": "==6.26.3"
+            "version": "==6.27.0"
         },
         "ua-parser": {
             "hashes": [
