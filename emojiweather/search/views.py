@@ -12,7 +12,7 @@ class SearchView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        if self.request.method == 'GET'
+        if self.request.method == 'GET':
             kwargs.update({'data': self.request.GET})
         return kwargs
 
