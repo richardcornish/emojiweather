@@ -3,28 +3,32 @@
 {% load i18n static utils_tags widget_tweaks %}
 
 
-{% block title %}{% if results.geocode %}{{ results.geocode.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}
+{% block title %}{% if results.geocode.results %}{{ results.geocode.results.formatted_address }}{% else %}Search{% endif %} &#183; {{ block.super }}{% endblock %}
 
 
-{% block favicon %}{% if results.weather %}{% with 'img/favicons/'|add:results.weather.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block favicon %}{% if results.weather.results %}{% with 'img/favicons/'|add:results.weather.results.currently.icon|add:'.ico' as favicon %}{% static favicon %}{% endwith %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
-{% block description %}{% if results.geocode and results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|roundify }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}Beep boop. &#x1F916; {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block description %}{% if results %}{% if results.geocode.results and results.weather.results %}{% with results.weather.results.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.results.currently.temperature|roundify }}&#176; {{ results.weather.results.currently.summary|lower|capfirst }} at {{ results.geocode.results.formatted_address }}{% else %}Beep boop. &#x1F916; {{ results.status }}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
-{% block og_title %}{% if results.geocode and results.weather %}{{ results.weather.currently.temperature|roundify }}&#176; at {{ results.geocode.formatted_address }}{% elif results.error %}Search error{% else %}Search{% endif %}{% endblock %}
+{% block og_title %}{% if results %}{% if results.geocode.results and results.weather.results %}{{ results.weather.results.currently.temperature|roundify }}&#176; at {{ results.geocode.results.formatted_address }}{% else %}{{ results.status }}{% endif %}{% else %}Search{% endif %}{% endblock %}
 
-{% block og_image %}{% if results.weather or results.error %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% if results.weather %}{% with 'img/weather/'|add:results.weather.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% elif results.error %}{% static 'img/og/error.png' %}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
-{% block og_description %}{% if results.geocode and results.weather %}{% with results.weather.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %} {{ results.weather.currently.temperature|roundify }}&#176; {{ results.weather.currently.summary|lower|capfirst }} at {{ results.geocode.formatted_address }}{% elif results.error %}Beep boop. &#x1F916; {{ results.error }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block og_image %}http{% if request.is_secure %}s{% endif %}://{{ request.site.domain }}{% if results %}{% if results.weather.results %}{% with 'img/weather/'|add:results.weather.results.currently.icon|add:'.png' as touchicon %}{% static touchicon %}{% endwith %}{% else %}{% static 'img/og/error.png' %}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+
+{% block og_description %}{% if results %}{% if results.geocode.results and results.weather.results %}{% with results.weather.results.currently.icon|weatherify as icon %}{{ icon.html|safe }}{% endwith %}{{ results.weather.results.currently.temperature|roundify }}&#176; {{ results.weather.results.currently.summary|lower|capfirst }} at {{ results.geocode.results.formatted_address }}{% else %}Beep boop. &#x1F916; {{ results.status }}{% endif %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 
 {% block extra_head %}
-    {% if results.geocode and results.weather %}
-    <meta name="ICBM" content="{{ results.weather.latitude }}, {{ results.weather.longitude }}">
-    <meta name="geo.position" content="{{ results.weather.latitude }};{{ results.weather.longitude }}">
-    <meta name="geo.region" content="{% with results.geocode.address_components|flagify as flag %}{{ flag.code }}{% endwith %}">
-    <meta name="geo.placename" content="{{ results.geocode.formatted_address }}">
+    {% if results.weather.results %}
+        <meta name="ICBM" content="{{ results.weather.results.latitude }}, {{ results.weather.results.longitude }}">
+        <meta name="geo.position" content="{{ results.weather.results.latitude }};{{ results.weather.results.longitude }}">
+    {% endif %}
+    {% if results.geocode.results %}
+        <meta name="geo.region" content="{% with results.geocode.results.address_components|flagify as flag %}{{ flag.code }}{% endwith %}">
+        <meta name="geo.placename" content="{{ results.geocode.results.formatted_address }}">
     {% endif %}
 {% endblock %}
 
@@ -39,19 +43,19 @@
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
             {% comment %}
-            {% if results.geocode and results.weather %}
+            {% if results %}
             <p class="text-center"><a href="https://www.redcross.org/donate/hurricane-michael-donations.html">Help the victims of Hurricane Michael</a> &#x1F300;<span style="font-weight: bold; color: red; font-size: 1.5rem">+</span></p>
             {% endif %}
             {% endcomment %}
 
-            {% if results.weather.timezone %}
-                {% get_holidays results.weather.timezone as holidays %}
+            {% if results.weather.results and results.weather.results.timezone %}
+                {% get_holidays results.weather.results.timezone as holidays %}
                 {% if holidays %}
-                {% for holiday in holidays %}
-                <div class="alert alert-primary text-center" role="alert" style="background-color: rgba(204, 229, 255, .5); border: 0">
-                    {{ holiday.greeting|title }} {{ holiday.name|curlify }} {{ holiday.html|safe }}
-                </div>
-                {% endfor %}
+                    {% for holiday in holidays %}
+                    <div class="alert alert-primary text-center" role="alert" style="background-color: rgba(204, 229, 255, .5); border: 0">
+                        {{ holiday.greeting|title }} {{ holiday.name|curlify }} {{ holiday.html|safe }}
+                    </div>
+                    {% endfor %}
                 {% endif %}
             {% endif %}
 
@@ -60,11 +64,11 @@
     <div class="row">
         <div class="col-12">
 
-            {% if results.geocode and results.weather %}
+            {% if results.weather.results and results.temperature %}
                 <h1 class="text-center display-1">
-                    {% with results.weather.currently.icon|weatherify as icon %}
+                    {% with results.weather.results.currently.icon|weatherify as icon %}
                     {{ icon.html|safe }}{% endwith %}
-                    <span class="js-toggle-units" data-f="{{ results.temperature.f|roundify }}" data-c="{{ results.temperature.c|roundify }}" data-units="{{ results.weather.flags.units }}">{{ results.weather.currently.temperature|roundify|minusify }}</span>&#176;
+                    <span class="js-toggle-units" data-f="{{ results.temperature.f|roundify }}" data-c="{{ results.temperature.c|roundify }}" data-units="{{ results.weather.results.flags.units }}">{{ results.weather.results.currently.temperature|roundify|minusify }}</span>&#176;
                 </h1>
             {% endif %}
 
@@ -73,34 +77,30 @@
     <div class="row">
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
-            {% if results.geocode and results.weather %}
-                <p class="text-center" style="font-size: 2rem">
-                    {{ results.weather.currently.summary|lower|capfirst }}
-                </p>
-                <p class="text-center">
-                    {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
-                    {{ moon.name }} {{ moon.html|safe }}
-                    {% endwith %}
-                </p>
-                <p class="text-center">
-                    {% with results.geocode.address_components|flagify as flag %}
-                    <a href="https://maps.google.com/?q={{ results.geocode.formatted_address|quote_plus }}">{{ results.geocode.formatted_address }}</a>
-                    {{ flag.html|safe }}
-                    {% endwith %}
-                </p>
-                <p class="text-center js-moment">{% now "l, F j, Y. g:i:s A" %}</p>
-                <p class="text-center">{{ results.weather.daily.summary }} &#x1F321;&#xFE0F;</p>
-            {% elif results.error %}
-                <h1 class="text-center">{{ query }} not found</h1>
-                <p class="text-center">Beep boop. &#x1F916; {{ results.error }}</p>
+            {% if results %}
+                {% if results.geocode.results and results.weather.results %}
+                    <p class="text-center" style="font-size: 2rem">
+                        {{ results.weather.results.currently.summary|lower|capfirst }}
+                    </p>
+                    <p class="text-center">
+                        {% with results.weather.results.daily.data.0.moonPhase|moonify as moon %}
+                        {{ moon.name }} {{ moon.html|safe }}
+                        {% endwith %}
+                    </p>
+                    <p class="text-center">
+                        {% with results.geocode.results.address_components|flagify as flag %}
+                        <a href="https://maps.google.com/?q={{ results.geocode.results.formatted_address|quote_plus }}">{{ results.geocode.results.formatted_address }}</a>
+                        {{ flag.html|safe }}
+                        {% endwith %}
+                    </p>
+                    <p class="text-center js-moment">{% now "l, F j, Y. g:i:s A" %}</p>
+                    <p class="text-center">{{ results.weather.results.daily.summary }} &#x1F321;&#xFE0F;</p>
+                {% else %}
+                    <h1 class="text-center">{{ query }} not found</h1>
+                    <p class="text-center">Beep boop. &#x1F916; {{ results.status }}</p>
+                {% endif %}
             {% else %}
                 <h1 class="text-center">Search</h1>
-            {% endif %}
-
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
-                <p class="text-danger">{{ error|safe }}</p>
-                {% endfor %}
             {% endif %}
 
             <form method="get" action="{% url 'search' %}" class="js-search{% if results.weather %} js-search-success{% endif %}">
@@ -112,13 +112,8 @@
                             <label for="{{ field.id_for_label }}" class="sr-only">
                                 {{ field.label }}
                             </label>
-                            {% if form.is_bound %}
-                                {% if field.errors %}
-                                    {{ field|add_class:"is-invalid" }}
-                                {% else %}
-                                    {# {{ field|add_class:"is-valid" }} #}
-                                    {{ field }}
-                                {% endif %}
+                            {% if field.errors %}
+                                {{ field|add_class:'is-invalid' }}
                             {% else %}
                                 {{ field }}
                             {% endif %}
@@ -133,7 +128,7 @@
                         </div>
                     {% endif %}
                 {% endfor %}
-                <p><button type="submit" class="btn btn-primary btn-block btn-lg">{% get_os as os %}{% if os == 'Android' %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm8.9 3c-.5-4.2-3.8-7.5-7.9-7.9V1h-2v2.1c-4.2.5-7.5 3.8-7.9 7.9H1v2h2.1c.5 4.2 3.8 7.5 7.9 7.9V23h2v-2.1c4.2-.5 7.5-3.8 7.9-7.9H23v-2h-2.1zM12 19c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z" class="path"/></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path class="path" d="M23 0L0 11h12v12z"/></svg>{% endif %} Search</button></p>
+                <p><button type="submit" class="btn btn-primary btn-block btn-lg">Search {% get_os as os %}{% if os == 'Android' %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm8.9 3c-.5-4.2-3.8-7.5-7.9-7.9V1h-2v2.1c-4.2.5-7.5 3.8-7.9 7.9H1v2h2.1c.5 4.2 3.8 7.5 7.9 7.9V23h2v-2.1c4.2-.5 7.5-3.8 7.9-7.9H23v-2h-2.1zM12 19c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z" class="path"/></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path class="path" d="M23 0L0 11h12v12z"/></svg>{% endif %}</button></p>
                 <p><button type="button" class="js-geolocate btn btn-outline-primary btn-block btn">Or geolocate me</button></p>
             </form>
 
@@ -149,8 +144,8 @@
 {{ block.super }}
 <script>
     EmojiWeather.toggleUnits('.js-toggle-units');
-    {% if results.weather.timezone %}
-    EmojiWeather.insertDateTime('{{ results.weather.timezone }}');
+    {% if results.weather.results.timezone %}
+    EmojiWeather.insertDateTime('{{ results.weather.results.timezone }}');
     {% endif %}
     {% comment %}
     {% if results.weather.latitude and results.weather.longitude %}

@@ -1,23 +1,23 @@
 {% load utils_tags %}{% strip %}
 
-{% if results.error %}
-    Beep boop. {{ results.error }} 🤖
+{% if results.status %}
+    Beep boop. {{ results.status }} 🤖
 {% endif %}
 
-{% if results.geocode and results.weather %}
+{% if results.geocode.results and results.weather.results %}
 
-    {{ results.weather.currently.summary|lower|capfirst }} and 
-    {{ results.weather.currently.temperature|roundify }}° 
-    {% with results.weather.currently.icon|weatherify as icon %}
+    {{ results.weather.results.currently.summary|lower|capfirst }} and 
+    {{ results.weather.results.currently.temperature|roundify }}° 
+    {% with results.weather.results.currently.icon|weatherify as icon %}
         {{ icon.unicode }}
     {% endwith %}
 
-   {% with results.weather.daily.data.0.moonPhase|moonify as moon %}
+   {% with results.weather.results.daily.data.0.moonPhase|moonify as moon %}
        {{ moon.name }} {{ moon.unicode }}
    {% endwith %}
 
-   {{ results.geocode.formatted_address }}
-   {% with results.geocode.address_components|flagify as flag %}
+   {{ results.geocode.results.formatted_address }}
+   {% with results.geocode.results.address_components|flagify as flag %}
        {{ flag.unicode }}
    {% endwith %}
 

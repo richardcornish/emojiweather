@@ -31,13 +31,8 @@
                             <label for="{{ field.id_for_label }}" class="sr-only">
                                 {{ field.label }}
                             </label>
-                            {% if form.is_bound %}
-                                {% if field.errors %}
-                                    {{ field|add_class:"is-invalid" }}
-                                {% else %}
-                                    {# {{ field|add_class:"is-valid" }} #}
-                                    {{ field }}
-                                {% endif %}
+                            {% if field.errors %}
+                                {{ field|add_class:'is-invalid' }}
                             {% else %}
                                 {{ field }}
                             {% endif %}
@@ -52,7 +47,7 @@
                         </div>
                     {% endif %}
                 {% endfor %}
-                <p><button type="submit" class="btn btn-primary btn-block btn-lg">{% get_os as os %}{% if os == 'Android' %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm8.9 3c-.5-4.2-3.8-7.5-7.9-7.9V1h-2v2.1c-4.2.5-7.5 3.8-7.9 7.9H1v2h2.1c.5 4.2 3.8 7.5 7.9 7.9V23h2v-2.1c4.2-.5 7.5-3.8 7.9-7.9H23v-2h-2.1zM12 19c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z" class="path"/></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path class="path" d="M23 0L0 11h12v12z"/></svg>{% endif %} Search</button></p>
+                <p><button type="submit" class="btn btn-primary btn-block btn-lg">Search {% get_os as os %}{% if os == 'Android' %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm8.9 3c-.5-4.2-3.8-7.5-7.9-7.9V1h-2v2.1c-4.2.5-7.5 3.8-7.9 7.9H1v2h2.1c.5 4.2 3.8 7.5 7.9 7.9V23h2v-2.1c4.2-.5 7.5-3.8 7.9-7.9H23v-2h-2.1zM12 19c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z" class="path"/></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon-location"><path class="path" d="M23 0L0 11h12v12z"/></svg>{% endif %}</button></p>
                 <p><button type="button" class="js-geolocate btn btn-outline-primary btn-block btn">Or geolocate me</button></p>
             </form>
 

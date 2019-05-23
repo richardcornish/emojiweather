@@ -1,13 +1,13 @@
 {% load utils_tags %}{% strip %}
 
-{% if results.error %}
-    {{ results.error }}
+{% if results.status %}
+    {{ results.status }}
 {% endif %}
 
-{% if results.geocode and results.weather %}
-    The weather for {{ results.geocode.formatted_address }} 
-    is {{ results.weather.currently.temperature|roundify }} degrees and 
-    {{ results.weather.currently.summary|lower }}.
+{% if results.geocode.results and results.weather.results %}
+    The weather for {{ results.geocode.results.formatted_address }} 
+    is {{ results.weather.results.currently.temperature|roundify }} degrees and 
+    {{ results.weather.results.currently.summary|lower }}.
 {% endif %}
 
 Please say or enter a location.

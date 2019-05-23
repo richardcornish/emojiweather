@@ -6,9 +6,6 @@ from .forms import SearchWeatherForm
 class SearchView(FormView):
     form_class = SearchWeatherForm
     template_name = 'search/search.html'
-    query_field = 'q'
-    query = None
-    results = None
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -17,8 +14,10 @@ class SearchView(FormView):
         return kwargs
 
     def form_valid(self, form):
-        self.query = form.cleaned_data[self.query_field]
-        self.results = form.get_results(self.query)
+        self.extra_context = {
+            'query': form.cleaned_data['q'],
+            'results': form.get_results()
+        }
         return self.render_to_response(self.get_context_data())
 
     def get(self, request, *args, **kwargs):
@@ -29,8 +28,3 @@ class SearchView(FormView):
             else:
                 return self.form_invalid(form)
         return super().get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        kwargs['query'] = self.query
-        kwargs['results'] = self.results
-        return super().get_context_data(**kwargs)
