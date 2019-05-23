@@ -46,7 +46,7 @@ class WeatherFormMixin:
         latitude = data['results']['geometry']['location']['lat']
         longitude = data['results']['geometry']['location']['lng']
         units = 'auto'
-        url = 'https://api.darksky.net/forecast/%s/%s,%s' % (key, latitude, longitude)
+        url = f'https://api.darksky.net/forecast/{key}/{latitude},{longitude}'
         r = requests.get(url, params={'units': units})
         data = {}
         if r.status_code == 200:
