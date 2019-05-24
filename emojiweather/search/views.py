@@ -16,13 +16,13 @@ class SearchView(FormView):
     def form_valid(self, form):
         self.extra_context = {
             'query': form.cleaned_data['q'],
-            'results': form.get_results()
+            'results': form.get_results(),
         }
         return self.render_to_response(self.get_context_data())
 
     def get(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_bound:
+        if request.GET:
+            form = self.get_form()
             if form.is_valid():
                 return self.form_valid(form)
             else:
