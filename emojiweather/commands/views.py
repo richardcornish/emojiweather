@@ -36,16 +36,13 @@ class BaseCommandView(FormView):
         self.data['icon_url'] = add_domain(current_site.domain, path, request.is_secure())
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         return HttpResponseForbidden()
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['token_name'] = self.token_name
         return kwargs
-
-    def form_valid(self, form):
-        return self.render_to_response(self.get_context_data())
 
     def form_invalid(self, form):
         return HttpResponseForbidden()
@@ -65,12 +62,12 @@ class AskCommandView(CsrfExemptMixin, BaseCommandView):
             response = random.choice(MAGIC_8_BALL_RESPONSES)
         else:
             response = self.DEFAULT_ERROR
-        self.extra_context = {
+        kwargs = {
             'user_name': form.cleaned_data['user_name'],
             'text': form.cleaned_data['text'],
             'response': response,
         }
-        return super().form_valid(form)
+        return self.render_to_response(self.get_context_data(**kwargs))
 
 
 class ChuckCommandView(CsrfExemptMixin, BaseCommandView):
@@ -81,8 +78,8 @@ class ChuckCommandView(CsrfExemptMixin, BaseCommandView):
         r = requests.get('http://api.icndb.com/jokes/random')
         if r.status_code != 200 or r.json()['type'] != 'success':
             return HttpResponseForbidden()
-        self.extra_context = {'text': r.json()['value']['joke']}
-        return super().form_valid(form)
+        kwargs = {'text': r.json()['value']['joke']}
+        return self.render_to_response(self.get_context_data(**kwargs))
 
 
 class FactCommandView(CsrfExemptMixin, BaseCommandView):
@@ -90,8 +87,8 @@ class FactCommandView(CsrfExemptMixin, BaseCommandView):
     token_name = 'MATTERMOST_TOKEN_FACT'
 
     def form_valid(self, form):
-        self.extra_context = {'text': random.choice(RANDOM_FACTS)}
-        return super().form_valid(form)
+        kwargs = {'text': random.choice(RANDOM_FACTS)}
+        return self.render_to_response(self.get_context_data(**kwargs))
 
 
 class HotCommandView(CsrfExemptMixin, BaseCommandView):
@@ -104,8 +101,8 @@ class HotCommandView(CsrfExemptMixin, BaseCommandView):
             length = int(form.cleaned_data['text'])
         except ValueError:
             length = self.DEFAULT_LENGTH
-        self.extra_context = {'list': list(range(length))}
-        return super().form_valid(form)
+        kwargs = {'list': list(range(length))}
+        return self.render_to_response(self.get_context_data(**kwargs))
 
 
 class PrintCommandView(CsrfExemptMixin, BaseCommandView):
@@ -115,8 +112,8 @@ class PrintCommandView(CsrfExemptMixin, BaseCommandView):
     def form_valid(self, form):
         if not form.cleaned_data['text']:
             return HttpResponseForbidden()
-        self.extra_context = {'text': form.cleaned_data['text']}
-        return super().form_valid(form)
+        kwargs = {'text': form.cleaned_data['text']}
+        return self.render_to_response(self.get_context_data(**kwargs))
 
 
 class WeatherCommandView(CsrfExemptMixin, BaseCommandView):
@@ -148,9 +145,9 @@ class WeatherCommandView(CsrfExemptMixin, BaseCommandView):
                 'low': int(day['temperatureLow']),
                 'icon': WEATHER_EMOJI.get(day['icon'], self.DEFAULT_UNKNOWN_EMOJI),
             })
-        self.extra_context = {
+        kwargs = {
             'alerts': alerts,
             'location': location,
             'forecast': forecast,
         }
-        return super().form_valid(form)
+        return self.render_to_response(self.get_context_data(**kwargs))

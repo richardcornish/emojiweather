@@ -10,7 +10,7 @@ class SearchView(FormView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         if self.request.method == 'GET' and self.request.GET:
-            kwargs.update({'data': self.request.GET})
+            kwargs['data'] = self.request.GET
         return kwargs
 
     def form_valid(self, form):

@@ -8,8 +8,8 @@ import requests
 class CsrfExemptMixin:
 
     @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
 class WeatherFormMixin:
@@ -87,7 +87,7 @@ class WeatherFormMixin:
             'temperature': None,
         }
         if data['geocode'] and data['geocode']['results'] is not None:
-            data.update({'weather': self._get_weather(data['geocode'])})
+            data['weather'] = self._get_weather(data['geocode'])
         if data['weather'] and data['weather']['results'] is not None:
-            data.update({'temperature': self._get_temperature(data['weather'])})
+            data['temperature'] = self._get_temperature(data['weather'])
         return data
