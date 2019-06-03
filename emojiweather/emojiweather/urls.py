@@ -14,7 +14,7 @@ urlpatterns = [
     path('commands/', include('commands.urls')),
     path('favicon.ico', FaviconView.as_view(), name='favicon'),
     path('robots.txt', RobotsView.as_view(), name='robots'),
-    path('', include('sitemaps.urls')),
+    path('sitemap.xml', include('sitemaps.urls')),
     path('', HomeView.as_view(), name='home'),
 ]
 

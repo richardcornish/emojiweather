@@ -5,5 +5,5 @@ from .sitemaps import sitemaps
 
 
 urlpatterns = [
-    path('sitemap.xml', views.sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('', views.sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
