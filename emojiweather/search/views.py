@@ -14,11 +14,11 @@ class SearchView(FormView):
         return kwargs
 
     def form_valid(self, form):
-        self.extra_context = {
+        kwargs = {
             'query': form.cleaned_data['q'],
             'results': form.get_results(),
         }
-        return self.render_to_response(self.get_context_data())
+        return self.render_to_response(self.get_context_data(**kwargs))
 
     def get(self, request, *args, **kwargs):
         if request.GET:
