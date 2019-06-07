@@ -14,10 +14,10 @@ class CsrfExemptMixin:
 
 class WeatherFormMixin:
 
-    def _geocode(self, data):
+    def _geocode(self, address):
         url = 'https://maps.googleapis.com/maps/api/geocode/json'
         key = settings.GOOGLE_GEOCODING_API_KEY
-        r = requests.get(url, params={'address': data, 'key': key})
+        r = requests.get(url, params={'address': address, 'key': key})
         data = {}
         if r.status_code == 200:
             j = r.json()
@@ -41,10 +41,10 @@ class WeatherFormMixin:
                 })
         return data
 
-    def _get_weather(self, data):
+    def _get_weather(self, geocode):
         key = settings.DARK_SKY_API_KEY
-        latitude = data['results']['geometry']['location']['lat']
-        longitude = data['results']['geometry']['location']['lng']
+        latitude = geocode['results']['geometry']['location']['lat']
+        longitude = geocode['results']['geometry']['location']['lng']
         units = 'auto'
         url = f'https://api.darksky.net/forecast/{key}/{latitude},{longitude}'
         r = requests.get(url, params={'units': units})
@@ -63,9 +63,9 @@ class WeatherFormMixin:
                 })
         return data
 
-    def _get_temperature(self, data):
-        temp = data['results']['currently']['temperature']
-        units = data['results']['flags']['units']
+    def _get_temperature(self, weather):
+        temp = weather['results']['currently']['temperature']
+        units = weather['results']['flags']['units']
         data = {}
         if units == 'us':
             data.update({
@@ -79,10 +79,9 @@ class WeatherFormMixin:
             })
         return data
 
-    def get_results(self):
-        address = self.cleaned_data['q']
+    def get_results(self, query):
         data = {
-            'geocode': self._geocode(address),
+            'geocode': self._geocode(query),
             'weather': None,
             'temperature': None,
         }

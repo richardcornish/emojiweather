@@ -16,12 +16,12 @@ class VoiceView(CsrfExemptMixin, FormView):
     def form_valid(self, form):
         # https://www.twilio.com/docs/api/twiml/gather
         if form.cleaned_data['SpeechResult']:
-            address = form.cleaned_data['SpeechResult']
+            query = form.cleaned_data['SpeechResult']
         elif form.cleaned_data['Digits']:
-            address = form.cleaned_data['Digits']
+            query = form.cleaned_data['Digits']
         else:
-            address = None
-        results = form.get_results(address) if address else None
+            query = None
+        results = form.get_results(query) if query else None
         context = {'results': results}
         message = render_to_string('voice/voice.xml', context)
         response = VoiceResponse()
