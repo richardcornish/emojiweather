@@ -10,9 +10,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fake-key')
 
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = bool(os.environ.get('DEBUG', 'True'))
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     '.emojiweather.app',
 ]
 
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.cache.UpdateCacheMiddleware',  # must be first
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',  # must be last
 ]
 
 ROOT_URLCONF = 'emojiweather.urls'
@@ -82,12 +81,24 @@ WSGI_APPLICATION = 'emojiweather.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'emojiweather',
+            'USER': 'emojiweather',
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'fake-password'),
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -132,11 +143,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
+
 
 # Sites
 # https://docs.djangoproject.com/en/2.2/ref/contrib/sites/
 
-SITE_ID = os.environ.get('SITE_ID', 1)
+SITE_ID = int(os.environ.get('SITE_ID', '1'))
 
 
 # Geolocation
@@ -175,54 +188,3 @@ MATTERMOST_TOKEN_FACT = os.environ.get('MATTERMOST_TOKEN_FACT', '')
 MATTERMOST_TOKEN_HOT = os.environ.get('MATTERMOST_TOKEN_HOT', '')
 MATTERMOST_TOKEN_PRINT = os.environ.get('MATTERMOST_TOKEN_PRINT', '')
 MATTERMOST_TOKEN_WEATHER = os.environ.get('MATTERMOST_TOKEN_WEATHER', '')
-
-
-# Caching
-# https://docs.djangoproject.com/en/2.2/topics/cache/
-
-CACHE_MIDDLEWARE_ALIAS = 'default'
-
-CACHE_MIDDLEWARE_SECONDS = 604800
-
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
-
-if DEBUG:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-        }
-    }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-            'TIMEOUT': None,
-            'LOCATION': os.environ.get('MEMCACHIER_SERVERS', ''),
-            'OPTIONS': {
-                'binary': True,
-                'username': os.environ.get('MEMCACHIER_USERNAME', ''),
-                'password': os.environ.get('MEMCACHIER_PASSWORD', ''),
-                'behaviors': {
-                    'no_block': True,
-                    'tcp_nodelay': True,
-                    'tcp_keepalive': True,
-                    'connect_timeout': 2000,  # ms
-                    'send_timeout': 750 * 1000,  # us
-                    'receive_timeout': 750 * 1000,  # us
-                    '_poll_timeout': 2000,  # ms
-                    'ketama': True,
-                    'remove_failed': 1,
-                    'retry_timeout': 2,
-                    'dead_timeout': 30,
-                }
-            }
-        }
-    }
-
-
-# Heroku
-# https://devcenter.heroku.com/articles/django-app-configuration
-
-import django_heroku
-
-django_heroku.settings(locals())
