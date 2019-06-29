@@ -14,6 +14,7 @@ DEBUG = bool(os.environ.get('DEBUG', 'True'))
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '.compute-1.amazonaws.com',
     '.emojiweather.app',
 ]
 
