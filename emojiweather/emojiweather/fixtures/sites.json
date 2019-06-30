@@ -11,7 +11,7 @@
         "pk": 2, 
         "model": "sites.site", 
         "fields": {
-            "domain": "emojiweather.herokuapp.com",
+            "domain": "ec2-3-89-247-193.compute-1.amazonaws.com",
             "name": "Emoji Weather"
         }
     },
