@@ -37,26 +37,29 @@ def install(c):
 @task
 def migrate(c):
     print(colorize('\nMigrating database...', fg='white'))
-    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py migrate --noinput')
+    c.inline_ssh_env = True
+    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py migrate --noinput', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
 
 
 @task
 def collect(c):
     print(colorize('\nCopying static files...', fg='white'))
-    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py collectstatic --noinput --verbosity 1')
+    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py collectstatic --noinput')
 
 
 @task
 def clear(c):
-    print(colorize('\nDeleting old sessions...', fg='white'))
-    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py clearsessions --verbosity 1')
+    print(colorize('\nDeleting sessions...', fg='white'))
+    c.inline_ssh_env = True
+    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py clearsessions', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
 
 
 @task
 def restart(c):
-    print(colorize('\nRestarting web server...', fg='white'))
+    print(colorize('\nRestarting web server...\n', fg='white'))
     c.run(f'sudo systemctl restart {service_name}')
     c.run(f'sudo systemctl status {service_name}')
+    print('')
     c.run('sudo systemctl restart nginx')
     c.run('sudo systemctl status nginx')
 
