@@ -5,7 +5,6 @@ from django.utils.termcolors import colorize
 # 1. Local: ssh-add ~/.ssh/aws.pem
 # 2. Local: Edit hosts, repo_name, pythonpath (if necessary)
 # 3. Remote: Copy .env to to {code_dir}/.env:
-# 4. Remote: Add to ~/.bashrc: source ~/{repo_name}/.env
 
 
 hosts = [{
@@ -38,7 +37,7 @@ def install(c):
 def migrate(c):
     print(colorize('\nMigrating database...', fg='white'))
     c.inline_ssh_env = True
-    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py migrate --noinput', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
+    c.run(f'source {code_dir}/.env && cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py migrate --noinput', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
 
 
 @task
@@ -51,7 +50,7 @@ def collect(c):
 def clear(c):
     print(colorize('\nDeleting sessions...', fg='white'))
     c.inline_ssh_env = True
-    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py clearsessions', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
+    c.run(f'source {code_dir}/.env && cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py clearsessions', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
 
 
 @task
