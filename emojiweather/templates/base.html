@@ -85,7 +85,7 @@
         <div class="row">
             <div class="col">
                 {% block footer %}
-                <p class="small text-center text-muted">&copy; {% now "Y" %} <a href="{% url 'home' %}">{{ request.site.name }}</a> &#183; <a href="{% url 'search' %}">Search</a> &#183; <a href="{% url 'sms' %}">Text</a> &#183; <a href="{% url 'voice' %}">Call</a></p>
+                <p class="small text-center text-muted">&copy; {% now "Y" %} <a href="{% url 'home' %}">{{ request.site.name }}</a> &#183; <a href="{% url 'search' %}">Search</a> &#183; <a href="{% url 'sms' %}">Text</a> &#183; <a href="{% url 'voice' %}">Call</a> &#183; Powered by <a href="https://darksky.net/">Dark Sky</a></p>
                 {% endblock %}
             </div>
         </div>
