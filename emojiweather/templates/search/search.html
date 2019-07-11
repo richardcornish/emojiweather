@@ -139,6 +139,9 @@
 {% endblock %}
 
 
+{% block dark_sky %}forecast/{% if results.weather.results %}{{ results.weather.results.latitude }},{{ results.weather.results.longitude }}{% endif %}{% endblock %}
+
+
 {% block scripts %}
 {% strip %}
 {{ block.super }}
