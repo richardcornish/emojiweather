@@ -166,8 +166,11 @@ def moonify(value):
         if value:
             percentage = value * 100
             for item in data:
-                if item['start'] <= percentage < item['finish']:
-                    return item
+                try:
+                    if item['start'] <= percentage < item['finish']:
+                        return item
+                except:
+                    return {}
 
 
 @register.filter
