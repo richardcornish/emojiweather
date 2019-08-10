@@ -7,7 +7,7 @@ class SearchWeatherForm(WeatherFormMixin, forms.Form):
     q = forms.CharField(label='Query', widget=forms.TextInput(attrs={
         'type': 'search',
         'autocapitalize': 'words',
-        'autocomplete': 'street-address address-level2 address-level1 country',
+        'autocomplete': 'street-address',
         'autocorrect': 'off',
         'autofocus': True,
         'class': 'form-control form-control-lg text-center',
