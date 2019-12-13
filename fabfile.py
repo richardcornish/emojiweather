@@ -2,9 +2,10 @@ from fabric import task
 
 from django.utils.termcolors import colorize
 
-# 1. Local: ssh-add ~/.ssh/aws.pem
-# 2. Local: Edit hosts, repo_name, pythonpath (if necessary)
-# 3. Remote: Copy .env to to {code_dir}/.env:
+# 1. Local: chmod 400 ~/.ssh/aws.pem
+# 2. Local: ssh-add ~/.ssh/aws.pem
+# 3. Local: Edit hosts, repo_name, pythonpath (if necessary)
+# 4. Remote: Copy .env to to {code_dir}/.env:
 
 
 hosts = [{
