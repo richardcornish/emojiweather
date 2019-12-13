@@ -24,5 +24,7 @@ python manage.py runserver
 ## Production
 
 ```bash
+cd emojiweather/
+source env/bin/activate
 fab deploy
 ```
