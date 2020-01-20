@@ -28,3 +28,18 @@ cd emojiweather/
 source env/bin/activate
 fab deploy
 ```
+
+## Packages
+
+- django
+- django-debug-toolbar
+- django-ipware
+- django-widget-tweaks
+- fabric
+- geoip2
+- gunicorn
+- psycopg2-binary
+- python-dateutil
+- requests
+- twilio
+- ua-parser
