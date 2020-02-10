@@ -4,8 +4,8 @@ certifi==2019.9.11
 cffi==1.13.2
 chardet==3.0.4
 cryptography==2.8
-Django==3.0.2
-django-debug-toolbar==2.1
+Django==3.0.3
+django-debug-toolbar==2.2
 django-ipware==2.1.0
 django-widget-tweaks==1.4.5
 fabric==2.5.0
@@ -24,6 +24,6 @@ pytz==2019.3
 requests==2.22.0
 six==1.13.0
 sqlparse==0.3.0
-twilio==6.35.2
-ua-parser==0.8.0
+twilio==6.35.4
+ua-parser==0.9.0
 urllib3==1.25.7
