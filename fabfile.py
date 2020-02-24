@@ -3,7 +3,7 @@ from fabric import task
 from django.utils.termcolors import colorize
 
 # 1. Local: chmod 400 ~/.ssh/aws.pem
-# 2. Local: ssh-add ~/.ssh/aws.pem
+# 2. Local: ssh-add ~/.ssh/aws.pem OR ~/.ssh/config: Append to Host: IdentityFile ~/.ssh/aws.pem
 # 3. Local: Edit hosts, repo_name, pythonpath (if necessary)
 # 4. Remote: Copy .env to to {code_dir}/.env:
 
@@ -15,11 +15,11 @@ hosts = [{
 
 repo_name = 'emojiweather'
 
-pythonpath = repo_name
+pythonpath = f'{repo_name}/'
 
 service_name = repo_name
 
-code_dir = f'/home/ubuntu/{repo_name}'
+code_dir = f'/home/ubuntu/{repo_name}/'
 
 
 @task
@@ -38,20 +38,20 @@ def install(c):
 def migrate(c):
     print(colorize('\nMigrating database...', fg='white'))
     c.inline_ssh_env = True
-    c.run(f'source {code_dir}/.env && cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py migrate --noinput', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
+    c.run(f'source {code_dir}.env && cd {code_dir} && source env/bin/activate && python {pythonpath}manage.py migrate --noinput', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
 
 
 @task
 def collect(c):
     print(colorize('\nCopying static files...', fg='white'))
-    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py collectstatic --noinput')
+    c.run(f'cd {code_dir} && source env/bin/activate && python {pythonpath}manage.py collectstatic --noinput')
 
 
 @task
 def clear(c):
     print(colorize('\nDeleting sessions...', fg='white'))
     c.inline_ssh_env = True
-    c.run(f'source {code_dir}/.env && cd {code_dir} && source env/bin/activate && python {pythonpath}/manage.py clearsessions', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
+    c.run(f'source {code_dir}.env && cd {code_dir} && source env/bin/activate && python {pythonpath}manage.py clearsessions', env={'DEBUG': '$DEBUG', 'DATABASE_PASSWORD': '$DATABASE_PASSWORD'})
 
 
 @task
@@ -66,7 +66,7 @@ def restart(c):
 
 @task(hosts=hosts)
 def deploy(c):
-    print(colorize('\nStarting deploy... 👌', fg='green'))
+    print(colorize('\nStarting deploy... \U0001F44C', fg='green'))
     try:
         update(c)
         install(c)
@@ -74,6 +74,6 @@ def deploy(c):
         collect(c)
         # clear(c)
         restart(c)
-        print(colorize('\nDeploy succeeded 🎉', fg='green'))
+        print(colorize('\nDeploy succeeded \U0001F389', fg='green'))
     except:
-        print(colorize('\nDeploy failed ❌', fg='red'))
+        print(colorize('\nDeploy failed \u274C', fg='red'))
