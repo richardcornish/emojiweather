@@ -1,3 +1,5 @@
+import os
+
 from fabric import task
 
 from django.utils.termcolors import colorize
@@ -9,7 +11,7 @@ from django.utils.termcolors import colorize
 
 
 hosts = [{
-    'host': 'ec2-3-89-247-193.compute-1.amazonaws.com',
+    'host': os.environ.get('HOST', ''),
     'user': 'ubuntu',
 }]
 
